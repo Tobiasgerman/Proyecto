@@ -13,7 +13,8 @@ async function obtenerLista () {
 
     try {
         let response = await axios.get(url, { httpsAgent });
-        return response.data;
+        let paisesEsp = response.data.filter(p => p.translations.spa);
+        return paisesEsp;
       } catch (error) {
         throw new Error(`Error: ${error.message}`);
       }
@@ -41,6 +42,7 @@ async function obtenerDistanciaEntrePaises(paises, paisElegido){
     let origen = await obtenerCoordenadas(paisElegido, paises);
     let destino = await obtenerCoordenadas(paisAleatorio, paises);
     let distancia = calcularDistancia(origen, destino);
+    distancia = Math.round(distancia);
     return { origen, destino, distancia , paisAleatorio};
 }
 async function main(){
