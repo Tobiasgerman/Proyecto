@@ -4,6 +4,26 @@ const geolib = require('geolib');
 const httpsAgent = new https.Agent({ rejectUnauthorized: false });
 const readline = require('node:readline');
 
+const puntosCardinales = {
+    "N": "Norte",
+    "NNE": "Norte-Noreste",
+    "NE": "Noreste",
+    "ENE": "Este-Noreste",
+    "E": "Este",
+    "ESE": "Este-Sureste",
+    "SE": "Sureste",
+    "SSE": "Sur-Sureste",
+    "S": "Sur",
+    "SSW": "Sur-Suroeste",
+    "SW": "Suroeste",
+    "WSW": "Oeste-Suroeste",
+    "W": "Oeste",
+    "WNW": "Oeste-Noroeste",
+    "NW": "Noroeste",
+    "NNW": "Norte-Noroeste"
+};
+
+
 const rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout,
@@ -22,7 +42,7 @@ async function obtenerLista() {
 }
 
 async function obtenerCoordenadas(paisNombre, paises) {
-    let pais = paises.find(p => p.name.common === paisNombre);
+    let pais = paises.find(p => p.translations.spa.common === paisNombre);
     if (pais) {
         const { latlng } = pais;
         return { latitude: latlng[0], longitude: latlng[1] };
@@ -45,7 +65,7 @@ function generarPaisAleatorio(paises) {
 
 async function obtenerDistanciaEntrePaises(paises, paisElegido, paisAleatorio) {
     let origen = await obtenerCoordenadas(paisElegido, paises);
-    let destino = await obtenerCoordenadas(paisAleatorio.name.common, paises);
+    let destino = await obtenerCoordenadas(paisAleatorio.translations.spa.common, paises);
     let distancia = calcularDistancia(origen, destino);
     let direccion = calcularDireccion(origen, destino);
     distancia = Math.round(distancia);
@@ -54,7 +74,7 @@ async function obtenerDistanciaEntrePaises(paises, paisElegido, paisAleatorio) {
 
 async function obtenerDatos(paisElegido, paises, paisAleatorio) {
     let resultado = await obtenerDistanciaEntrePaises(paises, paisElegido, paisAleatorio);
-    return { distancia: resultado.distancia, direccion: resultado.direccion };
+    return { distancia: resultado.distancia, direccion: puntosCardinales[resultado.direccion] };
 }
 
 async function main() {
@@ -64,14 +84,14 @@ async function main() {
 
     const jugar = async () => {
         if (intentos >= 5) {
-            console.log(`Superaste los 5 intentos, la respuesta correcta era ${paisAleatorio.name.common}`);
+            console.log(`Superaste los 5 intentos, la respuesta correcta era ${paisAleatorio.translations.spa.common}`);
             rl.close();
             return;
         }
 
         rl.question('Elige un país: ', async (paisElegido) => {
-            if (paisElegido === paisAleatorio.name.common) {
-                console.log(`¡Ganaste! El país era ${paisAleatorio.name.common}`);
+            if (paisElegido.toLowerCase() === paisAleatorio.translations.spa.common.toLowerCase()) {
+                console.log(`¡Ganaste! El país era ${paisAleatorio.translations.spa.common}`);
                 rl.close();
                 return;
             } else {
