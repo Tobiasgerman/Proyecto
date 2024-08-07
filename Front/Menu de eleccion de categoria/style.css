@@ -1,0 +1,57 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Nokora", sans-serif;
+    text-align: center;
+    padding: 20px;
+}
+
+h1 {
+    margin-bottom: 10px;
+}
+
+h2 {
+    margin: 20px 0;
+}
+
+select, button {
+    font-family: "Nokora", sans-serif;
+    font-size: 20px;
+    background-color: lime;
+    border-radius: 10px;
+    width: 150px;
+    height: 75px;
+    border: none;
+    margin-bottom: 10px;
+    padding: 10px;
+    text-align: center;
+}
+
+.container {
+    display: flex;
+    justify-content: space-around;
+    max-width: 800px;
+    margin: 20px auto;
+}
+
+.column {
+    flex: 1;
+    margin: 0 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+button {
+    cursor: pointer;
+}
+
+
+
+
+ 
+
