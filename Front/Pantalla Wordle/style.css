@@ -55,15 +55,25 @@ button {
          height: 50px;
      }
 
-     .img {
-        
-         width: 20px;
-         height: 20px;
-        
-        }
-         
+.logo {
+    width: auto;
+    height: 50px;
+    position: relative;
+    top: 0.5rem;
+}        
+.navbar{
+    display: flex;
+    justify-content: center;
+    height: 1rem;
+    place-items: center;
+}
 
-         
+.navbar img {
+    position: absolute;
+    left: 3rem;
+    width: 100px;
+    height: 100px;
+}
      
 
     

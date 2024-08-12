@@ -1,46 +1,106 @@
-.Cuadrado1 {
-    width: 180px;
-    height: 120px;
-    border: black;
-    background-color: white;
-    border: solid;
-}
-.Cuadrado2 {
-    width: 180px;
-    height: 120px;
-    border: black;
-    background-color: white;
-    border: solid;
+body {
+    background-color: limegreen;
+    font-family: "Nokoro", sans-serif;
 }
 
-.Cuadrado3 {
-    width: 180px;
-    height: 120px;
-    border: black;
-    background-color: white;
-    border: solid;
+.title {
+    position: relative;
+    top: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 40px;
 }
 
-.Cuadrado4 {
-    width: 180px;
-    height: 120px;
-    border: black;
-    background-color: white;
-    border: solid;
+.cuadradogris {
+    background-color: lightgray;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    width: 400px;
+    margin: 20px auto;
 }
 
-.Cuadrado5  {
-    width: 180px;
-    height: 120px;
-    border: black;
-    background-color: white;
-    border: solid;
+.h2 {
+    margin-bottom: 20px;
+    font-size: 18px;
 }
 
-.Cuadrado6 {
+.Cuadrados {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    
+}
+
+.Cuadrados {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 30%;
+}
+
+.cuadradodecolor {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    border: 1px solid black;
+}
+
+.rojo { background-color: red; }
+.amarillo { background-color: yellow; }
+.verde { background-color: green; }
+
+.flechas {
+    margin-bottom: 20px;
+}
+
+.input-section {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+input[type="text"] {
+    padding: 5px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+button {
+    padding: 5px 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: none;
+    background-color: darkgray;
+    cursor: pointer;
+}
+
+
+.squares-container {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+}
+
+.Cuadrado1, .Cuadrado2, .Cuadrado3, .Cuadrado4, .Cuadrado5, .Cuadrado6 {
     width: 180px;
     height: 120px;
-    border: black;
     background-color: white;
-    border: solid;
+    border: 2px solid black;
+}
+
+/* Estilos generales */
+h3, h4, h5, h6 {
+    font-size: 20px;
+    font-weight: bolder;
+    margin: 10px 0;
+}
+
+.PP {
+    margin-top: 20px;
+    font-size: 20px;
+    font-weight: bolder;
 }

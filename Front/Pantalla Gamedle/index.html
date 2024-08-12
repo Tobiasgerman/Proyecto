@@ -1,38 +1,63 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nokora:wght@100;300;400;700;900&display=swap" rel="stylesheet">
     <title>Gamedle</title>
-    <h1>Gamedle</h1>
- 
-    
-
+</head>
 <body>
-    <h2>Instrucciones:</h2>
-    <h3>Si el color es rojo, la pista no coincide.</h3>
-    <h4>Si el color es amarillo, la pista esta relacionada indirectamente a la respuesta.</h4>
-    <h5>Si el color es verde, la pista coincide.</h5>
-    <h6>La linea hacia arriba, indica que la respuesta a la pista (en caso de ser un numero), es mayor.</h6>
-    <h7>La linea hacia abajo, indica que la respuesta a la pista (en caso de ser un numero), es menor.</h7>
-    <input type="text" placeholder="Escribe aqui" >
-    <button>Adivinar</button>
-    <h8> Categoria</h8>
-    <h9>Categoria</h9>
-    <h10>Categoria</h10>
-    <h11>Categoria</h11>
-    <h12>Categoria</h12>
-    <h13>Categoria</h13>
+    <div>  
+        <h1 class="title">Gamedle</h1>
+    </div>
 
-    <div class="Cuadrado1">
+   
+    <div class="cuadradogris">
+        <h2 class="h2">Nombre de la categoría de wordle</h2>
+        <div class="Cuadrados">
+            <div class="cuadradorojo ">
+                <div class="cuadradodecolor rojo"></div>
+                <p>Si el color es <strong>rojo</strong>, la pista no coincide.</p>
+            </div>
+            <div class="cuadradoamarillo">
+                <div class="cuadradodecolor amarillo"></div>
+                <p>Si el color es <strong>amarillo</strong>, la pista está relacionada indirectamente a la respuesta.</p>
+            </div>
+            <div class="cuadradoverde">
+                <div class="cuadradodecolor verde"></div>
+                <p>Si el color es <strong>verde</strong>, la pista coincide.</p>
+            </div>
+        </div>
+        <div class="flechas">
+            <p><strong> ⬆La linea hacia arriba</strong> indica que la respuesta a la pista, en caso de ser un número, es mayor.</p>
+            <p><strong> ⬇La linea hacia abajo</strong> indica que la respuesta a la pista, en caso de ser un número, es menor.</p>
+        </div>
+        <div class="parteinput">
+            <input type="text" placeholder="Escribí aqui">
+            <button>Adivinar</button>
+        </div>
+    </div>
+    
+    <!-- Cuadrados de colores -->
+    <div class="squares-container">
+        <div class="Cuadrado1"></div>
         <div class="Cuadrado2"></div>
         <div class="Cuadrado3"></div>
         <div class="Cuadrado4"></div>
         <div class="Cuadrado5"></div>
         <div class="Cuadrado6"></div>
+    </div>
 
-    </div>    
+    <div class="PP">
+        <p>Categoría</p>
+        <p>Categoría</p>
+        <p>Categoría</p>
+        <p>Categoría</p>
+        <p>Categoría</p>
+    </div>  
 </body>
 </html>
