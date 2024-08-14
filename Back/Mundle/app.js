@@ -1,130 +1,115 @@
 const axios = require('axios');
-const readline = require('readline');
 const https = require('https');
-require('dotenv').config();
+const geolib = require('geolib');
+const httpsAgent = new https.Agent({ rejectUnauthorized: false });
+const readline = require('node:readline');
 
-const CLIENT_ID = process.env.IGDB_CLIENT_ID;
-const ACCESS_TOKEN = process.env.IGDB_ACCESS_TOKEN;
-const IGDB_API_URL = 'https://api.igdb.com/v4/games';
+const puntosCardinales = {
+    "N": "Norte",
+    "NNE": "Noreste",
+    "NE": "Noreste",
+    "ENE": "Este",
+    "E": "Este",
+    "ESE": "Sureste",
+    "SE": "Sureste",
+    "SSE": "Sureste",
+    "S": "Sur",
+    "SSW": "Suroeste",
+    "SW": "Suroeste",
+    "WSW": "Suroeste",
+    "W": "Oeste",
+    "WNW": "Noroeste",
+    "NW": "Noroeste",
+    "NNW": "Noroeste"
+};
+
 
 const rl = readline.createInterface({
   input: process.stdin,
-  output: process.stdout
+  output: process.stdout,
 });
 
-const httpsAgent = new https.Agent({ rejectUnauthorized: false });
+async function obtenerLista() {
+    let url = 'https://restcountries.com/v3.1/all';
 
-async function obtenerListaJuegos() {
-  try {
-    let pagina = Math.floor(Math.random() * 10) + 1;
-    let respuesta = await axios.post(
-      IGDB_API_URL,
-      `fields name, platforms, genres, tags; limit 10; offset ${pagina * 10};`,
-      {
-        headers: {
-          'Client-ID': CLIENT_ID,
-          'Authorization': `Bearer ${ACCESS_TOKEN}`,
-          'Content-Type': 'text/plain'
-        },
-        httpsAgent
-      }
-    );
-    let juegoRandomIndex = Math.floor(Math.random() * respuesta.data.length);
-    return respuesta.data[juegoRandomIndex];
-  } catch (error) {
-    console.error('Error al obtener la lista de juegos:', error.response ? error.response.data : error.message);
-    return null;
-  }
+    try {
+        let response = await axios.get(url, { httpsAgent });
+        let paisesEsp = response.data.filter(p => p.translations && p.translations.spa);
+        return paisesEsp;
+    } catch (error) {
+        throw new Error(`Error: ${error.message}`);
+    }
 }
 
-async function obtenerJuegoSolicitado(juego) {
-  try {
-    let respuesta = await axios.post(
-      IGDB_API_URL,
-      `fields name, platforms, genres, tags; search "${juego}";`,
-      {
-        headers: {
-          'Client-ID': CLIENT_ID,
-          'Authorization': `Bearer ${ACCESS_TOKEN}`,
-          'Content-Type': 'text/plain'
-        },
-        httpsAgent
-      }
-    );
-    return respuesta.data[0];
-  } catch (error) {
-    console.error('Error al obtener el juego solicitado:', error.response ? error.response.data : error.message);
-    return null;
-  }
+async function obtenerCoordenadas(paisNombre, paises) {
+    let pais = paises.find(p => p.translations.spa.common === paisNombre);
+    if (pais) {
+        const { latlng } = pais;
+        return { latitude: latlng[0], longitude: latlng[1] };
+    } else {
+        throw new Error(`No se encontraron coordenadas para ${paisNombre}`);
+    }
+}
+
+function calcularDistancia(origen, destino) {
+    return geolib.getDistance(origen, destino) / 1000;
+}
+
+function calcularDireccion(origen, destino) {
+    return geolib.getCompassDirection(origen, destino);
+}
+
+function generarPaisAleatorio(paises) {
+    return paises[Math.floor(Math.random() * paises.length)];
+}
+
+async function obtenerDistanciaEntrePaises(paises, paisElegido, paisAleatorio) {
+    let origen = await obtenerCoordenadas(paisElegido, paises);
+    let destino = await obtenerCoordenadas(paisAleatorio.translations.spa.common, paises);
+    let distancia = calcularDistancia(origen, destino);
+    let direccion = calcularDireccion(origen, destino);
+    distancia = Math.round(distancia);
+    return { origen, destino, distancia, direccion };
+}
+
+async function obtenerDatos(paisElegido, paises, paisAleatorio) {
+    let resultado = await obtenerDistanciaEntrePaises(paises, paisElegido, paisAleatorio);
+    return { distancia: resultado.distancia, direccion: puntosCardinales[resultado.direccion] };
 }
 
 async function main() {
-  let juegoAleatorio = await obtenerListaJuegos();
+    let intentos = 0;
+    let paises = await obtenerLista();
+    let paisAleatorio = generarPaisAleatorio(paises);
 
-  if (!juegoAleatorio) {
-    console.log('No se pudo obtener un juego aleatorio.');
-    return;
-  }
-
-  let plataformaAleatoria = juegoAleatorio.platforms ? juegoAleatorio.platforms.map(platform => platform.name) : [];
-  let generosAleatorio = juegoAleatorio.genres ? juegoAleatorio.genres.map(genre => genre.name) : [];
-  let sagaAleatoria = juegoAleatorio.tags 
-    ? juegoAleatorio.tags.find(tag => tag.name && tag.name.includes('series'))?.name || 'No Saga'
-    : 'No Saga';
-  let intentos = 0;
-
-  const jugar = async () => {
-    rl.question('Elige un Juego: ', async (juego) => {
-      let juegoElegido = await obtenerJuegoSolicitado(juego);
-
-      if (!juegoElegido) {
-        console.log('Juego no encontrado.');
-        jugar(); // Volver a preguntar
-        return;
-      }
-
-      let plataformaElegida = juegoElegido.platforms ? juegoElegido.platforms.map(platform => platform.name) : [];
-      let generosElegido = juegoElegido.genres ? juegoElegido.genres.map(genre => genre.name) : [];
-      let sagaElegida = juegoElegido.tags 
-        ? juegoElegido.tags.find(tag => tag.name && tag.name.includes('series'))?.name || 'No Saga'
-        : 'No Saga';
-
-      if (juegoElegido.name === juegoAleatorio.name) {
-        rl.close();
-        console.log('¡Ganaste!');
-        return;
-      } else {
-        const coincidenciaGeneros = generosElegido.filter(category => generosAleatorio.includes(category));
-        const coincidenciaPlataforma = plataformaElegida.filter(platform => plataformaAleatoria.includes(platform));
-        const coincidenciaSaga = sagaElegida === sagaAleatoria;
-
-        const resultadoGenero = generosElegido.length > 0
-          ? (coincidenciaGeneros.length === generosElegido.length ? 'Verde' : 'Amarillo')
-          : 'Rojo';
-
-        const resultadoPlataforma = plataformaElegida.length > 0
-          ? (coincidenciaPlataforma.length === plataformaElegida.length ? 'Verde' : 'Amarillo')
-          : 'Rojo';
-
-        const resultadoSaga = sagaElegida === sagaAleatoria ? 'Verde' : 'Rojo';
-
-        console.log(`Generos: ${resultadoGenero}`);
-        console.log(`Plataforma: ${resultadoPlataforma}`);
-        console.log(`Saga: ${resultadoSaga}`);
-        intentos++;
-        console.log(`Intentos: ${intentos}`);
-
-        if (intentos < 5) {
-          jugar(); 
-        } else {
-          rl.close();
-          console.log('Perdiste! El juego era:', juegoAleatorio.name);
+    const jugar = async () => {
+        if (intentos >= 5) {
+            console.log(`Superaste los 5 intentos, la respuesta correcta era ${paisAleatorio.translations.spa.common}`);
+            rl.close();
+            return;
         }
-      }
-    });
-  };
 
-  jugar();
+        rl.question('Elige un país: ', async (paisElegido) => {
+            if (paisElegido.toLowerCase() === paisAleatorio.translations.spa.common.toLowerCase()) {
+                console.log(`¡Ganaste! El país era ${paisAleatorio.translations.spa.common}`);
+                rl.close();
+                return;
+            } else {
+                try {
+                    let resultado = await obtenerDatos(paisElegido, paises, paisAleatorio);
+                    console.log(`El país aleatorio está a ${resultado.distancia} km y se encuentra en dirección ${resultado.direccion}`);
+                } catch (error) {
+                    console.log(error.message);
+                }
+
+                intentos++;
+                console.log(`Vas ${intentos} / 5`);
+                jugar();
+            }
+        });
+    };
+
+    jugar();
 }
 
 main();
