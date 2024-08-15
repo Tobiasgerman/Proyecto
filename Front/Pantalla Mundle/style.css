@@ -4,3 +4,18 @@
     height:50px ;
     width:200px ;
 }
+
+h1 {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: "Nokoro", sans-serif;
+    font-size: 40px;
+    color: black;
+}
+
+.letra-diferente {
+    color: lime;
+    font-size: 40px;
+}

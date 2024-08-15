@@ -16,9 +16,9 @@ body {
     background-color: lightgray;
     padding: 20px;
     border-radius: 10px;
-    text-align: center;
     width: 400px;
     margin: 20px auto;
+    text-align: center;
 }
 
 .h2 {
@@ -27,18 +27,10 @@ body {
 }
 
 .Cuadrados {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-    
-}
-
-.Cuadrados {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 30%;
+    display: grid;
+    width: 100%;
+    grid-template-columns: repeat(3, 1fr);
+    gap: .5rem;
 }
 
 .cuadradodecolor {
@@ -74,15 +66,32 @@ button {
     font-size: 16px;
     border-radius: 5px;
     border: none;
-    background-color: darkgray;
+    background-color: limegreen;
     cursor: pointer;
+
 }
 
 
+
 .squares-container {
-    display: flex;
-    justify-content: space-around;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    justify-items: center;
+    align-items: center;
+    gap: 10px;
     margin-top: 20px;
+}
+
+.item {
+    text-align: center;
+}
+
+.categoria {
+    margin-bottom: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    color: black;
+    text-align: center;
 }
 
 .Cuadrado1, .Cuadrado2, .Cuadrado3, .Cuadrado4, .Cuadrado5, .Cuadrado6 {
@@ -92,15 +101,12 @@ button {
     border: 2px solid black;
 }
 
-/* Estilos generales */
+
+
 h3, h4, h5, h6 {
     font-size: 20px;
     font-weight: bolder;
     margin: 10px 0;
 }
 
-.PP {
-    margin-top: 20px;
-    font-size: 20px;
-    font-weight: bolder;
-}
+
