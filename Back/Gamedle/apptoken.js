@@ -1,13 +1,18 @@
 const axios = require('axios');
+const https = require('https');
+const httpsAgent = new https.Agent({ rejectUnauthorized: false });
+
+require('dotenv').config();
 
 async function obtenerToken() {
     try {
         const response = await axios.post('https://id.twitch.tv/oauth2/token', null, {
             params: {
-                client_id: 'txl67kdypncb7y5da96408724ga35o',
-                client_secret: 'rfzt85raolb8iwc39xcdj3vzu1fi3r',
+                client_id: process.env.IGDB_CLIENT_ID,
+                client_secret: 'bg7b4gisuhrsk4o7z72axy0w3i7ude',
                 grant_type: 'client_credentials'
-            }
+            },
+            httpsAgent: httpsAgent
         });
         console.log('Access Token:', response.data.access_token);
     } catch (error) {

@@ -86,7 +86,7 @@ async function main() {
 
       if (!juegoElegido) {
         console.log('Juego no encontrado.');
-        jugar(); // Volver a preguntar
+        jugar();
         return;
       }
 
