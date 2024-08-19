@@ -1,16 +1,9 @@
-.Rectangulo1 {
-    border: solid  black 1px;
-    background-color: white;
-    height:50px ;
-    width:200px ;
-}
-
 h1 {
-    text-align: center;
     display: flex;
+    text-align: center;
     justify-content: center;
     align-items: center;
-    font-family: "Nokoro", sans-serif;
+    font-family: "Nokora", sans-serif;
     font-size: 40px;
     color: black;
 }
@@ -18,4 +11,78 @@ h1 {
 .letra-diferente {
     color: lime;
     font-size: 40px;
+}
+
+.icon {
+    font-size: 40px;
+    margin-right: 10px;
+}
+
+input, button {
+    height: 40px;
+    border-radius: 5px;
+    font-size: 16px;
+    padding: 0 10px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+input {
+    width: 300px;
+}
+
+button {
+    width: 150px;
+    background-color: #f0f0f0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 10px;
+}
+
+button:hover {
+    background-color: #e0e0e0;
+}
+
+.contenedor {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.cuadradoblanco {
+    border: solid black;
+    background-color: white;
+    height: 300px;
+    width: 300px;
+    margin-bottom: 20px;
+}
+
+.input-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+h2 {
+    margin-top: 20px;
+    font-family: "Nokora", sans-serif;
+    font-size: 20px;
+    color: #333;
+}
+
+.guess-container {
+    width: 100%;
+    max-width: 450px;
+    margin-top: 10px;
+}
+
+.guess-row {
+    background-color: #f7f7f7;
+    border: 1px dashed #ccc;
+    height: 40px;
+    margin-bottom: 5px;
+    border-radius: 5px;
 }
