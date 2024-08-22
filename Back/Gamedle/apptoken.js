@@ -9,7 +9,7 @@ async function obtenerToken() {
         const response = await axios.post('https://id.twitch.tv/oauth2/token', null, {
             params: {
                 client_id: process.env.IGDB_CLIENT_ID,
-                client_secret: 'bg7b4gisuhrsk4o7z72axy0w3i7ude',
+                client_secret: process.env.IGBD_CLIENT_SECRET,
                 grant_type: 'client_credentials'
             },
             httpsAgent: httpsAgent
