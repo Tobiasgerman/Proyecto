@@ -1,3 +1,4 @@
+
 const filas = document.querySelectorAll('.row');
 var finalDiv = document.getElementById("final");
 let filaActual = 0;
@@ -107,3 +108,10 @@ botonBorrar.addEventListener("click", function() {
         letras[letraActual].textContent = '';
     }    
 });
+
+/*
+const botonReset = document.getElementById('reset');
+botonReset.addEventListener("click", function() {
+    location.reload();
+});
+*/
