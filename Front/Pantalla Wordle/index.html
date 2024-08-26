@@ -1,85 +1,105 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Categoria Comidas</title>
+    <title>Juego de Palabras</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="icon" type="image/x-icon" href="descarga (1).png"navbar">
     <link href="https://fonts.googleapis.com/css2?family=Nokora:wght@100;300;400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    
 </head>
 <body>
-    <div class="
-    navbar">
-<img src="Captura de pantalla 2024-08-05 113352.png" class="logo">
-</div>
-    <h1>LA PALABRA DEL DIA</h1>
+    <div class="navbar">
+        <a href="http://127.0.0.1:5500/index.html"> <img src="descarga.png" class="logo"> </a>
+        <!--
+        <button class="reset"id="reset" type="submit">Volver a jugar</button>
+        -->
+    </div>
+    <h1>LA PALABRA DEL DÍA</h1>
     <hr>
+    <div id="final" class="animated"></div>
     <div class="cuadricula">
-        <div class="letra"></div>
-        <div class="letra"></div>
-        <div class="letra"></div>
-        <div class="letra"></div>
-        <div class="letra"></div>
-        <div class="letra"></div>
-        <div class="letra"></div>
-        <div class="letra"></div>
-        <div class="letra"></div>
-        <div class="letra"></div>
-        <div class="letra"></div>
-        <div class="letra"></div>
-        <div class="letra"></div>
-        <div class="letra"></div>
-        <div class="letra"></div>
-        <div class="letra"></div>
-        <div class="letra"></div>
-        <div class="letra"></div>
-        <div class="letra"></div>
-        <div class="letra"></div>
-        <div class="letra"></div>
-        <div class="letra"></div>
-        <div class="letra"></div>
-        <div class="letra"></div>
-        <div class="letra"></div>
-        <div class="letra"></div>
-        <div class="letra"></div>
-        <div class="letra"></div>
-        <div class="letra"></div>
-        <div class="letra"></div>
+        
+        <div class="row">
+            <div class="letra"></div>
+            <div class="letra"></div>
+            <div class="letra"></div>
+            <div class="letra"></div>
+            <div class="letra"></div>
+        </div>
+        <div class="row">
+            <div class="letra"></div>
+            <div class="letra"></div>
+            <div class="letra"></div>
+            <div class="letra"></div>
+            <div class="letra"></div>
+        </div>
+        <div class="row">
+            <div class="letra"></div>
+            <div class="letra"></div>
+            <div class="letra"></div>
+            <div class="letra"></div>
+            <div class="letra"></div>
+        </div>
+        <div class="row">
+            <div class="letra"></div>
+            <div class="letra"></div>
+            <div class="letra"></div>
+            <div class="letra"></div>
+            <div class="letra"></div>
+        </div>
+        <div class="row">
+            <div class="letra"></div>
+            <div class="letra"></div>
+            <div class="letra"></div>
+            <div class="letra"></div>
+            <div class="letra"></div>
+        </div>
+        <div class="row">
+            <div class="letra"></div>
+            <div class="letra"></div>
+            <div class="letra"></div>
+            <div class="letra"></div>
+            <div class="letra"></div>
+        </div>
     </div>
     <div class="botones">
-        <button>Q</button>
-        <button>W</button>
-        <button>E</button>
-        <button>R</button>
-        <button>T</button>
-        <button>Y</button>
-        <button>U</button>
-        <button>I</button>
-        <button>O</button>
-        <button>P</button>
-        <button>A</button>
-        <button>S</button>
-        <button>D</button>
-        <button>F</button>
-        <button>G</button>
-        <button>H</button>
-        <button>J</button>
-        <button>K</button>
-        <button>L</button>
-        <button>Ñ</button>
-        <button class="enviar">Enviar</button>
-        <button>Z</button>
-        <button>X</button>
-        <button>C</button>
-        <button>V</button>
-        <button>B</button>
-        <button>N</button>
-        <button>M</button>
-        <button>⬅</button>
+        <button data-key="q" class="key">Q</button>
+        <button data-key="w" class="key">W</button>
+        <button data-key="e" class="key">E</button>
+        <button data-key="r" class="key">R</button>
+        <button data-key="t" class="key">T</button>
+        <button data-key="y" class="key">Y</button>
+        <button data-key="u" class="key">U</button>
+        <button data-key="i" class="key">I</button>
+        <button data-key="o" class="key">O</button>
+        <button data-key="p" class="key">P</button>
+        <button data-key="a" class="key">A</button>
+        <button data-key="s" class="key">S</button>
+        <button data-key="d" class="key">D</button>
+        <button data-key="f" class="key">F</button>
+        <button data-key="g" class="key">G</button>
+        <button data-key="h" class="key">H</button>
+        <button data-key="j" class="key">J</button>
+        <button data-key="k" class="key">K</button>
+        <button data-key="l" class="key">L</button>
+        <button data-key="ñ" class="key">Ñ</button>
+        <button data-key="enter" class="enviar" id="enviar">Enviar</button>
+        <button data-key="z" class="key">Z</button>
+        <button data-key="x" class="key">X</button>
+        <button data-key="c" class="key">C</button>
+        <button data-key="v" class="key">V</button>
+        <button data-key="b" class="key">B</button>
+        <button data-key="n" class="key">N</button>
+        <button data-key="m" class="key">M</button>
+        <button data-key="backspace" class="borrar" id="borrar">⬅</button>
     </div>
+    
+    </a>
+    <script src="script.js"></script>
 </body>
 </html>
-
