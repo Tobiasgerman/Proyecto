@@ -94,7 +94,7 @@ button {
     text-align: center;
 }
 
-.Cuadrado1, .Cuadrado2, .Cuadrado3, .Cuadrado4, .Cuadrado5, .Cuadrado6 {
+.Cuadrado1, .Cuadrado2, .Cuadrado3, .Cuadrado4, .Cuadrado5, .Cuadrado6 , .Cuadrado7 , .Cuadrado8 {
     width: 180px;
     height: 120px;
     background-color: white;
@@ -108,5 +108,3 @@ h3, h4, h5, h6 {
     font-weight: bolder;
     margin: 10px 0;
 }
-
-

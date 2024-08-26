@@ -1,8 +1,13 @@
 const axios = require('axios');
 const https = require('https');
 const geolib = require('geolib');
+const express = require('express');
+const cors = require('cors');
 const httpsAgent = new https.Agent({ rejectUnauthorized: false });
 const readline = require('node:readline');
+
+
+
 
 const puntosCardinales = {
     "N": "Norte",
@@ -23,6 +28,12 @@ const puntosCardinales = {
     "NNW": "Noroeste"
 };
 
+const app = express();
+const port = 3000;
+
+app.use(cors()); // Permite solicitudes desde cualquier origen
+app.use(express.json());
+
 
 const rl = readline.createInterface({
   input: process.stdin,
@@ -37,7 +48,7 @@ async function obtenerLista() {
         let paisesEsp = response.data.filter(p => p.translations && p.translations.spa);
         return paisesEsp;
     } catch (error) {
-        throw new Error(`Error: ${error.message}`);
+        console.log(error.message);
     }
 }
 
@@ -47,7 +58,7 @@ async function obtenerCoordenadas(paisNombre, paises) {
         const { latlng } = pais;
         return { latitude: latlng[0], longitude: latlng[1] };
     } else {
-        throw new Error(`No se encontraron coordenadas para ${paisNombre}`);
+        console.log("País no encontrado");
     }
 }
 
@@ -77,39 +88,40 @@ async function obtenerDatos(paisElegido, paises, paisAleatorio) {
     return { distancia: resultado.distancia, direccion: puntosCardinales[resultado.direccion] };
 }
 
-async function main() {
-    let intentos = 0;
-    let paises = await obtenerLista();
-    let paisAleatorio = generarPaisAleatorio(paises);
+app.get('/paises', async (req, res) => {
+    try {
+        const paises = await obtenerLista();
+        res.json(paises);
+    } catch (error) {
+        res.status(500).send(error.message);
+    }
+});
 
-    const jugar = async () => {
-        if (intentos >= 5) {
-            console.log(`Superaste los 5 intentos, la respuesta correcta era ${paisAleatorio.translations.spa.common}`);
-            rl.close();
-            return;
-        }
+app.post('/distancia', async (req, res) => {
+    const { paisElegido, paisAleatorio } = req.body;
 
-        rl.question('Elige un país: ', async (paisElegido) => {
-            if (paisElegido.toLowerCase() === paisAleatorio.translations.spa.common.toLowerCase()) {
-                console.log(`¡Ganaste! El país era ${paisAleatorio.translations.spa.common}`);
-                rl.close();
-                return;
-            } else {
-                try {
-                    let resultado = await obtenerDatos(paisElegido, paises, paisAleatorio);
-                    console.log(`El país aleatorio está a ${resultado.distancia} km y se encuentra en dirección ${resultado.direccion}`);
-                } catch (error) {
-                    console.log(error.message);
-                }
+    try {
+        const paises = await obtenerLista();
+        const resultado = await obtenerDatos(paisElegido, paises, paisAleatorio);
+        res.json(resultado);
+    } catch (error) {
+        res.status(500).send(error.message);
+    }
+});
 
-                intentos++;
-                console.log(`Vas ${intentos} / 5`);
-                jugar();
-            }
-        });
-    };
 
-    jugar();
-}
+app.get('/pais-aleatorio', async (req, res) => {
+    try {
+        const paises = await obtenerLista();
+        const paisAleatorio = generarPaisAleatorio(paises);
+        res.json(paisAleatorio);
+    } catch (error) {
+        res.status(500).send(error.message);
+    }
+});
 
-main();
+app.use(express.static('public'));
+
+app.listen(port, () => {
+    console.log(`Servidor backend escuchando en http://localhost:${port}`);
+});
