@@ -126,4 +126,133 @@ body {
   #reset:hover {
     background-color: #00ff04ee;
   }
+  */body {
+    display: flex;
+    flex-direction: column;
+    place-items: center;
+    background-color: #0b5563;
+    font-family: "Nokora", sans-serif;
+    color: white; /* Cambiado a blanco */
+  }
+  
+  .cuadricula {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: .5rem;
+    margin-bottom: 2rem;
+  }
+  
+  .row {
+    display: contents;
+  }
+  
+  .letra {
+    width: 60px;
+    height: 60px;
+    border: 2px solid white;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    font-weight: bold;
+    background-color: #87AFC7; 
+    color:   black; 
+    border-color: white;
+  }
+  
+  hr {
+    border: none;
+    border-top: 2px solid black;
+    width: 100%;
+  }
+  
+  .botones {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    gap: .5rem;
+    margin-top: 1rem;
+    max-width: 90%;
+  }
+  
+  button {
+    font-family: "Nokora", sans-serif;
+    border: 2px solid black;
+    border-radius: 5px;
+    background-color: #2980B9;
+    color: black;
+    width: 60px;
+    height: 60px;
+    font-size: 1rem;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+  
+  button.enviar {
+    grid-column: span 2;
+    width: 125px;
+  }
+  
+  button.borrar {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .logo {
+
+    width: auto;
+    height: 50px;
+    position: relative;
+    top: 0.5rem;
+  }
+  
+  .navbar {
+    display: flex;
+    justify-content: center;
+    height: 1rem;
+    place-items: center;
+  }
+  
+  .navbar img {
+    position: absolute;
+    left: 3rem;
+    width: 100px;
+    height: 100px;
+  }
+  
+  button:hover {
+  background-color: #5c85ff;
+  
+  }
+  
+  #final {
+    font-size: 2rem;
+    text-align: center;
+    max-width: 90%;
+  }
+  .button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  /*
+  .reset {
+    position: absolute;
+    left: 15rem;
+    top: 0.5rem;
+    width: 120px;
+    height: 100px;
+    background-color: #20b138;
+    color: black;
+    border: 2px solid black;
+    border-radius: 5px;
+    font-family: "Nokora", sans-serif;
+    font-size: 1rem;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+  #reset:hover {
+    background-color: #00ff04ee;
+  }
   */
