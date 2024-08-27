@@ -7,6 +7,7 @@ require('dotenv').config();
 const CLIENT_ID = process.env.IGDB_CLIENT_ID;
 const ACCESS_TOKEN = process.env.IGDB_ACCESS_TOKEN;
 const IGDB_API_URL = 'https://api.igdb.com/v4/games';
+const POPULARITY_API_URL = 'https://api.igdb.com/v4/popularity_primitives';
 
 const httpsAgent = new https.Agent({ rejectUnauthorized: false });
 const app = express();
@@ -18,18 +19,37 @@ let intentos = 0;
 
 async function obtenerListaJuegos(modoConocido) {
     try {
+        let gameIds = [];
         let query;
+
         if (modoConocido) {
-            const query = `fields name, platforms.name, genres.name, themes.name, game_modes.name, first_release_date, release_dates.human, player_perspectives.name, involved_companies.company.name, game_engines.name, rating, total_rating_count;
-                           where popularity_primitives.popularity_type = 121;  // Usa el valor correcto
-                           sort popularity_primitives.value desc;
-                           limit 100;`;
-            // Add your code to execute the query here
+            // Obtener IDs de juegos populares usando el endpoint de popularidad
+            const popularQuery = `fields game_id; where popularity_source = 121; where popularity_source = 121; sort value desc; limit 100;`;
+            const popularResponse = await axios.post(
+                POPULARITY_API_URL,
+                popularQuery,
+                {
+                    headers: {
+                        'Client-ID': CLIENT_ID,
+                        'Authorization': `Bearer ${ACCESS_TOKEN}`,
+                        'Content-Type': 'text/plain'
+                    },
+                    httpsAgent
+                }
+            );
+
+            gameIds = popularResponse.data.map(item => item.game_id);
+
+            if (gameIds.length === 0) {
+                throw new Error('No se encontraron juegos populares.');
+            }
+
+            // Obtener detalles de los juegos populares usando los IDs obtenidos
+            query = `fields name, platforms.name, genres.name, themes.name, game_modes.name, first_release_date, release_dates.human, player_perspectives.name, involved_companies.company.name, game_engines.name; where id = (${gameIds.join(',')});`;
         } else {
-            query = `fields name, platforms.name, genres.name, themes.name, game_modes.name, first_release_date, release_dates.human, player_perspectives.name, involved_companies.company.name, game_engines.name;
-                     limit 10; offset ${Math.floor(Math.random() * 1000)};`;
+            // Obtener juegos aleatorios
+            query = `fields name, platforms.name, genres.name, themes.name, game_modes.name, first_release_date, release_dates.human, player_perspectives.name, involved_companies.company.name, game_engines.name; limit 10; offset ${Math.floor(Math.random() * 1000)};`;
         }
-        
 
         let respuesta = await axios.post(
             IGDB_API_URL,
@@ -44,7 +64,12 @@ async function obtenerListaJuegos(modoConocido) {
             }
         );
 
+        if (respuesta.data.length === 0) {
+            throw new Error('No se encontraron juegos.');
+        }
+
         let juegoRandomIndex = Math.floor(Math.random() * respuesta.data.length);
+        console.log((respuesta.data[juegoRandomIndex]).name);
         return respuesta.data[juegoRandomIndex];
     } catch (error) {
         console.error('Error al obtener la lista de juegos:', error.response ? error.response.data : error.message);
