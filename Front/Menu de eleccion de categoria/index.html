@@ -2,14 +2,13 @@
 <html lang="es">
 <head>
     <link rel="stylesheet" href="style.css">
-    <script src="script.js"></script>
+    <script defer src="script.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nokora:wght@100;300;400;700;900&display=swap" rel="stylesheet">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
     <title>Pantalla de eleccion de categoria</title>
 </head>
 <body>
@@ -21,7 +20,7 @@
         <div class="column"> 
             <select name="Wordle" id="Wordle">
                 <option value="Wordle">Wordle</option>
-                <option value="Normal">Normal</option>
+                <option id="normal" value="Normal">Normal</option>
                 <option value="Fechas">Fechas</option>
             </select>
             <button>Mundle</button>
@@ -42,13 +41,6 @@
             <button>Series y Películas</button>
         </div>
     </div>
-    <button>Jugar!</button>
+    <button id="jugar">Jugar!</button>
 </body>
 </html>
-
-
-
-
-
-    
-
