@@ -17,7 +17,7 @@ h1 {
 
 .cuadricula {
     display: grid;
-    grid-template-columns: repeat(10, 50px);
+    grid-template-columns: repeat(10, 1fr);
     gap: 10px;
     margin-bottom: 30px;
 }
@@ -53,13 +53,15 @@ h1 {
     color: white;
 }
 
+/* Ajuste para la fila con Enter, Delete y el guion */
 .botones {
-    display: grid;
-    grid-template-columns: repeat(12, 50px);
-    gap: 10px;
+    display: flex;
+    justify-content: center; /* Centra los botones horizontalmente */
+    gap: 5px; /* Espacio entre los botones */
+    margin-bottom: 20px;
 }
 
-.key, .enviar, .borrar {
+.key {
     width: 50px;
     height: 50px;
     font-size: 1.2rem;
@@ -70,11 +72,16 @@ h1 {
 }
 
 .enviar, .borrar {
-    grid-column: span 2;
+    width: 105px; 
+    height: 50px;
+    font-size: 1.2rem;
+    border-radius: 5px;
     background-color: #6aaa64;
     color: white;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
-.animated {
-font-size: 2.5rem;
-margin-bottom: 20px;
-}
+
