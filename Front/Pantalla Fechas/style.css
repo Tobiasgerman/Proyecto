@@ -84,4 +84,7 @@ h1 {
     align-items: center;
     justify-content: center;
 }
-
+.animated {
+font-size: 2.5rem;
+margin-bottom: 20px;
+}

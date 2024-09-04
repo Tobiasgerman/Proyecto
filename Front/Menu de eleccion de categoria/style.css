@@ -51,8 +51,8 @@
   }
   button:hover {
  background-color: rgb(44, 138, 0);
-
-  } * {
+  } 
+   * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -107,3 +107,4 @@
  background-color: rgb(44, 138, 0);
 
   } 
+
