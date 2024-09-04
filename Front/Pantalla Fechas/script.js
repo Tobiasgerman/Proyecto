@@ -3,23 +3,20 @@ var finalDiv = document.getElementById("final");
 let filaActual = 0;
 let letraActual = 0;
 let juegoTerminado = false;
-let palabraCorrecta = '';
+let fechaCorrecta = '';
 let mensajeFinal = '';
 let listaFechas = [];
 
-// Cargar lista de fechas desde un archivo o de la fuente generada previamente
 fetch('fechas.txt')
     .then(response => response.text())
     .then(data => {
         listaFechas = data.split('\n').map(fecha => fecha.trim());
-        palabraCorrecta = listaFechas[Math.floor(Math.random() * listaFechas.length)];
-        console.log(`Fecha correcta: ${palabraCorrecta}`);
+        fechaCorrecta = listaFechas[Math.floor(Math.random() * listaFechas.length)];
+        console.log(`Fecha correcta: ${fechaCorrecta}`);
     });
 
-// Función para confirmar la fecha ingresada
 const confirmarFecha = () => {
-    if (letraActual != 10) return;  // Solo aceptar si tiene 10 caracteres (DD-MM-YYYY)
-
+    if (letraActual != 10) return; 
     const letras = filas[filaActual].querySelectorAll('.letra');
     let fechaIngresada = Array.from(letras).map(letter => letter.textContent).join('');
 
@@ -28,16 +25,26 @@ const confirmarFecha = () => {
         return;
     }
 
+    let diaCorrecto = fechaCorrecta.slice(0, 2);
+    let mesCorrecto = fechaCorrecta.slice(3, 5);
+    let añoCorrecto = fechaCorrecta.slice(6, 10);
+
+    let diaIngresado = fechaIngresada.slice(0, 2);
+    let mesIngresado = fechaIngresada.slice(3, 5);
+    let añoIngresado = fechaIngresada.slice(6, 10);
+
     let sum = 0;
-    letras.forEach((letter, index) => {
+
+    const compararYAsignarColor = (valorIngresado, valorCorrecto, index, esParteCorrecta) => {
+        const letter = letras[index];
         letter.classList.add('checked');
         const tecla = document.querySelector(`.key[data-key="${letter.textContent.toLowerCase()}"]`);
-        
-        if (letter.textContent === palabraCorrecta[index]) {
+
+        if (valorIngresado === valorCorrecto) {
             letter.style.backgroundColor = 'green';
             if (tecla) tecla.style.backgroundColor = 'green';
             sum++;
-        } else if (palabraCorrecta.includes(letter.textContent) && palabraCorrecta.indexOf(letter.textContent) !== index) {
+        } else if (esParteCorrecta) {
             letter.style.backgroundColor = 'yellow';
             if (tecla && tecla.style.backgroundColor !== 'green') {
                 tecla.style.backgroundColor = 'yellow';
@@ -46,14 +53,70 @@ const confirmarFecha = () => {
             letter.style.backgroundColor = 'gray';
             if (tecla) tecla.style.backgroundColor = 'gray';
         }
-    });
+    };
 
-    if (sum == 10) {  // Si todos los caracteres coinciden
-        mensajeFinal = `¡Felicidades! Has descubierto la fecha correcta: ${palabraCorrecta}.`;
+    compararYAsignarColor(diaIngresado[0], diaCorrecto[0], 0, diaCorrecto.includes(diaIngresado[0]));
+    compararYAsignarColor(diaIngresado[1], diaCorrecto[1], 1, diaCorrecto.includes(diaIngresado[1]));
+    compararYAsignarColor(mesIngresado[0], mesCorrecto[0], 3, mesCorrecto.includes(mesIngresado[0]));
+    compararYAsignarColor(mesIngresado[1], mesCorrecto[1], 4, mesCorrecto.includes(mesIngresado[1]));
+    for (let i = 6; i < 10; i++) {
+        compararYAsignarColor(añoIngresado[i - 6], añoCorrecto[i - 6], i, añoCorrecto.includes(añoIngresado[i - 6]));
+    }
+
+    if (fechaIngresada === '11-09-2001') { // atentado torres gemelas
+        const imagen = document.getElementById('imagen-easter-egg');
+        imagen.innerHTML = '<img src="descarga(torres-gemelas).png" alt="Imagen" />';
+        }
+    if (fechaIngresada === '04-08-0070') { // destrucción del Beit Hamikdash
+       const imagen = document.getElementById('imagen-easter-egg');
+       imagen.innerHTML = '<img src="descarga(beit-hamikdash-caida).png" alt="Imagen" />'
+        }
+    if (fechaIngresada === '06-08-1945') { // hiroshima
+        const imagen = document.getElementById('imagen-easter-egg');
+        imagen.innerHTML = '<img src="imagen(hiroshima).png" alt="Imagen" />'
+        }
+     if (fechaIngresada === '09-08-1945') { // little boy
+        const imagen = document.getElementById('imagen-easter-egg');
+        imagen.innerHTML = '<img src="descarga(nagasaki).png" alt="Imagen" />'
+        }
+     if (fechaIngresada === '23-08-2008') { // cumple de gandel
+        const imagen = document.getElementById('imagen-easter-egg');
+        imagen.innerHTML = '<img src="99615.png" alt="Imagen" />'
+        }
+     if (fechaIngresada === '23-06-2009') { // cumple de manu
+        const imagen = document.getElementById('imagen-easter-egg');
+        imagen.innerHTML = '<img src="90821.png" alt="Imagen" />'
+        }
+     if (fechaIngresada === '22-12-2008') { // cumple de tobi
+        const imagen = document.getElementById('imagen-easter-egg');
+        imagen.innerHTML = '<img src="91075.png" alt="Imagen" />'
+        }
+     if (fechaIngresada === '09-01-2009') { // cumple de oneto
+        const imagen = document.getElementById('imagen-easter-egg');
+        imagen.innerHTML = '<img src="96400.png" alt="Imagen" />'
+        }
+     if (fechaIngresada === '16-04-2009') { // cumple de pipa
+        const imagen = document.getElementById('imagen-easter-egg');
+        imagen.innerHTML = '<img src="106798.png" alt="Imagen" />'
+        }
+     if (fechaIngresada === '07-02-2023') { // creacion de skibidi toilet
+        const imagen = document.getElementById('imagen-easter-egg');
+        imagen.innerHTML = '<img src="descarga (skibidi-toilet).png" alt="Imagen" />'
+        }
+    if (fechaIngresada === '26-09-2008') { // cumple sakito
+        const imagen = document.getElementById('imagen-easter-egg');
+        imagen.innerHTML = '<img src="96912.png" alt="Imagen" />'
+        }        
+    if (fechaIngresada === '01-12-2019') { // creacion de aieka
+        const imagen = document.getElementById('imagen-easter-egg');
+        imagen.innerHTML = '<img src="descarga(aieka).png" alt="Imagen" />'
+        }      
+    if (filaActual == 6) {          
+        mensajeFinal = `Has alcanzado el número máximo de intentos. La fecha correcta era: ${fechaCorrecta}`;
         finalDiv.innerHTML = mensajeFinal;
         juegoTerminado = true;
-    } else if (filaActual == 5) {  // Número máximo de intentos
-        mensajeFinal = `Has alcanzado el número máximo de intentos. La fecha correcta era: ${palabraCorrecta}`;
+    } else if (diaIngresado == diaCorrecto && mesIngresado == mesCorrecto && añoIngresado == añoCorrecto) {
+        mensajeFinal = `¡Felicidades! Has descubierto la fecha correcta: ${fechaCorrecta}.`;
         finalDiv.innerHTML = mensajeFinal;
         juegoTerminado = true;
     } else {
@@ -62,7 +125,6 @@ const confirmarFecha = () => {
     }
 };
 
-// Manejar el ingreso de teclas del teclado
 document.addEventListener('keydown', e => {
     if (juegoTerminado) return;
 
@@ -73,13 +135,12 @@ document.addEventListener('keydown', e => {
     } else if (e.key === 'Backspace' && letraActual > 0) {
         letraActual--;
         letras[letraActual].textContent = '';
-    } else if (e.key.match(/^[0-9\-]$/) && letraActual < 10) {  // Solo permitir números y guiones
+    } else if (e.key.match(/^[0-9\-]$/) && letraActual < 10) {  
         letras[letraActual].textContent = e.key;
         letraActual++;
     }
 });
 
-// Manejar los botones en pantalla
 const teclas = document.querySelectorAll('.key');
 
 teclas.forEach(tecla => {
@@ -94,8 +155,8 @@ teclas.forEach(tecla => {
         } else if (key === 'backspace' && letraActual > 0) {
             letraActual--;
             letras[letraActual].textContent = '';
-        } else if (letraActual < 10 && key.match(/^[0-9\-]$/)) {  // Solo números y guiones
-            letras[letraActual].textContent = key.toUpperCase();
+        } else if (letraActual < 10 && key.match(/^[0-9\-]$/)) {
+            letras[letraActual].textContent = key;
             letraActual++;
         }
     });
