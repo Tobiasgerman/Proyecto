@@ -16,12 +16,19 @@ fetch('fechas.txt')
     });
 
 const confirmarFecha = () => {
+    if (finalDiv.innerHTML !== '' || document.getElementById('imagen-easter-egg').innerHTML !== '') {
+        finalDiv.innerHTML = '';
+        document.getElementById('imagen-easter-egg').innerHTML = '';
+        return;
+    }
+
     if (letraActual != 10) return; 
     const letras = filas[filaActual].querySelectorAll('.letra');
     let fechaIngresada = Array.from(letras).map(letter => letter.textContent).join('');
 
     if (!listaFechas.includes(fechaIngresada)) {
-        alert('La fecha ingresada no existe en el diccionario.');
+        mensajeFinal = `Esta fecha no está incluida en el diccionario, acuérdate se escribe, XX-XX-XXXX y va de 0 a 9`;
+        finalDiv.innerHTML = mensajeFinal;
         return;
     }
 
@@ -66,51 +73,63 @@ const confirmarFecha = () => {
     if (fechaIngresada === '11-09-2001') { // atentado torres gemelas
         const imagen = document.getElementById('imagen-easter-egg');
         imagen.innerHTML = '<img src="descarga(torres-gemelas).png" alt="Imagen" />';
-        }
+    }
     if (fechaIngresada === '04-08-0070') { // destrucción del Beit Hamikdash
        const imagen = document.getElementById('imagen-easter-egg');
        imagen.innerHTML = '<img src="descarga(beit-hamikdash-caida).png" alt="Imagen" />'
-        }
+    }
     if (fechaIngresada === '06-08-1945') { // hiroshima
         const imagen = document.getElementById('imagen-easter-egg');
         imagen.innerHTML = '<img src="imagen(hiroshima).png" alt="Imagen" />'
-        }
-     if (fechaIngresada === '09-08-1945') { // little boy
+    }
+    if (fechaIngresada === '09-08-1945') { // little boy
         const imagen = document.getElementById('imagen-easter-egg');
         imagen.innerHTML = '<img src="descarga(nagasaki).png" alt="Imagen" />'
-        }
-     if (fechaIngresada === '23-08-2008') { // cumple de gandel
+    }
+    if (fechaIngresada === '23-08-2008') { // cumple de gandel
         const imagen = document.getElementById('imagen-easter-egg');
         imagen.innerHTML = '<img src="99615.png" alt="Imagen" />'
-        }
-     if (fechaIngresada === '23-06-2009') { // cumple de manu
+    }
+    if (fechaIngresada === '23-06-2009') { // cumple de manu
         const imagen = document.getElementById('imagen-easter-egg');
         imagen.innerHTML = '<img src="90821.png" alt="Imagen" />'
-        }
-     if (fechaIngresada === '22-12-2008') { // cumple de tobi
+    }
+    if (fechaIngresada === '22-12-2008') { // cumple de tobi
         const imagen = document.getElementById('imagen-easter-egg');
         imagen.innerHTML = '<img src="91075.png" alt="Imagen" />'
-        }
-     if (fechaIngresada === '09-01-2009') { // cumple de oneto
+    }
+    if (fechaIngresada === '09-01-2009') { // cumple de oneto
         const imagen = document.getElementById('imagen-easter-egg');
         imagen.innerHTML = '<img src="96400.png" alt="Imagen" />'
-        }
-     if (fechaIngresada === '16-04-2009') { // cumple de pipa
+    }
+    if (fechaIngresada === '16-04-2009') { // cumple de pipa
         const imagen = document.getElementById('imagen-easter-egg');
         imagen.innerHTML = '<img src="106798.png" alt="Imagen" />'
-        }
-     if (fechaIngresada === '07-02-2023') { // creacion de skibidi toilet
+    }
+    if (fechaIngresada === '07-02-2023') { // creacion de skibidi toilet
         const imagen = document.getElementById('imagen-easter-egg');
         imagen.innerHTML = '<img src="descarga (skibidi-toilet).png" alt="Imagen" />'
-        }
+    }
     if (fechaIngresada === '26-09-2008') { // cumple sakito
         const imagen = document.getElementById('imagen-easter-egg');
         imagen.innerHTML = '<img src="96912.png" alt="Imagen" />'
-        }        
+    }        
     if (fechaIngresada === '01-12-2019') { // creacion de aieka
         const imagen = document.getElementById('imagen-easter-egg');
         imagen.innerHTML = '<img src="descarga(aieka).png" alt="Imagen" />'
-        }      
+    }      
+    if (fechaIngresada === '26-04-1986') { // chernobyl
+        const imagen = document.getElementById('imagen-easter-egg');
+        imagen.innerHTML = '<img src="descarga(chernobyl).png" alt="Imagen" />'
+    }
+    if (fechaIngresada === '03-08-2008') { // cumple fogo
+        const imagen = document.getElementById('imagen-easter-egg');
+        imagen.innerHTML = '<img src="96879.png" alt="Imagen" />'
+    }  
+    if (fechaIngresada === '01-09-1939') { // invasion de polonia
+        const imagen = document.getElementById('imagen-easter-egg');
+        imagen.innerHTML = '<img src="descarga(invasion-polonia).png" alt="Imagen" />'
+    }   
     if (filaActual == 6) {          
         mensajeFinal = `Has alcanzado el número máximo de intentos. La fecha correcta era: ${fechaCorrecta}`;
         finalDiv.innerHTML = mensajeFinal;
