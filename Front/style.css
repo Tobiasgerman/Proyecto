@@ -1,0 +1,43 @@
+body {
+    background-color: #3491bd;
+    background-image: url('Fondo.png'); 
+    background-size: cover; 
+    background-position: center; 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+h1 {
+    color: #FF0000;
+    font-family: "Bungee Inline", sans-serif;
+    font-size: 100px;
+    text-align: center;
+}
+
+h2 {
+    color: #FFFFFF;
+    font-size: 30px;
+    font-family: "Istok Web", sans-serif;
+    font-style: normal;
+    text-align: center;
+    padding: 0 20px; 
+}
+
+button {
+    background-color: #FF0000;
+    font-family: "Istok Web", sans-serif;
+    font-size: 30px;
+    font-style: normal;
+    color: white;
+    border: none;
+    padding: 20px 40px;
+    cursor: pointer;
+    margin-top: 20px;
+    border-radius: 14px;
+    height: 90px;
+    width: 150px;
+}
