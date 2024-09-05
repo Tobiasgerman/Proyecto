@@ -1,7 +1,10 @@
+import { io } from "https://cdn.socket.io/4.7.5/socket.io.esm.min.js";
 document.addEventListener('DOMContentLoaded', async () => {
     const input = document.querySelector('.parteinput input');
     const guessButton = document.querySelector('.parteinput button');
+    const suggestionsContainer = document.getElementById('suggestions-container');
     const squares = document.querySelectorAll('.squares-container .item div');
+    const socket = io();
     const URL = "http://localhost:3000";
 
     try {
@@ -13,7 +16,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ modoConocido }) // Enviar la opción seleccionada al backend
+            body: JSON.stringify({ modoConocido }) 
         });
 
 
@@ -26,6 +29,31 @@ document.addEventListener('DOMContentLoaded', async () => {
     } catch (error) {
         console.error('Error al iniciar el juego:', error);
     }
+    document.addEventListener('keyup', (event) => {
+        if (event.key === 'Enter') {
+            guessButton.click();
+        }
+    });
+    input.addEventListener('input', () => {
+        const query = input.value.trim();
+        if(query){
+            socket.emit('autocomplete', query);
+        }
+
+    });
+    socket.on('suggestions', (suggestions) => {
+        suggestionsContainer.innerHTML = '' ;
+        suggestions.forEach(suggestion => {
+            const suggestionElement = document.createElement('div');
+            suggestionElement.textContent = suggestion;
+            suggestionElement.classList.add('suggestion-item');
+            suggestionElement.addEventListener('click', () => {
+                input.value = suggestion;
+                suggestionsContainer.innerHTML = ''; 
+            });
+            suggestionsContainer.appendChild(suggestionElement);
+        });
+    } )
 
     guessButton.addEventListener('click', async () => {
         console.log("hola");
@@ -83,4 +111,5 @@ document.addEventListener('DOMContentLoaded', async () => {
             square.style.backgroundColor = 'green';
         }
     }
+
 });
