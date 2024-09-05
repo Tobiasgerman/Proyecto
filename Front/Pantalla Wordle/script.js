@@ -1,4 +1,3 @@
-
 const filas = document.querySelectorAll('.row');
 var finalDiv = document.getElementById("final");
 let filaActual = 0;
@@ -10,13 +9,12 @@ let mensajeFinal = '';
 
 let listaPalabras = [];
 
-
-fetch('palabras.txt')
+fetch('palabras.txt') // Extra un valor de palabras.txt
     .then(response => response.text())
     .then(data => {
         listaPalabras = data.split('\n').map(palabra => palabra.trim().toUpperCase());
-        palabraCorrecta = listaPalabras[Math.floor(Math.random() * listaPalabras.length)];
-        console.log(`Palabra correcta: ${palabraCorrecta}`);
+        palabraCorrecta = listaPalabras[Math.floor(Math.random() * listaPalabras.length)]; // Lo hace de manera random
+        console.log(`Palabra correcta: ${palabraCorrecta}`); // console.log para controlar errores
     });
 
 const confirmarPalabra = () => {
@@ -26,26 +24,41 @@ const confirmarPalabra = () => {
     let palabraIngresada = Array.from(letras).map(letter => letter.textContent).join('');
 
     if (!listaPalabras.includes(palabraIngresada)) {
-        alert('La palabra ingresada no existe en el diccionario.');
+        mensajeFinal = `Palabra no válida`;
+        finalDiv.innerHTML = mensajeFinal;
         return;
     }
 
+    let palabraCorrectaTemp = palabraCorrecta.split('');
     let sum = 0;
+
+    // Primero manejamos los casos en los que las letras están en la posición correcta
     letras.forEach((letter, index) => {
-        letter.classList.add('checked');
         const tecla = document.querySelector(`.key[data-key="${letter.textContent.toLowerCase()}"]`);
+
         if (letter.textContent === palabraCorrecta[index]) {
             letter.style.backgroundColor = 'green';
             if (tecla) tecla.style.backgroundColor = 'green';
             sum++;
-        } else if (palabraCorrecta.includes(letter.textContent)) {
-            letter.style.backgroundColor = 'yellow';
-            if (tecla && tecla.style.backgroundColor !== 'green') {
-                tecla.style.backgroundColor = 'yellow';
+            palabraCorrectaTemp[index] = null; // Remover la letra correcta para evitar duplicados
+        }
+    });
+
+    // Luego manejamos las letras que están en la palabra pero en otra posición
+    letras.forEach((letter, index) => {
+        if (letter.style.backgroundColor !== 'green') { // Solo comprobar letras que no están en la posición correcta
+            const tecla = document.querySelector(`.key[data-key="${letter.textContent.toLowerCase()}"]`);
+            let pos = palabraCorrectaTemp.indexOf(letter.textContent);
+            if (pos !== -1) {
+                letter.style.backgroundColor = 'yellow';
+                if (tecla && tecla.style.backgroundColor !== 'green') {
+                    tecla.style.backgroundColor = 'yellow';
+                }
+                palabraCorrectaTemp[pos] = null; // Remover la letra para evitar duplicados
+            } else {
+                letter.style.backgroundColor = 'gray';
+                if (tecla) tecla.style.backgroundColor = 'gray';
             }
-        } else {
-            letter.style.backgroundColor = 'gray';
-            if (tecla) tecla.style.backgroundColor = 'gray';
         }
     });
 
@@ -62,6 +75,13 @@ const confirmarPalabra = () => {
         letraActual = 0;
     }
 };
+
+// Evento para borrar el mensaje con el teclado (Backspace o Delete)
+document.addEventListener('keydown', (event) => {
+    if (event.key === 'Backspace' || event.key === 'Delete') {
+        finalDiv.innerHTML = '';  // Limpia el contenido del mensaje
+    }
+});
 
 document.addEventListener('keydown', e => {
     if (juegoTerminado) return;
@@ -95,6 +115,7 @@ teclas.forEach(tecla => {
         }
     });
 });
+
 const botonEnter = document.getElementById('enviar');
 botonEnter.addEventListener("click", function() {
     confirmarPalabra();
@@ -106,12 +127,6 @@ botonBorrar.addEventListener("click", function() {
     if (letraActual > 0) {
         letraActual--;
         letras[letraActual].textContent = '';
-    }    
+    }
+    finalDiv.innerHTML = '';  // Limpia el contenido del mensaje
 });
-
-/*
-const botonReset = document.getElementById('reset');
-botonReset.addEventListener("click", function() {
-    location.reload();
-});
-*/
