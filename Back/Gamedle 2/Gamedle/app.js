@@ -6,7 +6,7 @@ const cors = require('cors');
 const http = require('http');
 
 const socketio = require('socket.io');
-require('dotenv').config();
+  require('dotenv').config();
 
 const app = express();
 app.use(express.json());
@@ -14,8 +14,12 @@ app.use(cors());
 http.globalAgent.options.rejectUnauthorized = false;
 https.globalAgent.options.rejectUnauthorized = false;
 const server = http.createServer(app);
-const io = socketio(server);
-
+const io = socketio(server, {
+    cors: {
+      origin: "*", 
+      methods: ["GET", "POST"]
+    }
+    });
 const CLIENT_ID = process.env.IGDB_CLIENT_ID;
 const ACCESS_TOKEN = process.env.IGDB_ACCESS_TOKEN;
 const IGDB_API_URL = 'https://api.igdb.com/v4/games';
@@ -33,7 +37,7 @@ async function obtenerListaJuegos(modoConocido) {
         let query;
 
         if (modoConocido) {
-            // Obtener IDs de juegos populares usando el endpoint de popularidad
+            
             const popularQuery = `fields game_id; where popularity_source = 121; where popularity_source = 121; sort value desc; limit 100;`;
             const popularResponse = await axios.post(
                 POPULARITY_API_URL,
@@ -54,10 +58,8 @@ async function obtenerListaJuegos(modoConocido) {
                 throw new Error('No se encontraron juegos populares.');
             }
 
-            // Obtener detalles de los juegos populares usando los IDs obtenidos
             query = `fields name, platforms.name, genres.name, themes.name, game_modes.name, first_release_date, release_dates.human, player_perspectives.name, involved_companies.company.name, game_engines.name; where id = (${gameIds.join(',')});`;
         } else {
-            // Obtener juegos aleatorios
             query = `fields name, platforms.name, genres.name, themes.name, game_modes.name, first_release_date, release_dates.human, player_perspectives.name, involved_companies.company.name, game_engines.name; limit 10; offset ${Math.floor(Math.random() * 1000)};`;
         }
 
@@ -109,7 +111,7 @@ async function obtenerJuegoSolicitado(juego) {
 }
 
 app.post('/iniciarJuego', async (req, res) => {
-    const { modoConocido } = req.body; // Recibe la opción del modo de juego
+    const { modoConocido } = req.body; 
     juegoAleatorio = await obtenerListaJuegos(modoConocido);
 
     if (!juegoAleatorio) {
@@ -117,7 +119,7 @@ app.post('/iniciarJuego', async (req, res) => {
     }
     
 
-    intentos = 0; // Reiniciar intentos al iniciar un nuevo juego
+    intentos = 0;
 
     res.json({
         message: 'Juego aleatorio generado. ¡Adivina el juego!',
@@ -214,34 +216,36 @@ app.post('/adivinarJuego', async (req, res) => {
         }
     }
 });
-    io.on('connection', (socket) => {
-        console.log('Client conected');
 
-        socket.on('autocomplete', async (query) => {
-            try {
-                let respuesta = await axios.post(
-                    IGDB_API_URL,
-                    `fields name; search "${query}"; limit 10;`,
-                    {
-                        headers: {
-                            'Client-ID': CLIENT_ID,
-                            'Authorization': `Bearer ${ACCESS_TOKEN}`,
-                            'Content-Type': 'text/plain'
-                        },
-                        httpsAgent
-                    }
-                );
-                socket.emit('suggestions', respuesta.data);
-            } catch (error) {
-                console.error('Error al obtener los resultados de autocompletado:', error.response ? error.response.data : error.message);
-                socket.emit('autocompleteError', error.message);
-            }
-        });
-        socket.on('disconnect', () => {
-            console.log('Client disconnected');
-        });
+io.on('connection', (socket) => {
+    console.log('Client conected: ' + socket.id);
+
+    socket.on('autocomplete', async (query) => {
+        console.log('Autocompletando:', query);
+        try {
+            let respuesta = await axios.post(
+                IGDB_API_URL,
+                `fields name; search "${query}"; limit 10;`,
+                {
+                    headers: {
+                        'Client-ID': CLIENT_ID,
+                        'Authorization': `Bearer ${ACCESS_TOKEN}`,
+                        'Content-Type': 'text/plain'
+                    },
+                    httpsAgent
+                }
+            );
+            socket.emit('suggestions', respuesta.data);
+        } catch (error) {
+            console.error('Error al obtener los resultados de autocompletado:', error.response ? error.response.data : error.message);
+            socket.emit('autocompleteError', error.message);
+        }
     });
+    socket.on('disconnect', () => {
+        console.log('Client disconnected');
+    });
+});
 
-app.listen(3000, () => {
+server.listen(3000, () => {
     console.log('Servidor iniciado en http://localhost:3000');
 });
