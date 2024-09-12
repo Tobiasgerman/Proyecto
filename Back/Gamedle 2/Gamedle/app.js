@@ -1,12 +1,16 @@
 const axios = require('axios');
 const https = require('https');
+const  mysql = require('mysql2/promise');
 
 const express = require('express');
 const cors = require('cors');
+
 const http = require('http');
 
 const socketio = require('socket.io');
-  require('dotenv').config();
+const db = require('mysql2');
+const { error } = require('console');
+require('dotenv').config();
 
 const app = express();
 app.use(express.json());
@@ -26,6 +30,13 @@ const IGDB_API_URL = 'https://api.igdb.com/v4/games';
 const POPULARITY_API_URL = 'https://api.igdb.com/v4/popularity_primitives';
 
 const httpsAgent = new https.Agent({ rejectUnauthorized: false });
+
+
+  const connection = await mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    database: 'multiwordle',
+  });
 
 
 let juegoAleatorio;
@@ -223,28 +234,23 @@ io.on('connection', (socket) => {
     socket.on('autocomplete', async (query) => {
         console.log('Autocompletando:', query);
         try {
-            let respuesta = await axios.post(
-                IGDB_API_URL,
-                `fields name; search "${query}"; limit 10;`,
-                {
-                    headers: {
-                        'Client-ID': CLIENT_ID,
-                        'Authorization': `Bearer ${ACCESS_TOKEN}`,
-                        'Content-Type': 'text/plain'
-                    },
-                    httpsAgent
-                }
+            let respuesta = await connection.execute(
+            `SELECT juegos FROM multiwordle WHERE nombre LIKE '%${query}%' LIMIT 10`
             );
-            socket.emit('suggestions', respuesta.data);
+            
+            let suggestions = respuesta.map(item => item.name);
+
+            socket.emit('suggestions', suggestions);
         } catch (error) {
-            console.error('Error al obtener los resultados de autocompletado:', error.response ? error.response.data : error.message);
+            console.error('Error retrieving autocomplete results:', error);
             socket.emit('autocompleteError', error.message);
-        }
-    });
+        }});
     socket.on('disconnect', () => {
         console.log('Client disconnected');
     });
 });
+
+
 
 server.listen(3000, () => {
     console.log('Servidor iniciado en http://localhost:3000');
