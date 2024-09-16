@@ -69,6 +69,7 @@ async function adivinarJuego() {
             updateSquareColor(squares[5], data.fechaLanzamiento);
             updateSquareColor(squares[6], data.desarrolladores);
             updateSquareColor(squares[7], data.motor);
+            input.value = '';
         }
     } catch (error) {
         console.error('Error al adivinar el juego:', error);
@@ -106,10 +107,10 @@ socket.on('suggestions', (suggestions) => {
     suggestionsContainer.style.display = 'block';
     suggestions.forEach(suggestion => {
         const suggestionElement = document.createElement('div');
-        suggestionElement.textContent = suggestion.name;
+        suggestionElement.textContent = suggestion;
         suggestionElement.classList.add('suggestion-item');
         suggestionElement.addEventListener('click', () => {
-            input.value = suggestion.name;
+            input.value = suggestion;
             suggestionsContainer.innerHTML = '';
             suggestionsContainer.style.display = 'none';
         });
@@ -119,5 +120,4 @@ socket.on('suggestions', (suggestions) => {
 
 iniciarJuego();
 
-// Evento al hacer clic en el botón de adivinar
 guessButton.addEventListener('click', adivinarJuego);

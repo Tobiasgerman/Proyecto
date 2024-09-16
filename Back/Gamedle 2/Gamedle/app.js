@@ -1,43 +1,37 @@
 const axios = require('axios');
 const https = require('https');
-const  mysql = require('mysql2/promise');
-
+const mysql = require('mysql2');
 const express = require('express');
 const cors = require('cors');
-
 const http = require('http');
-
+const { Sequelize } = require('sequelize')
 const socketio = require('socket.io');
-const db = require('mysql2');
-const { error } = require('console');
 require('dotenv').config();
 
 const app = express();
 app.use(express.json());
 app.use(cors());
-http.globalAgent.options.rejectUnauthorized = false;
-https.globalAgent.options.rejectUnauthorized = false;
+
 const server = http.createServer(app);
 const io = socketio(server, {
     cors: {
       origin: "*", 
       methods: ["GET", "POST"]
     }
-    });
+});
+
+const sequelize = new Sequelize('MultiWordle', 'root', 'root', {
+    host: 'localhost',
+    dialect: 'mysql', 
+  });
+
+
 const CLIENT_ID = process.env.IGDB_CLIENT_ID;
 const ACCESS_TOKEN = process.env.IGDB_ACCESS_TOKEN;
 const IGDB_API_URL = 'https://api.igdb.com/v4/games';
 const POPULARITY_API_URL = 'https://api.igdb.com/v4/popularity_primitives';
 
 const httpsAgent = new https.Agent({ rejectUnauthorized: false });
-
-
-  const connection = await mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    database: 'multiwordle',
-  });
-
 
 let juegoAleatorio;
 let intentos = 0;
@@ -48,8 +42,7 @@ async function obtenerListaJuegos(modoConocido) {
         let query;
 
         if (modoConocido) {
-            
-            const popularQuery = `fields game_id; where popularity_source = 121; where popularity_source = 121; sort value desc; limit 100;`;
+            const popularQuery = `fields game_id; where popularity_source = 121; sort value desc; limit 100;`;
             const popularResponse = await axios.post(
                 POPULARITY_API_URL,
                 popularQuery,
@@ -129,7 +122,6 @@ app.post('/iniciarJuego', async (req, res) => {
         return res.status(500).json({ error: 'No se pudo obtener un juego aleatorio.' });
     }
     
-
     intentos = 0;
 
     res.json({
@@ -229,28 +221,28 @@ app.post('/adivinarJuego', async (req, res) => {
 });
 
 io.on('connection', (socket) => {
-    console.log('Client conected: ' + socket.id);
+    console.log('Client connected: ' + socket.id);
 
     socket.on('autocomplete', async (query) => {
         console.log('Autocompletando:', query);
         try {
-            let respuesta = await connection.execute(
-            `SELECT juegos FROM multiwordle WHERE nombre LIKE '%${query}%' LIMIT 10`
+            let respuesta = await sequelize.query(
+                `SELECT nombre FROM juegos WHERE nombre LIKE '${query}%' LIMIT 10`,
             );
-            
-            let suggestions = respuesta.map(item => item.name);
+            respuesta  = respuesta[0].map(item => item.nombre) ;
 
-            socket.emit('suggestions', suggestions);
+                console.log(respuesta);
+            socket.emit('suggestions', respuesta);
         } catch (error) {
             console.error('Error retrieving autocomplete results:', error);
             socket.emit('autocompleteError', error.message);
-        }});
+        }
+    });
+
     socket.on('disconnect', () => {
         console.log('Client disconnected');
     });
 });
-
-
 
 server.listen(3000, () => {
     console.log('Servidor iniciado en http://localhost:3000');
