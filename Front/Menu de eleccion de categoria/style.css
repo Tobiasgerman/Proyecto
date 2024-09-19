@@ -1,110 +1,145 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+body {
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  
+  color: white;
+  background-image: url('Fondo.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 100vh;
+  margin: 0;
+}
+
+.Fondo.png {
+  margin-top: 0%;
+  margin-bottom: 0%;
+  width: 10px;
+  height: 10px;
+  
+
+}
+
+header {
+  width: 100%;
+  height: 100px;
+  background-color: #00a100;
+  display: flex;
+  justify-content: center; 
+  align-items: center; 
+  margin-top: 0%;
+  margin-bottom: 0%;
+  padding: 10px, 0;
+}
+
+h1 {
+  color: black;
+  font-size: 3rem;
+  font-family: 'Bungee Inline', sans-serif;
+  font-weight: bold;
+  text-align: center;
+  padding: 3px;
+  margin-top: 0%;
+  margin-bottom: 0%
+}
+
+
+header img {
+    height: 40px; 
+}
+
+
+
+
+
+  
+  
+  
+  .cuadricula {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: .5rem;
+    margin-bottom: 2rem;
   }
   
-  body {
-    font-family: "Nokora", sans-serif;
-    text-align: center;
-    padding: 20px;
+  .row {
+    display: contents;
   }
   
-  h1 {
-    margin-bottom: 10px;
-  }
-  
-  h2 {
-    margin: 20px 0;
-  }
-  
-  select, button {
-    font-family: "Nokora", sans-serif;
-    font-size: 20px;
-    background-color: lime;
-    border-radius: 10px;
-    width: 150px;
-    height: 75px;
-    border: none;
-    margin-bottom: 10px;
-    padding: 10px;
-    text-align: center;
-  }
-  
-  .container {
+  .letra {
+    width: 60px;
+    height: 60px;
+    border: 2px solid white;
+    border-radius: 5px;
     display: flex;
-    justify-content: space-around;
-    max-width: 800px;
-    margin: 20px auto;
-  }
-  
-  .column {
-    flex: 1;
-    margin: 0 10px;
-    display: flex;
-    flex-direction: column;
+    justify-content: center;
     align-items: center;
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    font-weight: bold;
+    background-color: #FFFFFF; 
+    color:   black; 
+    border-color: #000000;
+    margin-top: 15px;
+  }
+  
+  hr {
+    border: none;
+    border-top: 2px solid black;
+    width: 100%;
+  }
+  
+  .botones {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    gap: .5rem;
+    margin-top: 1rem;
+    max-width: 90%;
   }
   
   button {
-    cursor: pointer;
-  }
-  button:hover {
- background-color: rgb(44, 138, 0);
-  } 
-   * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  
-  body {
     font-family: "Nokora", sans-serif;
-    text-align: center;
-    padding: 20px;
+    border: 2px solid black;
+    border-radius: 5px;
+    background-color: grey;
+    color: black;
+    width: 60px;
+    height: 60px;
+    font-size: 1rem;
+    font-weight: bold;
+    text-transform: uppercase;
   }
   
-  h1 {
-    margin-bottom: 10px;
+  button.enviar {
+    grid-column: span 2;
+    width: 125px;
   }
   
-  h2 {
-    margin: 20px 0;
+  button.borrar {
+    width: 60px;
+    height: 60px;
   }
   
-  select, button {
-    font-family: "Nokora", sans-serif;
-    font-size: 20px;
-    background-color: lime;
-    border-radius: 10px;
-    width: 150px;
-    height: 75px;
-    border: none;
-    margin-bottom: 10px;
-    padding: 10px;
-    text-align: center;
+  .logo {
+    width: auto;
+    height: 50px;
+    position: relative;
+    top: 0.5rem;
   }
   
-  .container {
-    display: flex;
-    justify-content: space-around;
-    max-width: 800px;
-    margin: 20px auto;
-  }
   
-  .column {
-    flex: 1;
-    margin: 0 10px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
   
-  button {
-    cursor: pointer;
-  }
   button:hover {
- background-color: rgb(44, 138, 0);
-
-  } 
-
+  background-color: grey;
+  
+  }
+  
+  #final {
+    font-size: 2rem;
+    text-align: center;
+    max-width: 90%;
+  }
+ 
+  
