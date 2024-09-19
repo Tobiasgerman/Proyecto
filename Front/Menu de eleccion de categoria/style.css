@@ -1,9 +1,9 @@
 body {
   display: flex;
   flex-direction: column;
-
+   background-color: #00a100;
   align-items: center;
-  
+  background-size: cover;
   color: white;
   background-image: url('Fondo.png');
   background-size: cover;
@@ -17,10 +17,11 @@ body {
   margin-top: 0%;
   margin-bottom: 0%;
   width: 10px;
-  height: 10px;
+  height: 100px;
   
 
 }
+
 
 header {
   width: 100%;
@@ -142,4 +143,3 @@ header img {
     max-width: 90%;
   }
  
-  
