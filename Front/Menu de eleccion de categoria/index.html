@@ -1,46 +1,126 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <link rel="stylesheet" href="style.css">
-    <script defer src="script.js"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Nokora:wght@100;300;400;700;900&display=swap" rel="stylesheet">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pantalla de eleccion de categoria</title>
+
+    <header>
+       
+        <h1>WORDLE</h1>
+        
+    </header>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bungee+Inline&display=swap" rel="stylesheet">
+
+
+
+
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="icon" type="image/x-icon" href="icono.png"navbar">
+
+    <link href="https://fonts.googleapis.com/css2?family=Nokora:wght@100;300;400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    
 </head>
 <body>
-    <h1>Multi Wordle</h1>
-    <img src="file:///C:/Users/49194475/Pictures/Captura%20de%20pantalla%202024-08-05%20113352.png" alt="">
-    <hr>
-    <h2>A continuación deberás seleccionar la categoría que desees jugar:</h2>
-    <div class="container">
-        <div class="column"> 
-            <select name="Wordle" id="Wordle">
-                <option value="Wordle">Wordle</option>
-                <option id="normal" value="Normal">Normal</option>
-                <option value="Fechas">Fechas</option>
-            </select>
-            <button>Mundle</button>
-            <button>Marcas</button>
-            <button>Animales</button>
-        </div>
+    
+    
 
-        <div class="column">
-            <select name="Deportistas" id="Deportistas">
-                <option value="Deportistas">Deportistas</option>
-                <option value="Futbol">Futbol</option>
-                <option value="Tenis">Tenis</option>
-                <option value="Basket">Basket</option>
-                <option value="Formula 1">Formula 1</option>
-            </select> 
-            <button>Comidas</button>
-            <button>Celebridades</button>
-            <button>Series y Películas</button>
+       
+    
+     
+   
+    <div id="final" class="animated"></div>
+    <div class="cuadricula">
+        
+        <div class="row">
+            <div class="letra"></div>
+            <div class="letra"></div>
+            <div class="letra"></div>
+            <div class="letra"></div>
+            <div class="letra"></div>
+        </div>
+        <div class="row">
+            <div class="letra"></div>
+            <div class="letra"></div>
+            <div class="letra"></div>
+            <div class="letra"></div>
+            <div class="letra"></div>
+        </div>
+        <div class="row">
+            <div class="letra"></div>
+            <div class="letra"></div>
+            <div class="letra"></div>
+            <div class="letra"></div>
+            <div class="letra"></div>
+        </div>
+        <div class="row">
+            <div class="letra"></div>
+            <div class="letra"></div>
+            <div class="letra"></div>
+            <div class="letra"></div>
+            <div class="letra"></div>
+        </div>
+        <div class="row">
+            <div class="letra"></div>
+            <div class="letra"></div>
+            <div class="letra"></div>
+            <div class="letra"></div>
+            <div class="letra"></div>
+        </div>
+        <div class="row">
+            <div class="letra"></div>
+            <div class="letra"></div>
+            <div class="letra"></div>
+            <div class="letra"></div>
+            <div class="letra"></div>
         </div>
     </div>
-    <button id="jugar">Jugar!</button>
+    <div class="botones">
+        <button data-key="q" class="key">Q</button>
+        <button data-key="w" class="key">W</button>
+        <button data-key="e" class="key">E</button>
+        <button data-key="r" class="key">R</button>
+        <button data-key="t" class="key">T</button>
+        <button data-key="y" class="key">Y</button>
+        <button data-key="u" class="key">U</button>
+        <button data-key="i" class="key">I</button>
+        <button data-key="o" class="key">O</button>
+        <button data-key="p" class="key">P</button>
+        <button data-key="a" class="key">A</button>
+        <button data-key="s" class="key">S</button>
+        <button data-key="d" class="key">D</button>
+        <button data-key="f" class="key">F</button>
+        <button data-key="g" class="key">G</button>
+        <button data-key="h" class="key">H</button>
+        <button data-key="j" class="key">J</button>
+        <button data-key="k" class="key">K</button>
+        <button data-key="l" class="key">L</button>
+        <button data-key="ñ" class="key">Ñ</button>
+        <button data-key="enter" class="enviar" id="enviar">Enviar</button>
+        <button data-key="z" class="key">Z</button>
+        <button data-key="x" class="key">X</button>
+        <button data-key="c" class="key">C</button>
+        <button data-key="v" class="key">V</button>
+        <button data-key="b" class="key">B</button>
+        <button data-key="n" class="key">N</button>
+        <button data-key="m" class="key">M</button>
+        <button data-key="backspace" class="borrar" id="borrar">⬅</button>
+    </div>
+    
+    </a>
+    <script src="script.js"></script>
 </body>
+
 </html>
+
+
+            
