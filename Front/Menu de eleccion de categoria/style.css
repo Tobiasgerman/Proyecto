@@ -1,145 +1,133 @@
+* {
+
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+hr {
+	margin: 0;
+}
+
 body {
-  display: flex;
-  flex-direction: column;
-   background-color: #00a100;
-  align-items: center;
-  background-size: cover;
-  color: white;
-  background-image: url('Fondo.png');
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-  height: 100vh;
-  margin: 0;
-}
-
-.Fondo.png {
-  margin-top: 0%;
-  margin-bottom: 0%;
-  width: 10px;
-  height: 100px;
-  
-
-}
-
-
-header {
-  width: 100%;
-  height: 100px;
-  background-color: #00a100;
-  display: flex;
-  justify-content: center; 
-  align-items: center; 
-  margin-top: 0%;
-  margin-bottom: 0%;
-  padding: 10px, 0;
+	background-color: #3491bd;
+	text-align: center;
+	min-height: 100dvh;
 }
 
 h1 {
-  color: black;
-  font-size: 3rem;
-  font-family: 'Bungee Inline', sans-serif;
-  font-weight: bold;
-  text-align: center;
-  padding: 3px;
-  margin-top: 0%;
-  margin-bottom: 0%
+	margin-bottom: 10px;
+	font-family: "Bungee Inline", sans-serif;
+	color: #ff0000;
+}
+
+h2 {
+	font-family: "Bungee Inline", sans-serif;
+	color: #ffffff;
+}
+
+select,
+button {
+	font-family: "Average Sans", serif;
+	font-size: 20px;
+	background-color: #ffffff;
+	border-radius: 20px;
+	width: 150px;
+	height: 75px;
+	border: none;
+	margin-bottom: 10px;
+	padding: 10px;
+	text-align: center;
+}
+
+.container {
+	display: flex;
+	justify-content: space-around;
+	max-width: 800px;
+	margin: 20px auto;
+}
+
+.column {
+	flex: 1;
+	margin: 0 10px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+button, select {
+	font-weight: bold;
+	cursor: pointer;
+}
+
+button:hover {
+	background-color: #818188;
+}
+
+.Wordle {
+	font-family: "Average Sans", serif;
+	border-width: 3px;
+	border-style: solid;
+	border-color: #39b24d;
+}
+
+.Mundi {
+	font-family: "Average Sans", serif;
+	border-width: 3px;
+	border-style: solid;
+	border-color: #1100ff;
+}
+
+.Marcas {
+	font-family: "Average Sans", serif;
+	border-width: 3px;
+	border-style: solid;
+	border-color: #e40000;
+}
+
+.Animales {
+    font-family: "Average Sans", serif;
+    border-width: 3px;
+	border-style: solid;
+	border-color: #00C7D6;
+}
+
+.Deportistas {
+	font-family: "Average Sans", serif;
+    border-width: 3px;
+	border-style: solid;
+	border-color: red;
+}
+
+.Comidas {
+	font-family: "Average Sans", serif;
+    border-width: 3px;
+	border-style: solid;
+	border-color: #A44200;
+}
+
+.Cine {
+	font-family: "Average Sans", serif;
+    border-width: 3px;
+	border-style: solid;
+	border-color: black;
+}
+
+.celebridades {
+	font-family: "Average Sans", serif;
+    border-width: 3px;
+	border-style: solid;
+	border-color: #efb810;
 }
 
 
-header img {
-    height: 40px; 
+
+
+main {
+    max-width: auto;
+	background-image: url('fondo.png');
+	background-size: contain;
+    min-height: 47rem;
 }
 
-
-
-
-
   
-  
-  
-  .cuadricula {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: .5rem;
-    margin-bottom: 2rem;
-  }
-  
-  .row {
-    display: contents;
-  }
-  
-  .letra {
-    width: 60px;
-    height: 60px;
-    border: 2px solid white;
-    border-radius: 5px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 1.5rem;
-    text-transform: uppercase;
-    font-weight: bold;
-    background-color: #FFFFFF; 
-    color:   black; 
-    border-color: #000000;
-    margin-top: 15px;
-  }
-  
-  hr {
-    border: none;
-    border-top: 2px solid black;
-    width: 100%;
-  }
-  
-  .botones {
-    display: grid;
-    grid-template-columns: repeat(10, 1fr);
-    gap: .5rem;
-    margin-top: 1rem;
-    max-width: 90%;
-  }
-  
-  button {
-    font-family: "Nokora", sans-serif;
-    border: 2px solid black;
-    border-radius: 5px;
-    background-color: grey;
-    color: black;
-    width: 60px;
-    height: 60px;
-    font-size: 1rem;
-    font-weight: bold;
-    text-transform: uppercase;
-  }
-  
-  button.enviar {
-    grid-column: span 2;
-    width: 125px;
-  }
-  
-  button.borrar {
-    width: 60px;
-    height: 60px;
-  }
-  
-  .logo {
-    width: auto;
-    height: 50px;
-    position: relative;
-    top: 0.5rem;
-  }
-  
-  
-  
-  button:hover {
-  background-color: grey;
-  
-  }
-  
-  #final {
-    font-size: 2rem;
-    text-align: center;
-    max-width: 90%;
-  }
- 
