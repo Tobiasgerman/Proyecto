@@ -1,12 +1,14 @@
 const axios = require('axios');
 const https = require('https');
-const mysql = require('mysql2');
 const express = require('express');
 const cors = require('cors');
 const http = require('http');
-const { Sequelize } = require('sequelize')
+const { Sequelize } = require('sequelize');
+const sequelize = require('./sequelize/sequelize');
+const { User, Game } = require('./sequelize/models');
 const socketio = require('socket.io');
 require('dotenv').config();
+sequelize.sync({ alter: true });
 
 const app = express();
 app.use(express.json());
@@ -20,10 +22,6 @@ const io = socketio(server, {
     }
 });
 
-const sequelize = new Sequelize('MultiWordle', 'root', 'root', {
-    host: 'localhost',
-    dialect: 'mysql', 
-  });
 
 
 const CLIENT_ID = process.env.IGDB_CLIENT_ID;
@@ -85,7 +83,6 @@ async function obtenerListaJuegos(modoConocido) {
         }
 
         let juegoRandomIndex = Math.floor(Math.random() * respuesta.data.length);
-        console.log((respuesta.data[juegoRandomIndex]).name);
         return respuesta.data[juegoRandomIndex];
     } catch (error) {
         console.error('Error al obtener la lista de juegos:', error.response ? error.response.data : error.message);
@@ -113,16 +110,22 @@ async function obtenerJuegoSolicitado(juego) {
         return null;
     }
 }
+app.use(express.static('public'));
 
+app.get('/', (req, res) => {
+    res.sendFile(__dirname + '/public/index.html');
+});
 app.post('/iniciarJuego', async (req, res) => {
     const { modoConocido } = req.body; 
     juegoAleatorio = await obtenerListaJuegos(modoConocido);
+    console.log(juegoAleatorio.name)
 
     if (!juegoAleatorio) {
         return res.status(500).json({ error: 'No se pudo obtener un juego aleatorio.' });
     }
     
     intentos = 0;
+    startTime = Date.now();
 
     res.json({
         message: 'Juego aleatorio generado. ¡Adivina el juego!',
@@ -134,7 +137,7 @@ app.post('/adivinarJuego', async (req, res) => {
         return res.json({ message: `Perdiste! El juego era: ${juegoAleatorio.name}` });
     }
 
-    const { juego } = req.body;
+    const { juego,  username } = req.body;
     let juegoElegido = await obtenerJuegoSolicitado(juego);
 
     if (!juegoElegido) {
@@ -149,7 +152,6 @@ app.post('/adivinarJuego', async (req, res) => {
     let fechaLanzamientoAleatoria = juegoAleatorio.first_release_date ? new Date(juegoAleatorio.first_release_date * 1000).getFullYear() : 'Desconocido';
     let desarrolladoresAleatorios = juegoAleatorio.involved_companies ? juegoAleatorio.involved_companies.map(company => company.company.name) : [];
     let motorAleatorio = juegoAleatorio.game_engines ? juegoAleatorio.game_engines.map(engine => engine.name) : [];
-
     let plataformaElegida = juegoElegido.platforms ? juegoElegido.platforms.map(platform => platform.name) : [];
     let generosElegido = juegoElegido.genres ? juegoElegido.genres.map(genre => genre.name) : [];
     let temasElegido = juegoElegido.themes ? juegoElegido.themes.map(theme => theme.name) : [];
@@ -160,7 +162,22 @@ app.post('/adivinarJuego', async (req, res) => {
     let motorElegido = juegoElegido.game_engines ? juegoElegido.game_engines.map(engine => engine.name) : [];
 
     if (juegoElegido.name === juegoAleatorio.name) {
-        return res.json({ message: '¡Ganaste!' });
+        const endTime = Date.now();
+        const timeTaken = Math.floor((endTime - startTime) / 1000);
+    
+
+        await User.create({
+          username, 
+          timeTaken,
+        });
+    
+        const bestTime = await User.min('timeTaken');
+    
+        return res.json({
+          message: '¡Ganaste!',
+          timeTaken,
+          bestTime,
+        });        
     } else {
         let coincidenciaGeneros = generosElegido.filter(category => generosAleatorio.includes(category));
         let coincidenciaPlataforma = plataformaElegida.filter(platform => plataformaAleatoria.includes(platform));
@@ -226,12 +243,17 @@ io.on('connection', (socket) => {
     socket.on('autocomplete', async (query) => {
         console.log('Autocompletando:', query);
         try {
-            let respuesta = await sequelize.query(
-                `SELECT nombre FROM juegos WHERE nombre LIKE '${query}%' LIMIT 10`,
-            );
-            respuesta  = respuesta[0].map(item => item.nombre) ;
+            let respuesta = await Game.findAll({
+                where: {
+                  nombre: {
+                    [Sequelize.Op.like]: `${query}%`
+                  }
+                },
+                limit: 10,
+                attributes: ['nombre']
+              });
+            respuesta  = respuesta.map(item => item.nombre) ;
 
-                console.log(respuesta);
             socket.emit('suggestions', respuesta);
         } catch (error) {
             console.error('Error retrieving autocomplete results:', error);

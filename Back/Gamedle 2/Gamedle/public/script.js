@@ -6,8 +6,9 @@ const suggestionsContainer = document.getElementById('suggestions-container');
 const squares = document.querySelectorAll('.squares-container .item div');
 const socket = io("http://localhost:3000");
 const URL = "http://localhost:3000";
-
+let username;
 async function iniciarJuego() {
+    username = prompt('Ingresa tu nombre de usuario:');
     try {
         const modoConocido = prompt('Elige el modo de juego:\n1. Juegos Conocidos\n2. Todos los Juegos') === '1';
 
@@ -44,10 +45,20 @@ async function adivinarJuego() {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ juego: gameName })
+            body: JSON.stringify({ juego: gameName , username})
         });
 
         const data = await response.json();
+        if (data.error) {
+            alert(data.error);
+        }
+        else if(data.message) {
+            alert(data.message);
+        if(data.timeTaken){
+            alert(`Tu tiempo: ${data.timeTaken} segundos. Mejor tiempo: ${data.bestTime} segundos.`)
+
+            }
+        }
 
 
         if (data.error) {

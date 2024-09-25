@@ -87,6 +87,11 @@ async function obtenerDatos(paisElegido, paises, paisAleatorio) {
     let resultado = await obtenerDistanciaEntrePaises(paises, paisElegido, paisAleatorio);
     return { distancia: resultado.distancia, direccion: puntosCardinales[resultado.direccion] };
 }
+app.use(express.static('public'));
+
+app.get('/', (req, res) => {
+    res.sendFile(__dirname + '/public/index.html');
+});
 
 app.get('/paises', async (req, res) => {
     try {
