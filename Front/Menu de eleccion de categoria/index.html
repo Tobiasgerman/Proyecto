@@ -3,44 +3,51 @@
 <head>
     <link rel="stylesheet" href="style.css">
     <script defer src="script.js"></script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Nokora:wght@100;300;400;700;900&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bungee+Inline&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Average+Sans&family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pantalla de eleccion de categoria</title>
+    
 </head>
 <body>
     <h1>Multi Wordle</h1>
-    <img src="file:///C:/Users/49194475/Pictures/Captura%20de%20pantalla%202024-08-05%20113352.png" alt="">
+    
     <hr>
-    <h2>A continuación deberás seleccionar la categoría que desees jugar:</h2>
-    <div class="container">
-        <div class="column"> 
-            <select name="Wordle" id="Wordle">
-                <option value="Wordle">Wordle</option>
-                <option id="normal" value="Normal">Normal</option>
-                <option value="Fechas">Fechas</option>
-            </select>
-            <button>Mundle</button>
-            <button>Marcas</button>
-            <button>Animales</button>
-        </div>
 
-        <div class="column">
-            <select name="Deportistas" id="Deportistas">
-                <option value="Deportistas">Deportistas</option>
-                <option value="Futbol">Futbol</option>
-                <option value="Tenis">Tenis</option>
-                <option value="Basket">Basket</option>
-                <option value="Formula 1">Formula 1</option>
-            </select> 
-            <button>Comidas</button>
-            <button>Celebridades</button>
-            <button>Series y Películas</button>
+    <main>
+        <h2>Seleccione la categoria que quieres jugar</h2>
+        <div class="container">
+            <div class="column"> 
+                <select name="Wordle" id="Wordle" class="Wordle">
+                    <option value="Wordle">Wordle</option>
+                    <option id="normal" value="Normal">Normal</option>
+                    <option value="Fechas">Fechas</option>
+                </select>
+                <button class="Mundi">Mundi</button>
+                <button class="Marcas">Marcas</button>
+                <button class="Animales">Animales</button>
+            </div>
+            <div class="column">
+                <select name="Deportistas" id="Deportistas" class="Deportistas">
+                    <option value="Deportistas" >Deportistas</option>
+                    <option value="Futbol">Futbol</option>
+                    <option value="Tenis">Tenis</option>
+                    <option value="Basket">Basket</option>
+                    <option value="Formula 1">Formula 1</option>
+                </select> 
+                <button class="Cine">Cine</button>
+                <button class="Comidas">Comidas</button>
+                <button class="celebridades">Celebridades</button>
+                
+            </div>
         </div>
-    </div>
-    <button id="jugar">Jugar!</button>
-</body>
-</html>
+        <button id="jugar">Jugar!</button>
+    </main>
+
+    
