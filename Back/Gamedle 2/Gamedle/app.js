@@ -170,7 +170,7 @@ app.post('/adivinarJuego', async (req, res) => {
           username, 
           timeTaken,
         });
-    
+        
         const bestTime = await User.min('timeTaken');
     
         return res.json({
