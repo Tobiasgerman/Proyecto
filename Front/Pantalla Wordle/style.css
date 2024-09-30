@@ -13,14 +13,19 @@ body {
   margin: 0;
 }
 
+
 .Fondo.png {
   margin-top: 0%;
   margin-bottom: 0%;
   width: 10px;
   height: 100px;
-  
+ 
+
 
 }
+
+
+
 
 
 
@@ -29,12 +34,13 @@ header {
   height: 200px;
   background-color: #00a100;
   display: flex;
-  justify-content: center; 
-  align-items: center; 
+  justify-content: center;
+  align-items: center;
   margin-top: 0%;
   margin-bottom: 0%;
   padding: 10px, 0;
 }
+
 
 h1 {
   color: black;
@@ -47,9 +53,11 @@ h1 {
   margin-bottom: 0%
 }
 
+
 header img {
-    height: 40px; 
+    height: 40px;
 }
+
 
 .cuadricula {
     display: grid;
@@ -57,11 +65,11 @@ header img {
     gap: .5rem;
     margin-bottom: 2rem;
   }
-  
+ 
   .row {
     display: contents;
   }
-  
+ 
   .letra {
     width: 60px;
     height: 60px;
@@ -73,18 +81,18 @@ header img {
     font-size: 1.5rem;
     text-transform: uppercase;
     font-weight: bold;
-    background-color: #FFFFFF; 
-    color:   black; 
+    background-color: #FFFFFF;
+    color:   black;
     border-color: #000000;
     margin-top: 15px;
   }
-  
+ 
   hr {
     border: none;
     border-top: 2px solid black;
     width: 100%;
   }
-  
+ 
   .botones {
     display: grid;
     grid-template-columns: repeat(10, 1fr);
@@ -92,47 +100,46 @@ header img {
     margin-top: 1rem;
     max-width: 90%;
   }
-  
+ 
   button {
     font-family: "Nokora", sans-serif;
     border: 2px solid black;
     border-radius: 5px;
-    background-color: grey;
-    color: black;
+    background-color: rgb(114, 245, 136);
+    color:  black;
     width: 60px;
     height: 60px;
     font-size: 1rem;
     font-weight: bold;
     text-transform: uppercase;
   }
-  
+ 
   button.enviar {
     grid-column: span 2;
     width: 125px;
   }
-  
+ 
   button.borrar {
     width: 60px;
     height: 60px;
   }
-  
+ 
   .logo {
     width: auto;
     height: 50px;
     position: relative;
     top: 0.5rem;
   }
-  
-  
-  
+ 
+ 
+ 
   button:hover {
   background-color: grey;
-  
+ 
   }
-  
+ 
   #final {
     font-size: 2rem;
     text-align: center;
     max-width: 90%;
   }
- 

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <script defer type="module" src="script.js"></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Nokora:wght@100;300;400;700;900&display=swap" rel="stylesheet">
+    <title>Gamedle</title>
+</head>
+<body>
+    <div>  
+        <h1 class="title">Gamedle</h1>
+    </div>
+
+   
+    <div class="cuadradogris">
+        <h2 class="h2">Nombre de la categoría de wordle</h2>
+        <div class="Cuadrados">
+            <div class="cuadradorojo ">
+                <div class="cuadradodecolor rojo"></div>
+                <p>Si el color es <strong>rojo</strong>, la pista no coincide.</p>
+            </div>
+            <div class="cuadradoamarillo">
+                <div class="cuadradodecolor amarillo"></div>
+                <p>Si el color es <strong>amarillo</strong>, la pista está relacionada indirectamente a la respuesta.</p>
+            </div>
+            <div class="cuadradoverde">
+                <div class="cuadradodecolor verde"></div>
+                <p>Si el color es <strong>verde</strong>, la pista coincide.</p>
+            </div>
+        </div>
+        <div class="flechas">
+            <p><strong> ⬆La linea hacia arriba</strong> indica que la respuesta a la pista, en caso de ser un número, es mayor.</p>
+            <p><strong> ⬇La linea hacia abajo</strong> indica que la respuesta a la pista, en caso de ser un número, es menor.</p>
+        </div>
+        <div class="parteinput">
+            <input type="text" placeholder="Escribí aqui">
+            <div style="display: none;" id="suggestions-container"></div>
+            <button>Adivinar</button>
+        </div>
+    </div>
+    
+   
+    <div class="squares-container">
+        <div class="item">
+            <p class="categoria">Genero</p>
+            <div class="Cuadrado1"></div>
+        </div>
+        <div class="item">
+            <p class="categoria">Plataforma</p>
+            <div class="Cuadrado2"></div>
+        </div>
+        <div class="item">
+            <p class="categoria">Temas</p>
+            <div class="Cuadrado3"></div>
+        </div>
+        <div class="item">
+            <p class="categoria">Modos De Juego</p>
+            <div class="Cuadrado4"></div>
+        </div>
+        <div class="item">
+            <p class="categoria">Perspectivas</p>
+            <div class="Cuadrado5"></div>
+        </div>
+        <div class="item">
+            <p class="categoria">Fecha de Lanzamiento</p>
+            <div class="Cuadrado6"></div>
+        </div>
+        <div class="item">
+            <p class="categoria">Desarrolladores</p>
+            <div class="Cuadrado7"></div>
+        </div>
+        <div class="item">
+            <p class="categoria">Motor</p>
+            <div class="Cuadrado7"></div>
+        </div>
+    </div>
+
+    
+</body>
+</html>
