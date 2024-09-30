@@ -1,133 +1,153 @@
 * {
 
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
+
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
+
 
 hr {
-	margin: 0;
+    margin: 0;
 }
+
 
 body {
-	background-color: #3491bd;
-	text-align: center;
-	min-height: 100dvh;
+    background-color: #3491bd;
+    text-align: center;
+    min-height: 100dvh;
 }
+
 
 h1 {
-	margin-bottom: 10px;
-	font-family: "Bungee Inline", sans-serif;
-	color: #ff0000;
+    margin-bottom: 10px;
+    font-family: "Bungee Inline", sans-serif;
+    color: #ff0000;
 }
 
+
 h2 {
-	font-family: "Bungee Inline", sans-serif;
-	color: #ffffff;
+    font-family: "Bungee Inline", sans-serif;
+    color: #ffffff;
 }
+
 
 select,
 button {
-	font-family: "Average Sans", serif;
-	font-size: 20px;
-	background-color: #ffffff;
-	border-radius: 20px;
-	width: 150px;
-	height: 75px;
-	border: none;
-	margin-bottom: 10px;
-	padding: 10px;
-	text-align: center;
+    font-family: "Average Sans", serif;
+    font-size: 20px;
+    background-color: #ffffff;
+    border-radius: 20px;
+    width: 150px;
+    height: 75px;
+    border: none;
+    margin-bottom: 10px;
+    padding: 10px;
+    text-align: center;
 }
+
 
 .container {
-	display: flex;
-	justify-content: space-around;
-	max-width: 800px;
-	margin: 20px auto;
+    display: flex;
+    justify-content: space-around;
+    max-width: 800px;
+    margin: 20px auto;
 }
+
 
 .column {
-	flex: 1;
-	margin: 0 10px;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
+    flex: 1;
+    margin: 0 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
+
 
 button, select {
-	font-weight: bold;
-	cursor: pointer;
+    font-weight: bold;
+    cursor: pointer;
 }
+
 
 button:hover {
-	background-color: #818188;
+    background-color: #818188;
 }
+
 
 .Wordle {
-	font-family: "Average Sans", serif;
-	border-width: 3px;
-	border-style: solid;
-	border-color: #39b24d;
+    font-family: "Average Sans", serif;
+    border-width: 3px;
+    border-style: solid;
+    border-color: #39b24d;
 }
+
 
 .Mundi {
-	font-family: "Average Sans", serif;
-	border-width: 3px;
-	border-style: solid;
-	border-color: #1100ff;
+    font-family: "Average Sans", serif;
+    border-width: 3px;
+    border-style: solid;
+    border-color: #1100ff;
 }
 
+
 .Marcas {
-	font-family: "Average Sans", serif;
-	border-width: 3px;
-	border-style: solid;
-	border-color: #e40000;
+    font-family: "Average Sans", serif;
+    border-width: 3px;
+    border-style: solid;
+    border-color: #e40000;
 }
+
 
 .Animales {
     font-family: "Average Sans", serif;
     border-width: 3px;
-	border-style: solid;
-	border-color: #00C7D6;
+    border-style: solid;
+    border-color: #00C7D6;
 }
+
 
 .Deportistas {
-	font-family: "Average Sans", serif;
+    font-family: "Average Sans", serif;
     border-width: 3px;
-	border-style: solid;
-	border-color: red;
+    border-style: solid;
+    border-color: red;
 }
+
 
 .Comidas {
-	font-family: "Average Sans", serif;
+    font-family: "Average Sans", serif;
     border-width: 3px;
-	border-style: solid;
-	border-color: #A44200;
+    border-style: solid;
+    border-color: #A44200;
 }
+
 
 .Cine {
-	font-family: "Average Sans", serif;
+    font-family: "Average Sans", serif;
     border-width: 3px;
-	border-style: solid;
-	border-color: black;
+    border-style: solid;
+    border-color: black;
 }
 
+
 .celebridades {
-	font-family: "Average Sans", serif;
+    font-family: "Average Sans", serif;
     border-width: 3px;
-	border-style: solid;
-	border-color: #efb810;
+    border-style: solid;
+    border-color: #efb810;
 }
+
+
+
+
 
 
 
 
 main {
     max-width: auto;
-	background-image: url('fondo.png');
-	background-size: contain;
+    background-image: url('fondo.png');
+    background-size: contain;
     min-height: 47rem;
 }
-
-  

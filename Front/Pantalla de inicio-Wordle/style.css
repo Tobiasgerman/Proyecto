@@ -1,0 +1,117 @@
+body {
+ 
+    background-color: #00bb1a;
+  }
+  
+  
+  
+  
+  
+  
+  h1 {
+    font-size: 70px;
+    display: flex;
+    align-items:center;
+    justify-content: center;
+    position: relative;
+    margin: 0;
+    font-family: "Bungee Inline", sans-serif;
+    color: #000000;
+  }
+  
+  
+  h2 {
+    font-family: "Roboto",sans-serif;
+   
+  }
+  
+  
+  p {
+    font-family:"Roboto",sans-serif ;
+    font-size: 1.5rem;
+    font-weight: 500;
+    display: flex;
+    align-items: flex-start;
+    justify-content: left;
+    margin: 0;
+  }
+  
+  
+  .cuadrado {
+    width: 50px;
+    height: 50px;
+    border-radius: 5px;
+    display: grid;
+    place-items: center;
+    font-size: 2rem;
+  }
+  
+  
+  .cuadrado[color="verde"] {
+    background-color: lime;
+    font-family:"Roboto",sans-serif ;
+  }
+  
+  
+  .cuadrado[color="amarillo"] {
+    background-color: yellow;
+    font-family:"Roboto",sans-serif ;
+  }
+  
+  
+  .cuadrado[color="gris"] {
+    background-color:lightgray;
+    font-family:"Roboto",sans-serif ;
+   
+  }
+  
+  
+  .contenedor {
+    display: flex;
+    place-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+  
+  
+  button {
+    font-family: "Nokoro", sans-serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+    background-color: #FFFFFF;
+    border-radius: 15px;
+    border: none;
+    padding: 1rem 2rem;
+  }
+  
+  
+  .contenedor-jugar {
+    width: 100%;
+    display: grid;
+    place-items: center;
+    margin-top: 3rem;
+  }
+  
+  
+  .logo {
+    width: auto;
+    height: 50 px;
+    position: relative;
+    top: 100 px;
+  }
+  
+  
+  .navbar {
+    display: flex;
+    justify-content: center;
+    height: 8rem;
+    place-items: center;
+  }
+  
+  
+  .navbar img {
+    position: absolute;
+    left: 3rem;
+    width: 8rem;
+  }
+  
