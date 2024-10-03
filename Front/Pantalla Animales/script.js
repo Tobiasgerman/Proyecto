@@ -2,59 +2,66 @@ const filas = document.querySelectorAll('.row');
 var finalDiv = document.getElementById("final");
 let filaActual = 0;
 let letraActual = 0;
-
 let juegoTerminado = false;
-let palabraCorrecta = '';
+let animalcorrecto = '';
 let mensajeFinal = '';
 
-let listaPalabras = [];
+
+let listaanimales = [];
+
 
 fetch('animales.txt') // Extra un valor de animales.txt
     .then(response => response.text())
     .then(data => {
-        listaPalabras = data.split('\n').map(palabra => palabra.trim().toUpperCase());
-        palabraCorrecta = listaPalabras[Math.floor(Math.random() * listaPalabras.length)]; // Lo hace de manera random
-        console.log(`Palabra correcta: ${palabraCorrecta}`); // console.log para controlar errores
+        listaanimales = data.split('\n').map(animal => animal.trim().toUpperCase());
+        animalcorrecto = listaanimales[Math.floor(Math.random() * listaanimales.length)]; // Lo hace de manera random
+        console.log(`Animal correcto: ${animalcorrecto}`); // console.log para controlar errores
     });
 
-const confirmarPalabra = () => {
+
+const confirmaranimal = () => {
     if (letraActual != 5) return;
 
     const letras = filas[filaActual].querySelectorAll('.letra');
-    let palabraIngresada = Array.from(letras).map(letter => letter.textContent).join('');
+    let animalIngresado = Array.from(letras).map(letter => letter.textContent).join('');
 
-    if (!listaPalabras.includes(palabraIngresada)) {
-        mensajeFinal = `Palabra no válida`;
+
+    if (!listaanimales.includes(animalIngresado)) {
+        mensajeFinal = `animal no válida`;
         finalDiv.innerHTML = mensajeFinal;
         return;
     }
 
-    let palabraCorrectaTemp = palabraCorrecta.split('');
+
+    let animalcorrectoTemp = animalcorrecto.split('');
     let sum = 0;
 
-    // Primero manejamos los casos en los que las letras están en la posición correcta
+
+    // Primero manejamos los casos en los que las letras están en la posición correcto
     letras.forEach((letter, index) => {
         const tecla = document.querySelector(`.key[data-key="${letter.textContent.toLowerCase()}"]`);
 
-        if (letter.textContent === palabraCorrecta[index]) {
+
+        if (letter.textContent === animalcorrecto[index]) {
             letter.style.backgroundColor = 'green';
             if (tecla) tecla.style.backgroundColor = 'green';
             sum++;
-            palabraCorrectaTemp[index] = null; // Remover la letra correcta para evitar duplicados
+            animalcorrectoTemp[index] = null; // Remover la letra correcto para evitar duplicados
         }
     });
 
-    // Luego manejamos las letras que están en la palabra pero en otra posición
+
+    // Luego manejamos las letras que están en la animal pero en otra posición
     letras.forEach((letter, index) => {
-        if (letter.style.backgroundColor !== 'green') { // Solo comprobar letras que no están en la posición correcta
+        if (letter.style.backgroundColor !== 'green') { // Solo comprobar letras que no están en la posición correcto
             const tecla = document.querySelector(`.key[data-key="${letter.textContent.toLowerCase()}"]`);
-            let pos = palabraCorrectaTemp.indexOf(letter.textContent);
+            let pos = animalcorrectoTemp.indexOf(letter.textContent);
             if (pos !== -1) {
                 letter.style.backgroundColor = 'yellow';
                 if (tecla && tecla.style.backgroundColor !== 'green') {
                     tecla.style.backgroundColor = 'yellow';
                 }
-                palabraCorrectaTemp[pos] = null; // Remover la letra para evitar duplicados
+                animalcorrectoTemp[pos] = null; // Remover la letra para evitar duplicados
             } else {
                 letter.style.backgroundColor = 'gray';
                 if (tecla) tecla.style.backgroundColor = 'gray';
@@ -63,11 +70,11 @@ const confirmarPalabra = () => {
     });
 
     if (sum == 5) {
-        mensajeFinal = `¡Felicidades! Has descubierto la palabra correcta: ${palabraCorrecta}.`;
+        mensajeFinal = `¡Felicidades! Has descubierto la animal correcto: ${animalcorrecto}.`;
         finalDiv.innerHTML = mensajeFinal;
         juegoTerminado = true;
     } else if (filaActual == 5) {
-        mensajeFinal = `Has alcanzado el número máximo de intentos. La palabra correcta era: ${palabraCorrecta}`;
+        mensajeFinal = `Has alcanzado el número máximo de intentos. La animal correcto era: ${animalcorrecto}`;
         finalDiv.innerHTML = mensajeFinal;
         juegoTerminado = true;
     } else {
@@ -87,7 +94,7 @@ document.addEventListener('keydown', e => {
     if (juegoTerminado) return;
     const letras = filas[filaActual].querySelectorAll('.letra');
     if (e.key === 'Enter') {
-        confirmarPalabra();
+        confirmaranimal();
     } else if (e.key === 'Backspace' && letraActual > 0) {
         letraActual--;
         letras[letraActual].textContent = '';
@@ -105,7 +112,7 @@ teclas.forEach(tecla => {
         const letras = filas[filaActual].querySelectorAll('.letra');
 
         if (tecla.dataset.key === 'enter') {
-            confirmarPalabra();
+            confirmaranimal();
         } else if (tecla.dataset.key === 'backspace' && letraActual > 0) {
             letraActual--;
             letras[letraActual].textContent = '';
@@ -118,7 +125,7 @@ teclas.forEach(tecla => {
 
 const botonEnter = document.getElementById('enviar');
 botonEnter.addEventListener("click", function() {
-    confirmarPalabra();
+    confirmaranimal();
 });
 
 const botonBorrar = document.getElementById('borrar');

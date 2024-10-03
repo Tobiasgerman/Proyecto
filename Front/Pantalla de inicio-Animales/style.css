@@ -1,0 +1,142 @@
+body {
+    background: linear-gradient(#df7700, #ffbc05);
+    margin: 0;
+    padding: 0;
+    font-family: "Istok Web", sans-serif;
+    font-style: normal;
+  }
+  
+  
+  
+  
+  
+  
+  .gallo {
+    position: absolute;
+    top: 185px;
+    left: 30px;
+  }
+  
+  
+  
+  
+  h1 {
+    font-size: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    font-family: 'Bungee Inline', sans-serif;
+    color: #000000;
+  }
+  
+  
+  
+  
+  h2 {
+   
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px 0;
+    font-weight: 500;
+  }
+  
+  
+  
+  
+  p {
+   
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-left: 1rem;
+  }
+  
+  
+  
+  
+  
+  
+  .contenedor {
+    display: flex;
+    align-items: center;  
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+  
+  
+  
+  
+  .cuadrado {
+    width: 50px;
+    height: 50px;
+    border-radius: 5px;
+    display: flex;  
+    justify-content: center;  
+    align-items: center;  
+    font-size: 2rem;
+  }
+  
+  
+  .cuadrado[color="verde"] {
+    background-color: lime;
+  }
+  
+  
+  .cuadrado[color="amarillo"] {
+    background-color: yellow;
+  }
+  
+  
+  .cuadrado[color="gris"] {
+    background-color: lightgray;
+  }
+  
+  
+  
+  
+  
+  
+  button {
+   
+    font-size: 1.5rem;
+    font-weight: 600;
+    background-color: #ffc31d;
+    border-radius: 15px;
+    border: none;
+    padding: 1rem 2rem;
+    cursor: pointer;
+  }
+  
+  
+  
+  
+  .contenedor-jugar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    margin-top: 3rem;
+  }
+  
+  
+  
+  
+  .cabra {
+    position: relative;
+    right: 450px;
+    top: 20px;
+  }
+  
+  
+  .arbol {
+    position: relative;
+    left: 450px;
+  }
+  
