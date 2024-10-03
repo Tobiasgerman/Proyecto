@@ -19,7 +19,7 @@ fetch('comidas.txt') // Extra un valor de comidas.txt
     });
 
 
-const confirmarcomida = () => {
+const confirmarComida = () => {
     if (letraActual != 5) return;
 
     const letras = filas[filaActual].querySelectorAll('.letra');
@@ -93,7 +93,7 @@ document.addEventListener('keydown', e => {
     if (juegoTerminado) return;
     const letras = filas[filaActual].querySelectorAll('.letra');
     if (e.key === 'Enter') {
-        confirmarcomida();
+        confirmarComida();
     } else if (e.key === 'Backspace' && letraActual > 0) {
         letraActual--;
         letras[letraActual].textContent = '';
@@ -111,7 +111,7 @@ teclas.forEach(tecla => {
         const letras = filas[filaActual].querySelectorAll('.letra');
 
         if (tecla.dataset.key === 'enter') {
-            confirmarcomida();
+            confirmarComida();
         } else if (tecla.dataset.key === 'backspace' && letraActual > 0) {
             letraActual--;
             letras[letraActual].textContent = '';
@@ -124,7 +124,7 @@ teclas.forEach(tecla => {
 
 const botonEnter = document.getElementById('enviar');
 botonEnter.addEventListener("click", function() {
-    confirmarcomida();
+    confirmarComida();
 });
 
 const botonBorrar = document.getElementById('borrar');

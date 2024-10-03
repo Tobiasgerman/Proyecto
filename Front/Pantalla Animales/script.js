@@ -3,7 +3,7 @@ var finalDiv = document.getElementById("final");
 let filaActual = 0;
 let letraActual = 0;
 let juegoTerminado = false;
-let animalcorrecto = '';
+let animalCorrecto = '';
 let mensajeFinal = '';
 
 
@@ -14,12 +14,12 @@ fetch('animales.txt') // Extra un valor de animales.txt
     .then(response => response.text())
     .then(data => {
         listaanimales = data.split('\n').map(animal => animal.trim().toUpperCase());
-        animalcorrecto = listaanimales[Math.floor(Math.random() * listaanimales.length)]; // Lo hace de manera random
-        console.log(`Animal correcto: ${animalcorrecto}`); // console.log para controlar errores
+        animalCorrecto = listaanimales[Math.floor(Math.random() * listaanimales.length)]; // Lo hace de manera random
+        console.log(`Animal correcto: ${animalCorrecto}`); // console.log para controlar errores
     });
 
 
-const confirmaranimal = () => {
+const confirmarAnimal = () => {
     if (letraActual != 5) return;
 
     const letras = filas[filaActual].querySelectorAll('.letra');
@@ -33,7 +33,7 @@ const confirmaranimal = () => {
     }
 
 
-    let animalcorrectoTemp = animalcorrecto.split('');
+    let animalCorrectoTemp = animalCorrecto.split('');
     let sum = 0;
 
 
@@ -42,12 +42,11 @@ const confirmaranimal = () => {
         const tecla = document.querySelector(`.key[data-key="${letter.textContent.toLowerCase()}"]`);
 
 
-        if (letter.textContent === animalcorrecto[index]) {
+        if (letter.textContent === animalCorrecto[index]) {
             letter.style.backgroundColor = 'green';
             if (tecla) tecla.style.backgroundColor = 'green';
             sum++;
-            animalcorrectoTemp[index] = null; // Remover la letra correcto para evitar duplicados
-        }
+C        }
     });
 
 
@@ -55,13 +54,13 @@ const confirmaranimal = () => {
     letras.forEach((letter, index) => {
         if (letter.style.backgroundColor !== 'green') { // Solo comprobar letras que no están en la posición correcto
             const tecla = document.querySelector(`.key[data-key="${letter.textContent.toLowerCase()}"]`);
-            let pos = animalcorrectoTemp.indexOf(letter.textContent);
+            let pos = animalCorrectoTemp.indexOf(letter.textContent);
             if (pos !== -1) {
                 letter.style.backgroundColor = 'yellow';
                 if (tecla && tecla.style.backgroundColor !== 'green') {
                     tecla.style.backgroundColor = 'yellow';
                 }
-                animalcorrectoTemp[pos] = null; // Remover la letra para evitar duplicados
+                animalCorrectoTemp[pos] = null; // Remover la letra para evitar duplicados
             } else {
                 letter.style.backgroundColor = 'gray';
                 if (tecla) tecla.style.backgroundColor = 'gray';
@@ -70,11 +69,11 @@ const confirmaranimal = () => {
     });
 
     if (sum == 5) {
-        mensajeFinal = `¡Felicidades! Has descubierto la animal correcto: ${animalcorrecto}.`;
+        mensajeFinal = `¡Felicidades! Has descubierto la animal correcto: ${animalCorrecto}.`;
         finalDiv.innerHTML = mensajeFinal;
         juegoTerminado = true;
     } else if (filaActual == 5) {
-        mensajeFinal = `Has alcanzado el número máximo de intentos. La animal correcto era: ${animalcorrecto}`;
+        mensajeFinal = `Has alcanzado el número máximo de intentos. La animal correcto era: ${animalCorrecto}`;
         finalDiv.innerHTML = mensajeFinal;
         juegoTerminado = true;
     } else {
@@ -94,7 +93,7 @@ document.addEventListener('keydown', e => {
     if (juegoTerminado) return;
     const letras = filas[filaActual].querySelectorAll('.letra');
     if (e.key === 'Enter') {
-        confirmaranimal();
+        confirmarAnimal();
     } else if (e.key === 'Backspace' && letraActual > 0) {
         letraActual--;
         letras[letraActual].textContent = '';
@@ -112,7 +111,7 @@ teclas.forEach(tecla => {
         const letras = filas[filaActual].querySelectorAll('.letra');
 
         if (tecla.dataset.key === 'enter') {
-            confirmaranimal();
+            confirmarAnimal();
         } else if (tecla.dataset.key === 'backspace' && letraActual > 0) {
             letraActual--;
             letras[letraActual].textContent = '';
@@ -125,7 +124,7 @@ teclas.forEach(tecla => {
 
 const botonEnter = document.getElementById('enviar');
 botonEnter.addEventListener("click", function() {
-    confirmaranimal();
+    confirmarAnimal();
 });
 
 const botonBorrar = document.getElementById('borrar');
