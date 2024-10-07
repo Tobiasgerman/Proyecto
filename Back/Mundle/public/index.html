@@ -19,8 +19,11 @@
     </h1>
     <hr>
     <div class="contenedor">
-        <div class="cuadradoblanco"></div>
+        <div class="cuadradoblanco">
+            <img id="imagen"  alt="Imagen del pais">
+        </div>
         <div class="input-container">
+            <div style="display: none;" id="suggestions-container"></div>
             <input id="pais" type="text" placeholder="País, Territorios">
             <button id="submit">🌍 ADIVINAR</button>
         </div>
@@ -36,6 +39,6 @@
 </div>
 
 
-    <script src="script.js"></script>
+    <script type="module" src="script.js"></script>
 </body>
 </html>

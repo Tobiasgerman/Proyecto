@@ -33,6 +33,10 @@ const Paises = sequelize.define('Paises', {
         type: DataTypes.FLOAT, // Usar FLOAT para la longitud
         allowNull: false,
     },
+    imagen: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
 },
 {
   timestamps: false, // Esto añade automáticamente `createdAt` y `updatedAt`

@@ -1,12 +1,16 @@
 const axios = require('axios');
 const https = require('https');
 const geolib = require('geolib');
+const http = require('http');
 const express = require('express');
+const socketio = require('socket.io');
 const  sequelize  = require('./Database/sequelize');
 const { Paises, Usuarios } = require('./Database/models');
 const cors = require('cors');
 const httpsAgent = new https.Agent({ rejectUnauthorized: false });
 const readline = require('node:readline');
+const { Sequelize } = require('sequelize');
+
 
 sequelize.sync({alter: false});
 const puntosCardinales = {
@@ -35,6 +39,16 @@ app.use(cors());
 app.use(express.json());
 
 app.use(express.static('public'));
+
+const server = http.createServer(app);
+const io = socketio(server, {
+    cors: {
+      origin: "*", 
+      methods: ["GET", "POST"]
+    }
+});
+
+
 
 app.get('/', (req, res) => {
     res.sendFile(__dirname + '/public/index.html');
@@ -108,12 +122,43 @@ app.get('/pais-aleatorio', async (req, res) => {
     try {
         const paises = await obtenerLista();
         const paisAleatorio = generarPaisAleatorio(paises);
+        
         res.json(paisAleatorio);
     } catch (error) {
         res.status(500).send(error.message);
     }
 });
 
-app.listen(port, () => {
+
+io.on('connection', (socket) => {
+    console.log('Client connected: ' + socket.id);
+
+    socket.on('autocomplete', async (query) => {
+        console.log('Autocompletando:', query);
+        try {
+            let respuesta = await Paises.findAll({
+                where: {
+                  nombre: {
+                    [Sequelize.Op.like]: `${query}%`
+                  }
+                },
+                limit: 10,
+                attributes: ['nombre']
+              });
+            respuesta  = respuesta.map(item => item.nombre) ;
+
+            socket.emit('suggestions', respuesta);
+        } catch (error) {
+            console.error('Error retrieving autocomplete results:', error);
+            socket.emit('autocompleteError', error.message);
+        }
+    });
+
+    socket.on('disconnect', () => {
+        console.log('Client disconnected');
+    });
+});
+
+server.listen(port, () => {
     console.log(`Servidor backend escuchando en http://localhost:${port}`);
 });
