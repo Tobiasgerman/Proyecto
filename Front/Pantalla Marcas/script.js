@@ -3,58 +3,68 @@ var finalDiv = document.getElementById("final");
 let filaActual = 0;
 let letraActual = 0;
 
+
 let juegoTerminado = false;
-let palabraCorrecta = '';
+let marcaCorrecta = '';
 let mensajeFinal = '';
 
-let listaPalabras = [];
+
+let listamarcas = [];
+
 
 fetch('marcas.txt') // Extra un valor de marcas.txt
     .then(response => response.text())
     .then(data => {
-        listaPalabras = data.split('\n').map(palabra => palabra.trim().toUpperCase());
-        palabraCorrecta = listaPalabras[Math.floor(Math.random() * listaPalabras.length)]; // Lo hace de manera random
-        console.log(`Palabra correcta: ${palabraCorrecta}`); // console.log para controlar errores
+        listamarcas = data.split('\n').map(marca => marca.trim().toUpperCase());
+        marcaCorrecta = listamarcas[Math.floor(Math.random() * listamarcas.length)]; // Lo hace de manera random
+        console.log(`marca correcta: ${marcaCorrecta}`); // console.log para controlar errores
     });
 
-const confirmarPalabra = () => {
+
+const confirmarMarca = () => {
     if (letraActual != 5) return;
 
-    const letras = filas[filaActual].querySelectorAll('.letra');
-    let palabraIngresada = Array.from(letras).map(letter => letter.textContent).join('');
 
-    if (!listaPalabras.includes(palabraIngresada)) {
-        mensajeFinal = `Palabra no válida`;
+    const letras = filas[filaActual].querySelectorAll('.letra');
+    let marcaIngresada = Array.from(letras).map(letter => letter.textContent).join('');
+
+
+    if (!listamarcas.includes(marcaIngresada)) {
+        mensajeFinal = `marca no válida`;
         finalDiv.innerHTML = mensajeFinal;
         return;
     }
 
-    let palabraCorrectaTemp = palabraCorrecta.split('');
+
+    let marcaCorrectaTemp = marcaCorrecta.split('');
     let sum = 0;
+
 
     // Primero manejamos los casos en los que las letras están en la posición correcta
     letras.forEach((letter, index) => {
         const tecla = document.querySelector(`.key[data-key="${letter.textContent.toLowerCase()}"]`);
 
-        if (letter.textContent === palabraCorrecta[index]) {
+
+        if (letter.textContent === marcaCorrecta[index]) {
             letter.style.backgroundColor = 'green';
             if (tecla) tecla.style.backgroundColor = 'green';
             sum++;
-            palabraCorrectaTemp[index] = null; // Remover la letra correcta para evitar duplicados
+            marcaCorrectaTemp[index] = null; // Remover la letra correcta para evitar duplicados
         }
     });
 
-    // Luego manejamos las letras que están en la palabra pero en otra posición
+
+    // Luego manejamos las letras que están en la marca pero en otra posición
     letras.forEach((letter, index) => {
         if (letter.style.backgroundColor !== 'green') { // Solo comprobar letras que no están en la posición correcta
             const tecla = document.querySelector(`.key[data-key="${letter.textContent.toLowerCase()}"]`);
-            let pos = palabraCorrectaTemp.indexOf(letter.textContent);
+            let pos = marcaCorrectaTemp.indexOf(letter.textContent);
             if (pos !== -1) {
                 letter.style.backgroundColor = 'yellow';
                 if (tecla && tecla.style.backgroundColor !== 'green') {
                     tecla.style.backgroundColor = 'yellow';
                 }
-                palabraCorrectaTemp[pos] = null; // Remover la letra para evitar duplicados
+                marcaCorrectaTemp[pos] = null; // Remover la letra para evitar duplicados
             } else {
                 letter.style.backgroundColor = 'gray';
                 if (tecla) tecla.style.backgroundColor = 'gray';
@@ -62,12 +72,13 @@ const confirmarPalabra = () => {
         }
     });
 
+
     if (sum == 5) {
-        mensajeFinal = `¡Felicidades! Has descubierto la palabra correcta: ${palabraCorrecta}.`;
+        mensajeFinal = `¡Felicidades! Has descubierto la marca correcta: ${marcaCorrecta}.`;
         finalDiv.innerHTML = mensajeFinal;
         juegoTerminado = true;
     } else if (filaActual == 5) {
-        mensajeFinal = `Has alcanzado el número máximo de intentos. La palabra correcta era: ${palabraCorrecta}`;
+        mensajeFinal = `Has alcanzado el número máximo de intentos. La marca correcta era: ${marcaCorrecta}`;
         finalDiv.innerHTML = mensajeFinal;
         juegoTerminado = true;
     } else {
@@ -76,6 +87,7 @@ const confirmarPalabra = () => {
     }
 };
 
+
 // Evento para borrar el mensaje con el teclado (Backspace o Delete)
 document.addEventListener('keydown', (event) => {
     if (event.key === 'Backspace' || event.key === 'Delete') {
@@ -83,11 +95,12 @@ document.addEventListener('keydown', (event) => {
     }
 });
 
+
 document.addEventListener('keydown', e => {
     if (juegoTerminado) return;
     const letras = filas[filaActual].querySelectorAll('.letra');
     if (e.key === 'Enter') {
-        confirmarPalabra();
+        confirmarMarca();
     } else if (e.key === 'Backspace' && letraActual > 0) {
         letraActual--;
         letras[letraActual].textContent = '';
@@ -97,15 +110,18 @@ document.addEventListener('keydown', e => {
     }
 });
 
+
 const teclas = document.querySelectorAll('.key');
+
 
 teclas.forEach(tecla => {
     tecla.addEventListener('click', () => {
         if (juegoTerminado) return;
         const letras = filas[filaActual].querySelectorAll('.letra');
 
+
         if (tecla.dataset.key === 'enter') {
-            confirmarPalabra();
+            confirmarMarca();
         } else if (tecla.dataset.key === 'backspace' && letraActual > 0) {
             letraActual--;
             letras[letraActual].textContent = '';
@@ -118,7 +134,7 @@ teclas.forEach(tecla => {
 
 const botonEnter = document.getElementById('enviar');
 botonEnter.addEventListener("click", function() {
-    confirmarPalabra();
+    confirmarMarca();
 });
 
 const botonBorrar = document.getElementById('borrar');
