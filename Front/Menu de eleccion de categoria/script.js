@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", function() {
         const selectedOption = wordleSelect.options[wordleSelect.selectedIndex].value;
   
         if (selectedOption === "Normal") {
-            window.location.href = "http://127.0.0.1:5500/Front/Pantalla%20Wordle/";
+            window.location.href = "http://127.0.0.1:5500/Front/Pantalla%20de%20inicio-Wordle/";
         }
         else if (selectedOption === "Fechas") {
             window.location.href = "http://127.0.0.1:5500/Front/Pantalla%20Fechas/";
