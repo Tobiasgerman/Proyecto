@@ -7,18 +7,15 @@ let juegoTerminado = false;
 let comidaCorrecta = '';
 let mensajeFinal = '';
 
-
 let listaComidas = [];
 
-
-fetch('comidas.txt') // Extra un valor de comidas.txt
+fetch('comidas.txt') // Extrae un valor de comidas.txt
     .then(response => response.text())
     .then(data => {
         listaComidas = data.split('\n').map(comida => comida.trim().toUpperCase());
-        comidaCorrecta = listaComidas[Math.floor(Math.random() * listaComidas.length)]; // Lo hace de manera random
+        comidaCorrecta = listaComidas[Math.floor(Math.random() * listaComidas.length)]; // Lo elige de manera aleatoria
         console.log(`comida correcta: ${comidaCorrecta}`); // console.log para controlar errores
     });
-
 
 const confirmarComida = () => {
     if (letraActual != 5) return;
@@ -26,13 +23,11 @@ const confirmarComida = () => {
     const letras = filas[filaActual].querySelectorAll('.letra');
     let comidaIngresada = Array.from(letras).map(letter => letter.textContent).join('');
 
-
     if (!listaComidas.includes(comidaIngresada)) {
-        mensajeFinal = `comida no válida`;
+        mensajeFinal = `Comida no válida`;
         finalDiv.innerHTML = mensajeFinal;
         return;
     }
-
 
     let comidaCorrectaTemp = comidaCorrecta.split('');
     let sum = 0;
@@ -41,7 +36,6 @@ const confirmarComida = () => {
     letras.forEach((letter, index) => {
         const tecla = document.querySelector(`.key[data-key="${letter.textContent.toLowerCase()}"]`);
 
-
         if (letter.textContent === comidaCorrecta[index]) {
             letter.style.backgroundColor = 'green';
             if (tecla) tecla.style.backgroundColor = 'green';
@@ -49,7 +43,6 @@ const confirmarComida = () => {
             comidaCorrectaTemp[index] = null; // Remover la letra correcta para evitar duplicados
         }
     });
-
 
     // Luego manejamos las letras que están en la comida pero en otra posición
     letras.forEach((letter, index) => {
@@ -71,11 +64,11 @@ const confirmarComida = () => {
 
     if (sum == 5) {
         mensajeFinal = `¡Felicidades! Has descubierto la comida correcta: ${comidaCorrecta}.`;
-        finalDiv.innerHTML = mensajeFinal;
+        finalDiv.innerHTML = `${mensajeFinal} <br> <img src="${comidaCorrecta}.png" alt="${comidaCorrecta}" class="logo" width="auto" height="200px">`;
         juegoTerminado = true;
     } else if (filaActual == 5) {
         mensajeFinal = `Has alcanzado el número máximo de intentos. La comida correcta era: ${comidaCorrecta}`;
-        finalDiv.innerHTML = mensajeFinal;
+        finalDiv.innerHTML = `${mensajeFinal} <br> <img src="${comidaCorrecta}.png" alt="${comidaCorrecta}" class="logo" width="auto" height="200px">`;
         juegoTerminado = true;
     } else {
         filaActual++;

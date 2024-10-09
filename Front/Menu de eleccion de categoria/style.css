@@ -144,10 +144,10 @@ button:hover {
 
 
 
-
 main {
     max-width: auto;
     background-image: url('fondo.png');
     background-size: contain;
-    min-height: 47rem;
+    min-height: 49rem;
+    
 }

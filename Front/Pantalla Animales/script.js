@@ -7,18 +7,25 @@ let juegoTerminado = false;
 let animalCorrecto = '';
 let mensajeFinal = '';
 
-
 let listaAnimales = [];
 
-
-fetch('animales.txt') // Extra un valor de animales.txt
+fetch('animales.txt') // Extrae un valor de animales.txt
     .then(response => response.text())
     .then(data => {
         listaAnimales = data.split('\n').map(animal => animal.trim().toUpperCase());
-        animalCorrecto = listaAnimales[Math.floor(Math.random() * listaAnimales.length)]; // Lo hace de manera random
+        animalCorrecto = listaAnimales[Math.floor(Math.random() * listaAnimales.length)]; // Lo hace de manera aleatoria
         console.log(`Animal correcto: ${animalCorrecto}`); // console.log para controlar errores
     });
 
+const mostrarImagenAnimalCorrecto = () => {
+    const img = document.createElement("img");
+    img.src = `${animalCorrecto}.png`;  // Se asume que la imagen del animal está en la carpeta 'images'
+    img.alt = animalCorrecto;
+    img.style.width = "200px";  // Ajusta el tamaño de la imagen
+    img.style.height = "200px";
+    img.style.position = "center";
+    finalDiv.appendChild(img);  // Añade la imagen al finalDiv
+};
 
 const confirmaranimal = () => {
     if (letraActual != 5) return;
@@ -26,23 +33,18 @@ const confirmaranimal = () => {
     const letras = filas[filaActual].querySelectorAll('.letra');
     let animalingresado = Array.from(letras).map(letter => letter.textContent).join('');
 
-
     if (!listaAnimales.includes(animalingresado)) {
-        mensajeFinal = `animal no válida`;
+        mensajeFinal = `Animal no válido`;
         finalDiv.innerHTML = mensajeFinal;
         return;
     }
 
-
     let animalCorrectoTemp = animalCorrecto.split('');
     let sum = 0;
-
 
     // Primero manejamos los casos en los que las letras están en la posición correcta
     letras.forEach((letter, index) => {
         const tecla = document.querySelector(`.key[data-key="${letter.textContent.toLowerCase()}"]`);
-
-
         if (letter.textContent === animalCorrecto[index]) {
             letter.style.backgroundColor = 'green';
             if (tecla) tecla.style.backgroundColor = 'green';
@@ -51,8 +53,7 @@ const confirmaranimal = () => {
         }
     });
 
-
-    // Luego manejamos las letras que están en la animal pero en otra posición
+    // Luego manejamos las letras que están en el animal pero en otra posición
     letras.forEach((letter, index) => {
         if (letter.style.backgroundColor !== 'green') { // Solo comprobar letras que no están en la posición correcta
             const tecla = document.querySelector(`.key[data-key="${letter.textContent.toLowerCase()}"]`);
@@ -71,12 +72,14 @@ const confirmaranimal = () => {
     });
 
     if (sum == 5) {
-        mensajeFinal = `¡Felicidades! Has descubierto la animal correcta: ${animalCorrecto}.`;
+        mensajeFinal = `¡Felicidades! Has descubierto el animal correcto: ${animalCorrecto}.`;
         finalDiv.innerHTML = mensajeFinal;
+        mostrarImagenAnimalCorrecto();  // Muestra la imagen del animal
         juegoTerminado = true;
     } else if (filaActual == 5) {
-        mensajeFinal = `Has alcanzado el número máximo de intentos. La animal correcta era: ${animalCorrecto}`;
+        mensajeFinal = `Has alcanzado el número máximo de intentos. El animal correcto era: ${animalCorrecto}`;
         finalDiv.innerHTML = mensajeFinal;
+        mostrarImagenAnimalCorrecto();  // Muestra la imagen del animal
         juegoTerminado = true;
     } else {
         filaActual++;

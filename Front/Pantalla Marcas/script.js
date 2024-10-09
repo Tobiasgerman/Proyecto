@@ -3,31 +3,25 @@ var finalDiv = document.getElementById("final");
 let filaActual = 0;
 let letraActual = 0;
 
-
 let juegoTerminado = false;
 let marcaCorrecta = '';
 let mensajeFinal = '';
 
-
 let listamarcas = [];
 
-
-fetch('marcas.txt') // Extra un valor de marcas.txt
+fetch('marcas.txt') // Extrae un valor de marcas.txt
     .then(response => response.text())
     .then(data => {
         listamarcas = data.split('\n').map(marca => marca.trim().toUpperCase());
-        marcaCorrecta = listamarcas[Math.floor(Math.random() * listamarcas.length)]; // Lo hace de manera random
+        marcaCorrecta = listamarcas[Math.floor(Math.random() * listamarcas.length)]; // Lo hace de manera aleatoria
         console.log(`marca correcta: ${marcaCorrecta}`); // console.log para controlar errores
     });
-
 
 const confirmarMarca = () => {
     if (letraActual != 5) return;
 
-
     const letras = filas[filaActual].querySelectorAll('.letra');
     let marcaIngresada = Array.from(letras).map(letter => letter.textContent).join('');
-
 
     if (!listamarcas.includes(marcaIngresada)) {
         mensajeFinal = `marca no válida`;
@@ -35,15 +29,12 @@ const confirmarMarca = () => {
         return;
     }
 
-
     let marcaCorrectaTemp = marcaCorrecta.split('');
     let sum = 0;
-
 
     // Primero manejamos los casos en los que las letras están en la posición correcta
     letras.forEach((letter, index) => {
         const tecla = document.querySelector(`.key[data-key="${letter.textContent.toLowerCase()}"]`);
-
 
         if (letter.textContent === marcaCorrecta[index]) {
             letter.style.backgroundColor = 'green';
@@ -52,7 +43,6 @@ const confirmarMarca = () => {
             marcaCorrectaTemp[index] = null; // Remover la letra correcta para evitar duplicados
         }
     });
-
 
     // Luego manejamos las letras que están en la marca pero en otra posición
     letras.forEach((letter, index) => {
@@ -72,14 +62,13 @@ const confirmarMarca = () => {
         }
     });
 
-
     if (sum == 5) {
         mensajeFinal = `¡Felicidades! Has descubierto la marca correcta: ${marcaCorrecta}.`;
-        finalDiv.innerHTML = mensajeFinal;
+        finalDiv.innerHTML = `${mensajeFinal} <br> <img src="${marcaCorrecta}.png" alt="${marcaCorrecta}" width="auto" height="200px">`;
         juegoTerminado = true;
     } else if (filaActual == 5) {
         mensajeFinal = `Has alcanzado el número máximo de intentos. La marca correcta era: ${marcaCorrecta}`;
-        finalDiv.innerHTML = mensajeFinal;
+        finalDiv.innerHTML = `${mensajeFinal} <br> <img src="${marcaCorrecta}.png" alt="${marcaCorrecta}"width="auto" height="200px">`;
         juegoTerminado = true;
     } else {
         filaActual++;
@@ -87,14 +76,12 @@ const confirmarMarca = () => {
     }
 };
 
-
 // Evento para borrar el mensaje con el teclado (Backspace o Delete)
 document.addEventListener('keydown', (event) => {
     if (event.key === 'Backspace' || event.key === 'Delete') {
         finalDiv.innerHTML = '';  // Limpia el contenido del mensaje
     }
 });
-
 
 document.addEventListener('keydown', e => {
     if (juegoTerminado) return;
@@ -110,15 +97,12 @@ document.addEventListener('keydown', e => {
     }
 });
 
-
 const teclas = document.querySelectorAll('.key');
-
 
 teclas.forEach(tecla => {
     tecla.addEventListener('click', () => {
         if (juegoTerminado) return;
         const letras = filas[filaActual].querySelectorAll('.letra');
-
 
         if (tecla.dataset.key === 'enter') {
             confirmarMarca();
