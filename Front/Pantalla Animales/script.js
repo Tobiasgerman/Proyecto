@@ -17,16 +17,6 @@ fetch('animales.txt') // Extrae un valor de animales.txt
         console.log(`Animal correcto: ${animalCorrecto}`); // console.log para controlar errores
     });
 
-const mostrarImagenAnimalCorrecto = () => {
-    const img = document.createElement("img");
-    img.src = `${animalCorrecto}.png`;  // Se asume que la imagen del animal está en la carpeta 'images'
-    img.alt = animalCorrecto;
-    img.style.width = "200px";  // Ajusta el tamaño de la imagen
-    img.style.height = "200px";
-    img.style.position = "center";
-    finalDiv.appendChild(img);  // Añade la imagen al finalDiv
-};
-
 const confirmaranimal = () => {
     if (letraActual != 5) return;
 
@@ -73,13 +63,11 @@ const confirmaranimal = () => {
 
     if (sum == 5) {
         mensajeFinal = `¡Felicidades! Has descubierto el animal correcto: ${animalCorrecto}.`;
-        finalDiv.innerHTML = mensajeFinal;
-        mostrarImagenAnimalCorrecto();  // Muestra la imagen del animal
+        finalDiv.innerHTML = `${mensajeFinal} <br> <img src="${animalCorrecto}.png" alt="${animalCorrecto}" width="auto" height="200px">`;
         juegoTerminado = true;
     } else if (filaActual == 5) {
         mensajeFinal = `Has alcanzado el número máximo de intentos. El animal correcto era: ${animalCorrecto}`;
-        finalDiv.innerHTML = mensajeFinal;
-        mostrarImagenAnimalCorrecto();  // Muestra la imagen del animal
+        finalDiv.innerHTML = `${mensajeFinal} <br> <img src="${animalCorrecto}.png" alt="${animalCorrecto}" width="auto" height="200px">`;
         juegoTerminado = true;
     } else {
         filaActual++;

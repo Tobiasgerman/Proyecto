@@ -64,11 +64,11 @@ const confirmarComida = () => {
 
     if (sum == 5) {
         mensajeFinal = `¡Felicidades! Has descubierto la comida correcta: ${comidaCorrecta}.`;
-        finalDiv.innerHTML = `${mensajeFinal} <br> <img src="${comidaCorrecta}.png" alt="${comidaCorrecta}" class="logo" width="auto" height="200px">`;
+        finalDiv.innerHTML = `${mensajeFinal} <br> <img src="${comidaCorrecta}.png" alt="${comidaCorrecta}"  width="auto" height="200px">`;
         juegoTerminado = true;
     } else if (filaActual == 5) {
         mensajeFinal = `Has alcanzado el número máximo de intentos. La comida correcta era: ${comidaCorrecta}`;
-        finalDiv.innerHTML = `${mensajeFinal} <br> <img src="${comidaCorrecta}.png" alt="${comidaCorrecta}" class="logo" width="auto" height="200px">`;
+        finalDiv.innerHTML = `${mensajeFinal} <br> <img src="${comidaCorrecta}.png" alt="${comidaCorrecta}" width="auto" height="200px">`;
         juegoTerminado = true;
     } else {
         filaActual++;
