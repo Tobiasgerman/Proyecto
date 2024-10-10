@@ -1,0 +1,13 @@
+{
+  "dependencies": {
+    "geolib": "^3.3.4",
+<<<<<<< HEAD
+    "https": "^1.0.0",
+    "mysql2": "^3.11.3",
+    "sequelize": "^6.37.3",
+    "socket.io": "^4.8.0"
+=======
+    "https": "^1.0.0"
+>>>>>>> 5cfa73c41ac2e258486706a885c1968a4a1cd0df
+  }
+}
