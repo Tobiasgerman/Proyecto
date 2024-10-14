@@ -206,3 +206,5 @@ botonBorrar.addEventListener("click", function() {
         letras[letraActual].textContent = '';
     }
 });
+
+document.getElementById('final').style.fontSize = "30px";
