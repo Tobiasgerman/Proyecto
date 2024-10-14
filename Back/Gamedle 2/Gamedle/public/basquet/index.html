@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <script defer type="module" src="script.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bungee+Inline&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nokora:wght@100;300;400;700;900&display=swap" rel="stylesheet">
+    <title>Celebridades</title>
+</head>
+<body>
+    <img src="ajustes.png" alt="ajustes" class="aju">
+    <img src="info.png" alt="info" class="inf">
+    <img src="logo.png" alt="logo" class="log">
+    <img src="pelota.png" alt="pelota" class="pel">
+  
+     <header>
+            <h1 class="title">Basket</h1>
+          </header>
+
+          
+       
+   
+
+   
+    <div class="cuadradogris">
+       
+        <div class="Cuadrados">
+            <div class="cuadradorojo ">
+                <div class="cuadradodecolor rojo"></div>
+                <p>Si el color es <strong>rojo</strong>, la pista no coincide.</p>
+            </div>
+            <div class="cuadradoamarillo">
+                <div class="cuadradodecolor amarillo"></div>
+                <p>Si el color es <strong>amarillo</strong>, la pista está relacionada indirectamente a la respuesta.</p>
+            </div>
+            <div class="cuadradoverde">
+                <div class="cuadradodecolor verde"></div>
+                <p>Si el color es <strong>verde</strong>, la pista coincide.</p>
+            </div>
+        </div>
+        <div class="flechas">
+            <p><strong> ⬆La linea hacia arriba</strong> indica que la respuesta a la pista, en caso de ser un número, es mayor.</p>
+            <div class="adivinar"> <p><strong>A adivinar!</strong></p></div>
+            <p><strong> ⬇La linea hacia abajo</strong> indica que la respuesta a la pista, en caso de ser un número, es menor.</p>
+        </div>
+        </div>
+        <div class="parteinput">
+            <input type="text" placeholder="Escribí una celebridad para empezar">
+            <div style="display: none;" id="suggestions-container"></div>
+            <button>Adivinar</button>
+        </div>
+    
+   
+    <div class="squares-container">
+        <div class="item">
+            <p class="categoria">Pais</p>
+            <div class="Cuadrado1"></div>
+        </div>
+        <div class="item">
+            <p class="categoria">Equipo</p>
+            <div class="Cuadrado2"></div>
+        </div>
+        <div class="item">
+            <p class="categoria">Edad</p>
+            <div class="Cuadrado3"></div>
+        </div>
+        <div class="item">
+            <p class="categoria">Titulos</p>
+            <div class="Cuadrado4"></div>
+        </div>
+        <div class="item">
+            <p class="categoria">Camiseta</p>
+            <div class="Cuadrado5"></div>
+        </div>
+        
+    </div>
+    <script type="module" src="script.js"></script>
+
+    
+</body>
+</html>
