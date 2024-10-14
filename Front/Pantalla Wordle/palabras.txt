@@ -1462,3 +1462,4 @@ palmo
 grasa
 volta
 muera
+borde

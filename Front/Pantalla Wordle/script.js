@@ -130,3 +130,4 @@ botonBorrar.addEventListener("click", function() {
     }
     finalDiv.innerHTML = '';  // Limpia el contenido del mensaje
 });
+document.getElementById('final').style.fontSize = "200px";
