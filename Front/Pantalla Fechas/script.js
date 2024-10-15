@@ -7,6 +7,7 @@ let fechaCorrecta = '';
 let mensajeFinal = '';
 let listaFechas = [];
 
+// Cargar fechas desde el archivo
 fetch('fechas.txt')
     .then(response => response.text())
     .then(data => {
@@ -15,23 +16,22 @@ fetch('fechas.txt')
         console.log(`Fecha correcta: ${fechaCorrecta}`);
     });
 
+// Función para confirmar la fecha ingresada
 const confirmarFecha = () => {
-    if (finalDiv.innerHTML !== '' || document.getElementById('imagen-easter-egg').innerHTML !== '') {
-        finalDiv.innerHTML = '';
-        document.getElementById('imagen-easter-egg').innerHTML = '';
-        return;
-    }
+    if (juegoTerminado) return; // No continuar si el juego ya terminó
 
-    if (letraActual != 10) return;
     const letras = filas[filaActual].querySelectorAll('.letra');
+    if (letraActual !== 10) return; // No enviar si no hay una fecha completa (10 caracteres)
+    
     let fechaIngresada = Array.from(letras).map(letter => letter.textContent).join('');
 
     if (listaFechas.indexOf(fechaIngresada) === -1) {
-        mensajeFinal = `Esta fecha no está incluida en el diccionario, acuérdate se escribe, XX-XX-XXXX y va de 0 a 9`;
+        mensajeFinal = `Esta fecha no está incluida en el diccionario. Recuerda que se escribe en formato XX-XX-XXXX.`;
         finalDiv.innerHTML = mensajeFinal;
         return;
     }
 
+    // Comparar cada parte de la fecha
     let diaCorrecto = fechaCorrecta.slice(0, 2);
     let mesCorrecto = fechaCorrecta.slice(3, 5);
     let añoCorrecto = fechaCorrecta.slice(6, 10);
@@ -41,7 +41,6 @@ const confirmarFecha = () => {
     let añoIngresado = fechaIngresada.slice(6, 10);
 
     let sum = 0;
-
     const compararYAsignarColor = (valorIngresado, valorCorrecto, index, esParteCorrecta, correctosUsados) => {
         const letter = letras[index];
         letter.classList.add('checked');
@@ -64,18 +63,15 @@ const confirmarFecha = () => {
     };
 
     let correctosUsados = [];
-
     compararYAsignarColor(diaIngresado[0], diaCorrecto[0], 0, diaCorrecto.indexOf(diaIngresado[0]) !== -1, correctosUsados);
     compararYAsignarColor(diaIngresado[1], diaCorrecto[1], 1, diaCorrecto.indexOf(diaIngresado[1]) !== -1, correctosUsados);
     compararYAsignarColor(mesIngresado[0], mesCorrecto[0], 3, mesCorrecto.indexOf(mesIngresado[0]) !== -1, correctosUsados);
     compararYAsignarColor(mesIngresado[1], mesCorrecto[1], 4, mesCorrecto.indexOf(mesIngresado[1]) !== -1, correctosUsados);
-    compararYAsignarColor(mesIngresado[0], mesCorrecto[0], 6, mesCorrecto.indexOf(añoIngresado[0]) !== -1, correctosUsados);
-    compararYAsignarColor(mesIngresado[1], mesCorrecto[1], 7, mesCorrecto.indexOf(añoIngresado[1]) !== -1, correctosUsados);
-    compararYAsignarColor(mesIngresado[0], mesCorrecto[0], 8, mesCorrecto.indexOf(añoIngresado[0]) !== -1, correctosUsados);
-    compararYAsignarColor(mesIngresado[1], mesCorrecto[1], 9, mesCorrecto.indexOf(añoIngresado[1]) !== -1, correctosUsados);
-    for (let i = 6; i < 10; i++) {
-        compararYAsignarColor(añoIngresado[i - 6], añoCorrecto[i - 6], i, añoCorrecto.indexOf(añoIngresado[i - 6]) !== -1, correctosUsados);
-    }
+    compararYAsignarColor(añoIngresado[0], añoCorrecto[0], 6, añoCorrecto.indexOf(añoIngresado[0]) !== -1, correctosUsados);
+    compararYAsignarColor(añoIngresado[1], añoCorrecto[1], 7, añoCorrecto.indexOf(añoIngresado[1]) !== -1, correctosUsados);
+    compararYAsignarColor(añoIngresado[2], añoCorrecto[2], 8, añoCorrecto.indexOf(añoIngresado[2]) !== -1, correctosUsados);
+    compararYAsignarColor(añoIngresado[3], añoCorrecto[3], 9, añoCorrecto.indexOf(añoIngresado[3]) !== -1, correctosUsados);
+
     if (fechaIngresada === '11-09-2001') /* atentado torres gemelas */ {
         let imagen = document.getElementById('imagen-easter-egg');
         imagen.innerHTML = '<img src="descarga(torres-gemelas).png" alt="Imagen" />';
@@ -141,25 +137,28 @@ const confirmarFecha = () => {
         imagen.innerHTML = '<img src="cumple(simi).png" alt="Imagen" />'; 
     }
     
-    if (filaActual == 6) {
-        mensajeFinal = `Has alcanzado el número máximo de intentos. La fecha correcta era: ${fechaCorrecta}`;
-        finalDiv.innerHTML = mensajeFinal;
-        juegoTerminado = true;
-    } else if (diaIngresado == diaCorrecto && mesIngresado == mesCorrecto && añoIngresado == añoCorrecto) {
+    
+    if (fechaIngresada === fechaCorrecta) {
         mensajeFinal = `¡Felicidades! Has descubierto la fecha correcta: ${fechaCorrecta}.`;
         finalDiv.innerHTML = mensajeFinal;
         juegoTerminado = true;
     } else {
         filaActual++;
         letraActual = 0;
+        if (filaActual === 6) {
+            mensajeFinal = `Has alcanzado el número máximo de intentos. La fecha correcta era: ${fechaCorrecta}.`;
+            finalDiv.innerHTML = mensajeFinal;
+            juegoTerminado = true;
+        }
     }
 };
 
+// Control de eventos del teclado
 document.addEventListener('keydown', e => {
     if (juegoTerminado) return;
 
     const letras = filas[filaActual].querySelectorAll('.letra');
-
+    
     if (e.key === 'Enter') {
         confirmarFecha();
     } else if (e.key === 'Backspace' && letraActual > 0) {
@@ -171,8 +170,8 @@ document.addEventListener('keydown', e => {
     }
 });
 
+// Control de los botones en pantalla
 const teclas = document.querySelectorAll('.key');
-
 teclas.forEach(tecla => {
     tecla.addEventListener('click', () => {
         if (juegoTerminado) return;
@@ -192,17 +191,20 @@ teclas.forEach(tecla => {
     });
 });
 
-
+// Botón "Enviar"
 const botonEnter = document.getElementById('enviar');
 botonEnter.addEventListener("click", function() {
     confirmarFecha();
 });
 
+// Botón "Borrar"
 const botonBorrar = document.getElementById('borrar');
 botonBorrar.addEventListener("click", function() {
     const letras = filas[filaActual].querySelectorAll('.letra');
     if (letraActual > 0) {
         letraActual--;
         letras[letraActual].textContent = '';
-    }    
+    }
 });
+
+document.getElementById('final').style.fontSize = "30px";

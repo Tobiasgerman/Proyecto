@@ -3,16 +3,21 @@ const https = require('https');
 const geolib = require('geolib');
 const http = require('http');
 const express = require('express');
+<<<<<<< HEAD
+=======
 const socketio = require('socket.io');
 const  sequelize  = require('./Database/sequelize');
 const { Paises, Usuarios } = require('./Database/models');
+>>>>>>> 6e61083fa9a8828a2415fd2b94be8f940055bb0e
 const cors = require('cors');
 const httpsAgent = new https.Agent({ rejectUnauthorized: false });
 const readline = require('node:readline');
 const { Sequelize } = require('sequelize');
 
 
-sequelize.sync({alter: false});
+
+
+
 const puntosCardinales = {
     "N": "Norte",
     "NNE": "Noreste",
@@ -35,11 +40,15 @@ const puntosCardinales = {
 const app = express();
 const port = 3000;
 
-app.use(cors());
+app.use(cors()); // Permite solicitudes desde cualquier origen
 app.use(express.json());
 
-app.use(express.static('public'));
 
+<<<<<<< HEAD
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout,
+=======
 const server = http.createServer(app);
 const io = socketio(server, {
     cors: {
@@ -52,16 +61,26 @@ const io = socketio(server, {
 
 app.get('/', (req, res) => {
     res.sendFile(__dirname + '/public/index.html');
+>>>>>>> 6e61083fa9a8828a2415fd2b94be8f940055bb0e
 });
 
 async function obtenerLista() {
-    return await Paises.findAll();
+    let url = 'https://restcountries.com/v3.1/all';
+
+    try {
+        let response = await axios.get(url, { httpsAgent });
+        let paisesEsp = response.data.filter(p => p.translations && p.translations.spa);
+        return paisesEsp;
+    } catch (error) {
+        console.log(error.message);
+    }
 }
 
-async function obtenerCoordenadas(paisNombre) {
-    const pais = await Paises.findOne({ where: { nombre: paisNombre } });
+async function obtenerCoordenadas(paisNombre, paises) {
+    let pais = paises.find(p => p.translations.spa.common === paisNombre);
     if (pais) {
-        return { latitude: pais.latitud, longitude: pais.longitud };
+        const { latlng } = pais;
+        return { latitude: latlng[0], longitude: latlng[1] };
     } else {
         console.log("País no encontrado");
     }
@@ -79,24 +98,19 @@ function generarPaisAleatorio(paises) {
     return paises[Math.floor(Math.random() * paises.length)];
 }
 
-async function obtenerDistanciaEntrePaises(paisElegido, paisAleatorio) {
-    const origen = await obtenerCoordenadas(paisElegido);
-    const destino = await obtenerCoordenadas(paisAleatorio.nombre);
-    const distancia = calcularDistancia(origen, destino);
-    const direccion = calcularDireccion(origen, destino);
-    return { origen, destino, distancia: Math.round(distancia), direccion };
+async function obtenerDistanciaEntrePaises(paises, paisElegido, paisAleatorio) {
+    let origen = await obtenerCoordenadas(paisElegido, paises);
+    let destino = await obtenerCoordenadas(paisAleatorio.translations.spa.common, paises);
+    let distancia = calcularDistancia(origen, destino);
+    let direccion = calcularDireccion(origen, destino);
+    distancia = Math.round(distancia);
+    return { origen, destino, distancia, direccion };
 }
 
-async function obtenerDatos(paisElegido, paisAleatorio) {
-    let resultado = await obtenerDistanciaEntrePaises(paisElegido, paisAleatorio);
+async function obtenerDatos(paisElegido, paises, paisAleatorio) {
+    let resultado = await obtenerDistanciaEntrePaises(paises, paisElegido, paisAleatorio);
     return { distancia: resultado.distancia, direccion: puntosCardinales[resultado.direccion] };
 }
-
-app.use(express.static('public'));
-
-app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/public/index.html');
-});
 
 app.get('/paises', async (req, res) => {
     try {
@@ -111,12 +125,14 @@ app.post('/distancia', async (req, res) => {
     const { paisElegido, paisAleatorio } = req.body;
 
     try {
-        const resultado = await obtenerDatos(paisElegido, paisAleatorio);
+        const paises = await obtenerLista();
+        const resultado = await obtenerDatos(paisElegido, paises, paisAleatorio);
         res.json(resultado);
     } catch (error) {
         res.status(500).send(error.message);
     }
 });
+
 
 app.get('/pais-aleatorio', async (req, res) => {
     try {
@@ -129,6 +145,11 @@ app.get('/pais-aleatorio', async (req, res) => {
     }
 });
 
+<<<<<<< HEAD
+app.use(express.static('public'));
+
+app.listen(port, () => {
+=======
 
 io.on('connection', (socket) => {
     console.log('Client connected: ' + socket.id);
@@ -160,5 +181,6 @@ io.on('connection', (socket) => {
 });
 
 server.listen(port, () => {
+>>>>>>> 6e61083fa9a8828a2415fd2b94be8f940055bb0e
     console.log(`Servidor backend escuchando en http://localhost:${port}`);
 });
