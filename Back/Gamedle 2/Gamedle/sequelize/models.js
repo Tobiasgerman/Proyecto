@@ -12,12 +12,12 @@ const User = sequelize.define('usuarios', {
     primaryKey: true,
   },
   timeTaken: {
-    type: DataTypes.INTEGER, // Time in seconds
+    type: DataTypes.INTEGER,
     allowNull: false,
   },
 },
   {
-    timestamps: false, // Esto añade automáticamente `createdAt` y `updatedAt`
+    timestamps: false,
 });
 
 const Game = sequelize.define('juegos', {
@@ -35,8 +35,60 @@ const Game = sequelize.define('juegos', {
   },
 },
 {
-  timestamps: false, // Esto añade automáticamente `createdAt` y `updatedAt`
+  timestamps: false,
   });
 
+const basquet = sequelize.define('basquet', {
+  id:{
+    type: DataTypes.INTEGER,
+    autoIncrement: true,
+    primaryKey: true,
+  },
+  nombre: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  pais: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  equipo: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  camiseta: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
+},
+{
+  timestamps: false, 
+  freezeTableName: true,
+});
+const formula1 = sequelize.define('formula1', {
+  nombre: { 
+    type: DataTypes.STRING, 
+    allowNull: false 
+  },
+  apellido: {
+    type: DataTypes.STRING,
+    allowNull: false 
+    },
+  nacionalidad: {
+    type: DataTypes.STRING,
+    allowNull: false 
+  },
+  fechaNacimiento: {
+    type: DataTypes.DATEONLY,
+    allowNull: true 
+  },
+  numero: {
+    type: DataTypes.STRING,
+    allowNull: true 
+  },
+}, {
+  timestamps: false,
+  freezeTableName: true,
+});
 
-module.exports = { User, Game };
+module.exports = { User, Game , basquet , formula1 };

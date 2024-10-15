@@ -7,18 +7,14 @@ const http = require('http');
 const { Sequelize } = require('sequelize');
 const socketio = require('socket.io');
 const dotenv = require('dotenv');
-const { Basquet } = require('./sequelize/models');
+const { basquet } = require('./sequelize/models');
 
 dotenv.config();
 
 const app = express();
 app.use(express.json());
 app.use(cors());
-app.use(express.static('public'));
 
-app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/public/basquet/index.html');
-});
 const server = http.createServer(app);
 const io = socketio(server, {
     cors: {
@@ -34,9 +30,12 @@ const sequelize = new Sequelize('MultiWordle', 'root', 'root', {
 
 // Importa la lógica del juego
 const { iniciarJuegoBasquet, adivinarJugadorBasquet } = require('./basquet/app')(sequelize);
+const {iniciarJuegoFormula1, adivinarJugadorFormula1} = require('./formula1/app')(sequelize);
 
 app.post('/iniciarJuegoBasquet', iniciarJuegoBasquet);
 app.post('/adivinarJuegoBasquet', adivinarJugadorBasquet);
+app.post('/iniciarJuegoFormula1', iniciarJuegoFormula1);
+app.post('/adivinarJuegoFormula1', adivinarJugadorFormula1);
 io.on('connection', (socket) => {
     console.log('Client connected: ' + socket.id);
 
@@ -44,9 +43,15 @@ io.on('connection', (socket) => {
         console.log('Autocompletando:', query);
         try {
             if(gamedle == 'basquet' || gamedle =='futbol' || gamedle == 'tennis' || gamedle =='formula1' ||  gamedle == 'celebridades'){
+                if(gamedle == 'basquet'){
+                    let respuesta = await sequelize.query(
+                    `SELECT nombre FROM ${gamedle} WHERE nombre LIKE '${query}%' LIMIT 10`,
+                );
+        } else {
             let respuesta = await sequelize.query(
-                `SELECT ${gamedle} FROM ${gamedle} WHERE nombre LIKE '${query}%' LIMIT 10`,
+                `SELECT nombreCompleto FROM ${gamedle} WHERE nombreCompleto LIKE '${query}%' LIMIT 10`,
             );
+        }
             respuesta = respuesta[0].map(item => item.nombre);
 
             console.log(respuesta);

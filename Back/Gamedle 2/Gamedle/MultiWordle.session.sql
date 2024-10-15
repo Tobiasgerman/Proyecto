@@ -1,2 +1,2 @@
-ALTER TABLE usuarios
-drop column userId;
+DROP TABLE aas;
+DROP TABLE basquets;

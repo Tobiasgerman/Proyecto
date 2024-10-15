@@ -1,6 +1,6 @@
 const axios = require('axios');
 const https = require('https');
-const { basquet } = require('../sequelize/models'); // Asegúrate de que la ruta al modelo sea correcta
+const { formula1 } = require('../sequelize/models'); // Asegúrate de que la ruta al modelo sea correcta
 const sequelize = require('../sequelize/sequelize');
 sequelize.sync();
 module.exports = () => {
@@ -9,7 +9,7 @@ module.exports = () => {
 
     async function obtenerListaJugadores() {
         try {
-            let jugadores = await basquet.findAll({
+            let jugadores = await formula1.findAll({
                 order: sequelize.random(),
                 limit: 10,
             });
@@ -39,7 +39,7 @@ module.exports = () => {
         }
     }
 
-    async function iniciarJuegoBasquet(req, res) {
+    async function iniciarJuegoFormula1(req, res) {
         jugadorAleatorio = await obtenerListaJugadores();
 
         if (!jugadorAleatorio) {
@@ -54,9 +54,9 @@ module.exports = () => {
         });
     }
 
-    async function adivinarJugadorBasquet(req, res) {
+    async function adivinarJugadorFormula1(req, res) {
         if (intentos >= 5) {
-            return res.json({ message: `Perdiste! El jugador era: ${jugadorAleatorio.nombre}` });
+            return res.json({ message: `Perdiste! El jugador era: ${jugadorAleatorio.nombre} ${jugadorAleatorio.apellido}` });
             }
         const jugador = req.body.nombre;   
         console.log(jugador);
@@ -66,33 +66,39 @@ module.exports = () => {
         if (!jugadorElegido) {
             return res.json({ error: 'Jugador no encontrado.' });
         }
-        let coincidenciaPais = jugadorElegido.pais === jugadorAleatorio.pais;
-        let coincidenciaEquipo = jugadorElegido.equipo === jugadorAleatorio.equipo;
-        let coincidenciaCamiseta = jugadorElegido.camiseta === jugadorAleatorio.camiseta;
 
-        if (jugadorElegido.nombre === jugadorAleatorio.nombre) {
+        let coincidenciaNombre = jugadorElegido.nombre === jugadorAleatorio.nombre;
+        let coincidenciaApellido = jugadorElegido.apellido === jugadorAleatorio.apellido;
+        let coincidenciaNacionalidad = jugadorElegido.nacionalidad === jugadorAleatorio.nacionalidad;
+        let coincidenciaNacimiento = jugadorElegido.fechaNacimiento === jugadorAleatorio.fechaNacimiento;
+        let coincidenciaNumero = jugadorElegido.numero === jugadorAleatorio.numero;
+
+
+
+        if (jugadorAleatorio.nombreCompleto === jugadorElegido.nombreCompleto) {
             return res.json({ message: '¡Ganaste!' });
         } else {
             intentos++;
-            let resultadoNombre = 'Rojo';
-            let resultadoPais = coincidenciaPais ? 'Verde' : 'Rojo';
-            let resultadoEquipo = coincidenciaEquipo ? 'Verde' : 'Rojo';
-            let resultadoCamiseta = coincidenciaCamiseta ? 'Verde' : 'Rojo';
-            console.log(resultadoEquipo);
+            let resultadoNombre = coincidenciaNombre ? 'Verde' : 'Rojo';
+            let resultadoApellido = coincidenciaApellido ? 'Verde' : 'Rojo';
+            let resultadoNacionalidad = coincidenciaNacionalidad ? 'Verde' : 'Rojo';
+            let resultadoNacimiento = coincidenciaNacimiento ? 'Verde' : 'Rojo';
+            let resultadoNumero = coincidenciaNumero ? 'Verde' : 'Rojo';
 
             if (intentos >= 5) {
                 return res.json({ message: `Perdiste! El jugador era: ${jugadorAleatorio.nombre}` });
             } else {
                 res.json({
                     nombre: resultadoNombre,
-                    pais: resultadoPais,
-                    equipo: resultadoEquipo,
-                    camiseta: resultadoCamiseta,
+                    apellido :  resultadoApellido,
+                    nacionalidad: resultadoNacionalidad,
+                    nacimiento: resultadoNacimiento,
+                    numero: resultadoNumero,
                     intentos
                 });
             }
         }
     }
 
-    return { iniciarJuegoBasquet, adivinarJugadorBasquet };
+    return { iniciarJuegoFormula1, adivinarJugadorFormula1 };
 };
