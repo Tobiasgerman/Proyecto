@@ -10,23 +10,21 @@ let username;
 let juego = prompt("Que queres jugar (1.Basquet , 2. Tennis , 3. Futbol , 4. Formula 1 , 5. Celebridades)");
 switch (juego){
     case "1":
-        iniciarJuego();
         break;
     case "2":
         document.location.href("./tenis/tennis.html");
         break;
     case "3":
-        iniciarJuegoFutbol();
+        iniciarJuego();
         break;
     case "4":
-        iniciarJuegoFormula1();
+        iniciarJuego();
         break;
     case "5":
-        iniciarJuegoCelebridades();
+        iniciarJuego();
         break;
     default:
         alert("Opcion invalida");
-        iniciarJuego();
         break;
 }
 username = prompt('Ingresa tu nombre de usuario:');
@@ -35,7 +33,7 @@ async function iniciarJuego() {
     try {
         const modoConocido = prompt('Elige el modo de juego:\n1. Juegos Conocidos\n2. Todos los Juegos') === '1';
 
-        const iniciarJuegoResponse = await fetch(`${URL}/iniciarJuegoFormula1`, {
+        const iniciarJuegoResponse = await fetch(`${URL}/iniciarJuegoBasquet`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -63,13 +61,14 @@ async function adivinarJuego() {
     }
 
     try {
-        const response = await fetch(`${URL}/adivinarJuegoFormula1`, {
+        const response = await fetch(`${URL}/adivinarJuegoBasquet`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({ nombre: gameName})
         });
+        console.log(response);
 
         const data = await response.json();
         if (data.error) {

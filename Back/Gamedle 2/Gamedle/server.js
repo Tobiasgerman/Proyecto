@@ -33,26 +33,27 @@ const { iniciarJuegoBasquet, adivinarJugadorBasquet } = require('./basquet/app')
 const {iniciarJuegoFormula1, adivinarJugadorFormula1} = require('./formula1/app')(sequelize);
 
 app.post('/iniciarJuegoBasquet', iniciarJuegoBasquet);
-app.post('/adivinarJuegoBasquet', adivinarJugadorBasquet);
+app.post('/adivinarJugadorBasquet', adivinarJugadorBasquet);
 app.post('/iniciarJuegoFormula1', iniciarJuegoFormula1);
-app.post('/adivinarJuegoFormula1', adivinarJugadorFormula1);
+app.post('/adivinarJugaFormula1', adivinarJugadorFormula1);
 io.on('connection', (socket) => {
     console.log('Client connected: ' + socket.id);
 
     socket.on('autocomplete', async (query, gamedle) => {
         console.log('Autocompletando:', query);
         try {
+            let respuesta;  
             if(gamedle == 'basquet' || gamedle =='futbol' || gamedle == 'tennis' || gamedle =='formula1' ||  gamedle == 'celebridades'){
                 if(gamedle == 'basquet'){
-                    let respuesta = await sequelize.query(
+                    respuesta = await sequelize.query(
                     `SELECT nombre FROM ${gamedle} WHERE nombre LIKE '${query}%' LIMIT 10`,
                 );
-        } else {
-            let respuesta = await sequelize.query(
-                `SELECT nombreCompleto FROM ${gamedle} WHERE nombreCompleto LIKE '${query}%' LIMIT 10`,
-            );
-        }
-            respuesta = respuesta[0].map(item => item.nombre);
+                } else {
+                    respuesta = await sequelize.query(
+                        `SELECT nombreCompleto FROM ${gamedle} WHERE nombreCompleto LIKE '${query}%' LIMIT 10`,
+                    );
+                }
+                respuesta = respuesta[0].map(item => item.nombre);
 
             console.log(respuesta);
             socket.emit('suggestions', respuesta);

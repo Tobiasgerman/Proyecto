@@ -1,0 +1,212 @@
+body {
+    background-color: #e40b0b;
+     height: 100%;
+     width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: "Nokoro", sans-serif;
+}
+
+.log {
+    position: absolute;
+    top: 45px;
+    left: 460px;
+    height: 50px;
+    width: 50px;
+}
+
+.f1 {
+    position: absolute;
+    top: 45px;
+    right: 380px;
+}
+
+.inf {
+    position: absolute;
+    top: 45px;
+    right: 320px;
+    height: 50px;
+    width: 50px;
+    
+}
+
+.aju {
+    position: absolute;
+    top: 45px;
+    right: 270px;
+    height: 50px;
+    width: 50px;
+}
+
+.aui {
+    position: absolute;
+    top: 300px;
+    left: 20px;
+}
+
+.aud {
+    position: absolute;
+    top: 380px;
+    right: 20px;
+}
+
+
+
+.contenedor{
+    margin-top: -5%;
+}
+header {
+    background-color: #bb0a0a ;
+    width: 100%;
+    margin-top: 0;
+    padding: 0;
+    height: 100px;
+    
+}
+
+.title {
+    position: relative;
+    top: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 40px;
+    font-family: "Bungee Inline", sans-serif;
+    
+}
+
+
+.cuadradogris {
+    background-color: lightgray;
+    padding: 20px;
+    border-radius: 50px;
+    width: 500px;
+    margin: 20px auto;
+    text-align: center;
+}
+
+.h2 {
+    margin-bottom: 20px;
+    font-size: 18px;
+}
+
+.Cuadrados {
+    display: grid;
+    width: 100%;
+    grid-template-columns: repeat(3, 1fr);
+    gap: .5rem;
+}
+
+.cuadradodecolor {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    border: 1px solid black;
+}
+
+.rojo { background-color: red; }
+.amarillo { background-color: yellow; }
+.verde { background-color: green; }
+
+.flechas {
+    margin-bottom: 20px;
+}
+.adivinar {
+    text-decoration: underline;
+}
+
+.input-section {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    
+}
+
+input[type="text"] {
+    padding: 5px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    width: 270px;
+    text-align: centers;
+    
+    
+}
+
+.parteinput {
+    display: flex;
+    justify-content: center;
+}
+
+button {
+    padding: 5px 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: none;
+    background-color: limegreen;
+    cursor: pointer;
+
+}
+
+
+
+.squares-container {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    justify-items: center;
+    align-items: center;
+    gap: 50px;
+    margin-top: 20px;
+}
+
+.item {
+    text-align: center;
+   
+}
+
+.categoria {
+    margin-bottom: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    text-decoration: underline;
+    color: black;
+    text-align: center;
+    background-color: transparent;
+}
+
+.Cuadrado1, .Cuadrado2, .Cuadrado3, .Cuadrado4, .Cuadrado5 {
+    width: 200px;
+    height: 150px;
+    border-radius: 40px;
+    background-color: white;
+    border: 2px solid black;
+    
+    }
+
+#suggestions-container {
+    border: 1px solid #ccc;
+    max-height: 150px;
+    overflow-y: auto;
+    position: absolute;
+    background-color: white;
+    width: 100%;
+}
+
+.suggestion-item {
+    padding: 8px;
+    cursor: pointer;
+}
+
+.suggestion-item:hover {
+    background-color: #f0f0f0;
+}
+
+h3, h4, h5, h6 {
+    font-size: 20px;
+    font-weight: bolder;
+    margin: 10px 0;
+}
+p {
+    background-color: #44efd0;
+}

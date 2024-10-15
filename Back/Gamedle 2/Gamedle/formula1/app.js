@@ -1,6 +1,6 @@
 const axios = require('axios');
 const https = require('https');
-const { formula1 } = require('../sequelize/models'); // Asegúrate de que la ruta al modelo sea correcta
+const { formula1 } = require('../sequelize/models'); 
 const sequelize = require('../sequelize/sequelize');
 sequelize.sync();
 module.exports = () => {
@@ -13,7 +13,7 @@ module.exports = () => {
                 order: sequelize.random(),
                 limit: 10,
             });
-
+ 
             if (jugadores.length === 0) {
                 throw new Error('No se encontraron jugadores.');
             }
