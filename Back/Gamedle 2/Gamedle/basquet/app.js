@@ -78,6 +78,10 @@ module.exports = () => {
             let resultadoPais = coincidenciaPais ? 'Verde' : 'Rojo';
             let resultadoEquipo = coincidenciaEquipo ? 'Verde' : 'Rojo';
             let resultadoCamiseta = coincidenciaCamiseta ? 'Verde' : 'Rojo';
+            let MayorMenor;
+            if(jugadorElegido.camiseta < jugadorAleatorio.camiseta){
+                MayorMenor = "mayor"
+            }
             console.log(resultadoPais);
             console.log(jugadorElegido.pais);
             console.log(jugadorAleatorio.pais);
@@ -86,8 +90,9 @@ module.exports = () => {
                 return res.json({ message: `Perdiste! El jugador era: ${jugadorAleatorio.nombre}` });
             } else {
                 res.json({
+                    MayorMenor : MayorMenor,
                     nombre: resultadoNombre,
-                    pais: resultadoPais,
+                    pais: resultadoPais, 
                     equipo: resultadoEquipo,
                     camiseta: resultadoCamiseta,
                     intentos
