@@ -35,7 +35,7 @@ const {iniciarJuegoFormula1, adivinarJugadorFormula1} = require('./formula1/app'
 app.post('/iniciarJuegoBasquet', iniciarJuegoBasquet);
 app.post('/adivinarJugadorBasquet', adivinarJugadorBasquet);
 app.post('/iniciarJuegoFormula1', iniciarJuegoFormula1);
-app.post('/adivinarJugaFormula1', adivinarJugadorFormula1);
+app.post('/adivinarJugadorFormula1', adivinarJugadorFormula1);
 io.on('connection', (socket) => {
     console.log('Client connected: ' + socket.id);
 

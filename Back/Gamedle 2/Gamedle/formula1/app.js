@@ -29,7 +29,7 @@ module.exports = () => {
 
     async function obtenerJugadorSolicitado(jugador) {
         try {
-            let jugadorElegido = await basquet.findOne({
+            let jugadorElegido = await formula1.findOne({
                 where: { nombre: jugador }
             });
             return jugadorElegido;
@@ -72,6 +72,8 @@ module.exports = () => {
         let coincidenciaNacionalidad = jugadorElegido.nacionalidad === jugadorAleatorio.nacionalidad;
         let coincidenciaNacimiento = jugadorElegido.fechaNacimiento === jugadorAleatorio.fechaNacimiento;
         let coincidenciaNumero = jugadorElegido.numero === jugadorAleatorio.numero;
+        console.log(jugadorElegido.pais);
+        console.log(jugadorAleatorio.pais);
 
 
 
@@ -85,13 +87,14 @@ module.exports = () => {
             let resultadoNacimiento = coincidenciaNacimiento ? 'Verde' : 'Rojo';
             let resultadoNumero = coincidenciaNumero ? 'Verde' : 'Rojo';
 
+
             if (intentos >= 5) {
                 return res.json({ message: `Perdiste! El jugador era: ${jugadorAleatorio.nombre}` });
             } else {
                 res.json({
                     nombre: resultadoNombre,
                     apellido :  resultadoApellido,
-                    nacionalidad: resultadoNacionalidad,
+                    pais: resultadoNacionalidad,
                     nacimiento: resultadoNacimiento,
                     numero: resultadoNumero,
                     intentos

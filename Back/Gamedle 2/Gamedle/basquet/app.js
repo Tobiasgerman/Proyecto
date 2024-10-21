@@ -78,7 +78,9 @@ module.exports = () => {
             let resultadoPais = coincidenciaPais ? 'Verde' : 'Rojo';
             let resultadoEquipo = coincidenciaEquipo ? 'Verde' : 'Rojo';
             let resultadoCamiseta = coincidenciaCamiseta ? 'Verde' : 'Rojo';
-            console.log(resultadoEquipo);
+            console.log(resultadoPais);
+            console.log(jugadorElegido.pais);
+            console.log(jugadorAleatorio.pais);
 
             if (intentos >= 5) {
                 return res.json({ message: `Perdiste! El jugador era: ${jugadorAleatorio.nombre}` });

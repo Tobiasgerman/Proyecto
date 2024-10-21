@@ -33,7 +33,7 @@ async function iniciarJuego() {
     try {
         const modoConocido = prompt('Elige el modo de juego:\n1. Juegos Conocidos\n2. Todos los Juegos') === '1';
 
-        const iniciarJuegoResponse = await fetch(`${URL}/iniciarJuegoBasquet`, {
+        const iniciarJuegoResponse = await fetch(`${URL}/iniciarJuegoFormula1`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -61,7 +61,7 @@ async function adivinarJuego() {
     }
 
     try {
-        const response = await fetch(`${URL}/adivinarJuegoBasquet`, {
+        const response = await fetch(`${URL}/adivinarJugadorFormula1`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
