@@ -1463,3 +1463,6 @@ grasa
 volta
 muera
 borde
+rodea
+cabro
+cabra
