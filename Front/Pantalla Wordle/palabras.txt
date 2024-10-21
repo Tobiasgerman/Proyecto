@@ -11,6 +11,11 @@ pieza
 pilas
 borre
 abaco
+sales
+mares
+choco
+moños
+chata
 lujan
 manga
 lilas
