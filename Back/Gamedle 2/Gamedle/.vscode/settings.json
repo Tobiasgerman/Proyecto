@@ -10,11 +10,7 @@
             "port": 3306,
             "driver": "MySQL",
             "name": "MultiWordle",
-<<<<<<< HEAD
-            "database": "Multiwordle",
-=======
             "database": "MultiWordle",
->>>>>>> 644dfe1623305f27ab0013c808c2133dffd3b242
             "username": "root"
         }
     ]

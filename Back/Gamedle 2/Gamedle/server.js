@@ -7,7 +7,7 @@ const http = require('http');
 const { Sequelize } = require('sequelize');
 const socketio = require('socket.io');
 const dotenv = require('dotenv');
-const { basquet } = require('./sequelize/models');
+const { Paises} = require('./sequelize/models');
 
 dotenv.config();
 
@@ -28,14 +28,62 @@ const sequelize = new Sequelize('MultiWordle', 'root', 'root', {
     dialect: 'mysql',
 });
 
-// Importa la lógica del juego
 const { iniciarJuegoBasquet, adivinarJugadorBasquet } = require('./basquet/app')(sequelize);
 const {iniciarJuegoFormula1, adivinarJugadorFormula1} = require('./formula1/app')(sequelize);
+const {paisAleatorio, paises} = require('./Mundle/app')(sequelize);
 
 app.post('/iniciarJuegoBasquet', iniciarJuegoBasquet);
 app.post('/adivinarJugadorBasquet', adivinarJugadorBasquet);
 app.post('/iniciarJuegoFormula1', iniciarJuegoFormula1);
 app.post('/adivinarJugadorFormula1', adivinarJugadorFormula1);
+app.post('/distancia' , async (req, res) => {
+    const { paisElegido, paisAleatorio } = req.body;
+    try {
+        const resultado = await obtenerDatos(paisElegido, paisAleatorio);
+        res.json(resultado);
+    } catch (error) {
+        res.status(500).send(error.message);
+    }});
+
+app.get('/paises', paises);
+app.get('/pais-aleatorio', paisAleatorio);
+
+
+async function obtenerCoordenadas(paisNombre) {
+    const pais = await Paises.findOne({ where: { nombre: paisNombre } });
+    if (pais) {
+        return { latitude: pais.latitud, longitude: pais.longitud };
+    } else {
+        console.log("País no encontrado");
+    }
+}
+
+function calcularDistancia(origen, destino) {
+    return geolib.getDistance(origen, destino) / 1000;
+}
+
+function calcularDireccion(origen, destino) {
+    return geolib.getCompassDirection(origen, destino);
+}
+
+function generarPaisAleatorio(paises) {
+    return paises[Math.floor(Math.random() * paises.length)];
+}
+
+async function obtenerDistanciaEntrePaises(paisElegido, paisAleatorio) {
+    const origen = await obtenerCoordenadas(paisElegido.nombre);
+    const destino = await obtenerCoordenadas(paisAleatorio.nombre);
+    const distancia = calcularDistancia(origen, destino);
+    const direccion = calcularDireccion(origen, destino);
+    return { origen, destino, distancia: Math.round(distancia), direccion };
+}
+
+async function obtenerDatos(paisElegido, paisAleatorio) {
+    let resultado = await obtenerDistanciaEntrePaises(paisElegido, paisAleatorio);
+    return { distancia: resultado.distancia, direccion: puntosCardinales[resultado.direccion] };
+}
+
+
 io.on('connection', (socket) => {
     console.log('Client connected: ' + socket.id);
 
@@ -65,6 +113,26 @@ io.on('connection', (socket) => {
             socket.emit('autocompleteError', error.message);
         }
     
+    });
+    socket.on('autocompleteMundle', async (query) => {
+        console.log('Autocompletando:', query);
+        try {
+            let respuesta = await Paises.findAll({
+                where: {
+                  nombre: {
+                    [Sequelize.Op.like]: `${query}%`
+                  }
+                },
+                limit: 10,
+                attributes: ['nombre']
+              });
+            respuesta  = respuesta.map(item => item.nombre) ;
+
+            socket.emit('suggestions', respuesta);
+        } catch (error) {
+            console.error('Error retrieving autocomplete results:', error);
+            socket.emit('autocompleteError', error.message);
+        }
     });
 
     socket.on('disconnect', () => {

@@ -15,9 +15,8 @@ const User = sequelize.define('usuarios', {
     type: DataTypes.INTEGER,
     allowNull: false,
   },
-},
-  {
-    timestamps: false,
+}, {
+  timestamps: false,
 });
 
 const Game = sequelize.define('juegos', {
@@ -29,17 +28,16 @@ const Game = sequelize.define('juegos', {
     type: DataTypes.DATE,
     allowNull: true,
   },
-  modoConocido: {   
+  modoConocido: {
     type: DataTypes.BOOLEAN,
     allowNull: false,
   },
-},
-{
+}, {
   timestamps: false,
-  });
+});
 
 const basquet = sequelize.define('basquet', {
-  id:{
+  id: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
     primaryKey: true,
@@ -60,35 +58,90 @@ const basquet = sequelize.define('basquet', {
     type: DataTypes.INTEGER,
     allowNull: false,
   },
-},
-{
-  timestamps: false, 
+}, {
+  timestamps: false,
   freezeTableName: true,
 });
+
 const formula1 = sequelize.define('formula1', {
-  nombre: { 
-    type: DataTypes.STRING, 
-    allowNull: false 
+  nombre: {
+    type: DataTypes.STRING,
+    allowNull: false,
   },
   apellido: {
     type: DataTypes.STRING,
-    allowNull: false 
-    },
+    allowNull: false,
+  },
   nacionalidad: {
     type: DataTypes.STRING,
-    allowNull: false 
+    allowNull: false,
   },
   fechaNacimiento: {
     type: DataTypes.DATEONLY,
-    allowNull: true 
+    allowNull: true,
   },
   numero: {
     type: DataTypes.STRING,
-    allowNull: true 
+    allowNull: true,
   },
 }, {
   timestamps: false,
   freezeTableName: true,
 });
 
-module.exports = { User, Game , basquet , formula1 };
+const tennis = sequelize.define('tennis', {
+  nombre: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  apellido: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  ranking: {
+    type: DataTypes.INTEGER,
+  },
+  nacionalidad: {
+    type: DataTypes.STRING,
+  },
+  cumpleaños: {
+    type: DataTypes.DATE,
+  },
+  manoDominante: {
+    type: DataTypes.STRING,
+  },
+  altura: {
+    type: DataTypes.INTEGER,
+  },
+  peso: {
+    type: DataTypes.INTEGER,
+  },
+}, {
+  timestamps: false,
+  freezeTableName: true,
+});
+
+const Paises = sequelize.define('Paises', {
+  nombre: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  latitud: {
+    type: DataTypes.FLOAT, 
+    allowNull: false,
+    },
+    longitud: {
+        type: DataTypes.FLOAT, 
+        allowNull: false,
+    },
+    imagen: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+},
+{
+  timestamps: false, 
+  });
+
+
+module.exports = { User, Game, basquet, formula1, tennis, Paises };
