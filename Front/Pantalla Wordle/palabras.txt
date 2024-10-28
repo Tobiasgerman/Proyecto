@@ -592,7 +592,19 @@ meneo
 menor
 menos
 mente
-merma
+burra
+barra
+alveo
+bruno
+malos
+malas
+vacas
+roman
+toman
+tomen
+lisas
+lisos
+bajon
 mesas
 meses
 meson
@@ -1479,3 +1491,4 @@ borde
 rodea
 cabro
 cabra
+bañar
