@@ -1,95 +1,99 @@
-const axios = require('axios');
-const { Futbol } = require('../sequelize/models');
+const { Futbol } = require('../sequelize/models'); // Asegúrate de que la ruta al modelo sea correcta
 const sequelize = require('../sequelize/sequelize');
+sequelize.sync();
+module.exports = () => {
+    let jugadorAleatorio;
+    let intentos = 0;
 
-// Configuración de la API
-const API_URL = 'https://api.football-data.org/v4/';
-const API_TOKEN = '20f15d7be30549db828caf69ed6a8258'; // Reemplaza con tu token de la API
-
-// Función para esperar un tiempo determinado
-function wait(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
-
-// Función para obtener la lista de ligas
-async function getLeagues() {
-    try {
-        const response = await axios.get(`${API_URL}competitions`, {
-            headers: { 'X-Auth-Token': API_TOKEN }
-        });
-        return response.data.competitions;
-    } catch (error) {
-        if (error.response) {
-            console.error('Error en la respuesta del servidor al obtener las ligas:', error.response.status);
-            await wait(60000); // Esperar 1 minuto
-            return getLeagues(); // Reintentar
-        } else {
-            console.error('Error al obtener las ligas:', error.message);
-        }
-        return [];
-    }
-}
-
-// Función para obtener la lista de equipos de una liga
-async function getTeams(leagueId) {
-    try {
-        const response = await axios.get(`${API_URL}competitions/${leagueId}/teams`, {
-            headers: { 'X-Auth-Token': API_TOKEN }
-        });
-        return response.data.teams;
-    } catch (error) {
-        if (error.response) {
-            console.error('Error en la respuesta del servidor al obtener los equipos:', error.response.status);
-            await wait(60000); // Esperar 1 minuto
-            return getTeams(leagueId); // Reintentar
-        } else {
-            console.error('Error al obtener los equipos:', error.message);
-        }
-        return [];
-    }
-}
-
-// Función para obtener la lista de jugadores y guardarlos en la base de datos
-async function getPlayers(teamId) {
-    try {
-        const response = await axios.get(`${API_URL}teams/${teamId}`, {
-            headers: { 'X-Auth-Token': API_TOKEN }
-        });
-
-        const players = response.data.squad;
-        for (const player of players) {
-            await Futbol.create({
-                nombre: player.name,
-                nacionalidad: player.nationality,
-                fechaNacimiento: player.dateOfBirth,
-                posicion: player.position,
-                numeroCamiseta: player.shirtNumber
+    async function obtenerListaJugadores() {
+        try {
+            let jugadores = await Futbol.findAll({
+                order: sequelize.random(),
+                limit: 10,
             });
-            console.log(`Guardado: ${player.name}`);
+
+            if (jugadores.length === 0) {
+                throw new Error('No se encontraron jugadores.');
+            }
+
+            let jugadorRandomIndex = Math.floor(Math.random() * jugadores.length);
+            console.log(jugadores[jugadorRandomIndex]);
+            return jugadores[jugadorRandomIndex];
+        } catch (error) {
+            console.error('Error al obtener la lista de jugadores:', error.message);
+            return null;
         }
-    } catch (error) {
-        if (error.response) {
-            console.error('Error en la respuesta del servidor al obtener los jugadores:', error.response.status);
-            await wait(60000); // Esperar 1 minuto
-            return getPlayers(teamId); // Reintentar
+    }
+
+    async function obtenerJugadorSolicitado(jugador) {
+        try {
+            let jugadorElegido = await Futbol.findOne({
+                where: { nombre: jugador }
+            });
+            return jugadorElegido;
+        } catch (error) {
+            console.error('Error al obtener el jugador solicitado:', error.message);
+            return null;
+        }
+    }
+
+    async function iniciarJuegoFutbol(req, res) {
+        jugadorAleatorio = await obtenerListaJugadores();
+
+        if (!jugadorAleatorio) {
+            return res.status(500).json({ error: 'No se pudo obtener un jugador aleatorio.' });
+        }
+        console.log(jugadorAleatorio);
+        
+        intentos = 0;
+
+        res.json({
+            message: 'Jugador aleatorio generado. ¡Adivina el jugador!',
+        });
+    }
+
+    async function adivinarJugadorFutbol(req, res) {
+        if (intentos >= 5) {
+            return res.json({ message: `Perdiste! El jugador era: ${jugadorAleatorio.nombre}` });
+            }
+        const jugador = req.body.nombre;   
+        console.log(jugador);
+        let jugadorElegido = await obtenerJugadorSolicitado(jugador);
+        console.log(jugadorElegido);
+
+        if (!jugadorElegido) {
+            return res.json({ error: 'Jugador no encontrado.' });
+        }
+        let coincidenciaNacionalidad = jugadorElegido.nacionalidad === jugadorAleatorio.nacionalidad;
+        let coincidenciaFechaNacimiento = jugadorElegido.fechaNacimiento === jugadorAleatorio.fechaNacimiento;
+        let coincidenciaPosicion = jugadorElegido.posicion === jugadorAleatorio.posicion;
+        let nacimientoMayor = jugadorElegido.fechaNacimiento >= jugadorAleatorio.fechaNacimiento ?  true : false;
+
+
+        if (jugadorElegido.nombre === jugadorAleatorio.nombre) {
+            return res.json({ message: `Ganaste el jugador Aleatorio era ${jugadorAleatorio.nombre}` });
         } else {
-            console.error('Error al obtener los jugadores:', error.message);
+            intentos++;
+            let resultadoNombre = 'Rojo';
+            let resultadoNacionalidad = coincidenciaNacionalidad ? 'Verde' : 'Rojo';
+            let resultadoNacimiento = coincidenciaFechaNacimiento ? 'Verde' : 'Rojo';
+            let resultadoPosicion = coincidenciaPosicion ? 'Verde' : 'Rojo';
+
+
+            if (intentos >= 5) {
+                return res.json({ message: `Perdiste! El jugador era: ${jugadorAleatorio.nombre}` });
+            } else {
+                res.json({
+                    nombre: resultadoNombre,
+                    nacionalidad: resultadoNacionalidad, 
+                    nacimiento : resultadoNacimiento,
+                    posicion: resultadoPosicion,
+                    nacimientoMayor : nacimientoMayor,
+                    intentos
+                });
+            }
         }
     }
-}
 
-// Función principal para obtener jugadores de todos los equipos de las ligas conocidas
-async function getAllPlayers() {
-    const leagues = await getLeagues();
-    for (const league of leagues) {
-        const teams = await getTeams(league.id);
-        for (const team of teams) {
-            await getPlayers(team.id);
-        }
-    }
-}
-
-// Sincronizar el modelo y llamar a la función principal
-sequelize.sync().then(() => {
-    getAllPlayers();
-});
+    return { iniciarJuegoFutbol, adivinarJugadorFutbol };
+};

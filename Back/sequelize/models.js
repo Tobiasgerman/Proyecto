@@ -160,10 +160,6 @@ const Paises = sequelize.define('Paises', {
         type: DataTypes.STRING,
         allowNull: false
     },
-    numeroCamiseta: {
-        type: DataTypes.INTEGER,
-        allowNull: true
-    },
   },
     {
     timestamps: false,

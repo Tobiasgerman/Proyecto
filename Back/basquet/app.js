@@ -1,5 +1,3 @@
-const axios = require('axios');
-const https = require('https');
 const { basquet } = require('../sequelize/models'); // Asegúrate de que la ruta al modelo sea correcta
 const sequelize = require('../sequelize/sequelize');
 sequelize.sync();
@@ -69,6 +67,8 @@ module.exports = () => {
         let coincidenciaPais = jugadorElegido.pais === jugadorAleatorio.pais;
         let coincidenciaEquipo = jugadorElegido.equipo === jugadorAleatorio.equipo;
         let coincidenciaCamiseta = jugadorElegido.camiseta === jugadorAleatorio.camiseta;
+        let camisetaMayor = jugadorElegido.numeroCamiseta >= jugadorAleatorio.numeroCamiseta ? true : false;
+
 
         if (jugadorElegido.nombre === jugadorAleatorio.nombre) {
             return res.json({ message: '¡Ganaste!' });
@@ -78,10 +78,8 @@ module.exports = () => {
             let resultadoPais = coincidenciaPais ? 'Verde' : 'Rojo';
             let resultadoEquipo = coincidenciaEquipo ? 'Verde' : 'Rojo';
             let resultadoCamiseta = coincidenciaCamiseta ? 'Verde' : 'Rojo';
-            let MayorMenor;
-            if(jugadorElegido.camiseta < jugadorAleatorio.camiseta){
-                MayorMenor = "mayor"
-            }
+
+
             console.log(resultadoPais);
             console.log(jugadorElegido.pais);
             console.log(jugadorAleatorio.pais);
@@ -90,7 +88,7 @@ module.exports = () => {
                 return res.json({ message: `Perdiste! El jugador era: ${jugadorAleatorio.nombre}` });
             } else {
                 res.json({
-                    MayorMenor : MayorMenor,
+                    camisetaMayor : camisetaMayor,
                     nombre: resultadoNombre,
                     pais: resultadoPais, 
                     equipo: resultadoEquipo,

@@ -30,14 +30,16 @@ const sequelize = new Sequelize('MultiWordle', 'root', 'root', {
 
 const { iniciarJuegoBasquet, adivinarJugadorBasquet } = require('./basquet/app')(sequelize);
 const {iniciarJuegoFormula1, adivinarJugadorFormula1} = require('./formula1/app')(sequelize);
+const {iniciarJuegoFutbol, adivinarJugadorFutbol} = require('./futbol/app')(sequelize);
 const {paisAleatorio, paises, distancia} = require('./Mundle/app')(sequelize);
 
 app.post('/iniciarJuegoBasquet', iniciarJuegoBasquet);
 app.post('/adivinarJugadorBasquet', adivinarJugadorBasquet);
 app.post('/iniciarJuegoFormula1', iniciarJuegoFormula1);
 app.post('/adivinarJugadorFormula1', adivinarJugadorFormula1);
+app.post('/iniciarJuegoFutbol', iniciarJuegoFutbol);
+app.post('/adivinarJugadorFutbol', adivinarJugadorFutbol);
 app.post('/distancia' , distancia );
-
 app.get('/paises', paises);
 app.get('/pais-aleatorio', paisAleatorio);
 
@@ -81,11 +83,12 @@ io.on('connection', (socket) => {
     console.log('Client connected: ' + socket.id);
 
     socket.on('autocomplete', async (query, gamedle) => {
-        console.log('Autocompletando:', query);
+        console.log('Autocompletando:', query, gamedle);
+
         try {
             let respuesta;  
-            if(gamedle == 'basquet' || gamedle =='futbol' || gamedle == 'tennis' || gamedle =='formula1' ||  gamedle == 'celebridades'){
-                if(gamedle == 'basquet'){
+            if(gamedle == 'basquet' || gamedle =='Futbol' || gamedle == 'tennis' || gamedle =='formula1' ||  gamedle == 'celebridades'){
+                if(gamedle != 'formula1'){
                     respuesta = await sequelize.query(
                     `SELECT nombre FROM ${gamedle} WHERE nombre LIKE '${query}%' LIMIT 10`,
                 );
