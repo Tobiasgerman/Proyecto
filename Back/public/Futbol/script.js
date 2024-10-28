@@ -6,39 +6,14 @@ const suggestionsContainer = document.getElementById('suggestions-container');
 const squares = document.querySelectorAll('.squares-container .item div');
 const socket = io("http://localhost:3000");
 const URL = "http://localhost:3000";
-let username;
-let juego = prompt("Que queres jugar (1.Basquet , 2. Tennis , 3. Futbol , 4. Formula 1 , 5. Celebridades)");
-switch (juego){
-    case "1":
-        break;
-    case "2":
-        document.location.href("./tenis/tennis.html");
-        break;
-    case "3":
-        iniciarJuego();
-        break;
-    case "4":
-        iniciarJuego();
-        break;
-    case "5":
-        iniciarJuego();
-        break;
-    default:
-        alert("Opcion invalida");
-        break;
-}
-username = prompt('Ingresa tu nombre de usuario:');
 
 async function iniciarJuego() {
     try {
-        const modoConocido = prompt('Elige el modo de juego:\n1. Juegos Conocidos\n2. Todos los Juegos') === '1';
-
-        const iniciarJuegoResponse = await fetch(`${URL}/iniciarJuegoFormula1`, {
+        const iniciarJuegoResponse = await fetch(`${URL}/iniciarJuegoFutbol`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ modoConocido })
         });
 
         const iniciarJuegoData = await iniciarJuegoResponse.json();
@@ -61,7 +36,7 @@ async function adivinarJuego() {
     }
 
     try {
-        const response = await fetch(`${URL}/adivinarJugadorFormula1`, {
+        const response = await fetch(`${URL}/adivinarJugadorFutbol`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -91,12 +66,14 @@ async function adivinarJuego() {
             console.log(data.nombre);
             updateSquareColor(squares[0], data.nombre);
             console.log(data.pais);
-            updateSquareColor(squares[1], data.pais);
+            updateSquareColor(squares[1], data.nacionalidad);
             console.log(data.equipo);
-            updateSquareColor(squares[2], data.equipo);
-            console.log(data.camiseta);
-            updateSquareColor(squares[3], data.camiseta);
-            input.value = '';
+            updateSquareColor(squares[2], data.nacimiento);
+            if(data.nacimiento != 'Verde'){
+                document.getElementsByClassName('mayorMenor')[0].textContent = data.mayorMenor == true ? 'Mayor' : 'Menor';
+            }
+            updateSquareColor(squares[3], data.posicion);
+
         }
     } catch (error) {
         console.error('Error al adivinar el juego:', error);
@@ -123,7 +100,7 @@ document.addEventListener('keyup', (event) => {
 input.addEventListener('input', () => {
     const query = input.value.trim();
     if (query) {
-        socket.emit('autocomplete', query, 'basquet');
+        socket.emit('autocomplete', query, 'Futbol');
         console.log('Emitiendo:', query);
     }
 });
