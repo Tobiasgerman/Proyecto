@@ -1,2 +1,0 @@
-ALTER TABLE paises
-ADD COLUMN imagen TEXT;
