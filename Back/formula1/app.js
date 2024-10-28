@@ -2,7 +2,6 @@ const axios = require('axios');
 const https = require('https');
 const { formula1 } = require('../sequelize/models'); 
 const sequelize = require('../sequelize/sequelize');
-sequelize.sync();
 module.exports = () => {
     let jugadorAleatorio;
     let intentos = 0;
@@ -40,6 +39,8 @@ module.exports = () => {
     }
 
     async function iniciarJuegoFormula1(req, res) {
+        formula1.sync();
+
         jugadorAleatorio = await obtenerListaJugadores();
 
         if (!jugadorAleatorio) {
@@ -71,7 +72,9 @@ module.exports = () => {
         let coincidenciaApellido = jugadorElegido.apellido === jugadorAleatorio.apellido;
         let coincidenciaNacionalidad = jugadorElegido.nacionalidad === jugadorAleatorio.nacionalidad;
         let coincidenciaNacimiento = jugadorElegido.fechaNacimiento === jugadorAleatorio.fechaNacimiento;
+        let nacimientoMayor = jugadorElegido.fechaNacimiento >= jugadorAleatorio.fechaNacimiento ? true : false;
         let coincidenciaNumero = jugadorElegido.numero === jugadorAleatorio.numero;
+        let numeroMayor = jugadorElegido.numero >= jugadorAleatorio.numero ? true : false;
         console.log(jugadorElegido.pais);
         console.log(jugadorAleatorio.pais);
 
@@ -97,6 +100,8 @@ module.exports = () => {
                     pais: resultadoNacionalidad,
                     nacimiento: resultadoNacimiento,
                     numero: resultadoNumero,
+                    nacimientoMayor : nacimientoMayor,
+                    numeroMayor : numeroMayor,
                     intentos
                 });
             }

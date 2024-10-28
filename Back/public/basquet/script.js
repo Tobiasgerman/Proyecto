@@ -6,41 +6,16 @@ const suggestionsContainer = document.getElementById('suggestions-container');
 const squares = document.querySelectorAll('.squares-container .item div');
 const socket = io("http://localhost:3000");
 const URL = "http://localhost:3000";
-let username;
-let juego = prompt("Que queres jugar (1.Basquet , 2. Tennis , 3. Futbol , 4. Formula 1 , 5. Celebridades)");
-switch (juego){
-    case "1":
-        iniciarJuego();
-        break;
-    case "2":
-        document.location.href("./tenis/tennis.html");
-        break;
-    case "3":
-        iniciarJuegoFutbol();
-        break;
-    case "4":
-        iniciarJuegoFormula1();
-        break;
-    case "5":
-        iniciarJuegoCelebridades();
-        break;
-    default:
-        alert("Opcion invalida");
-        iniciarJuego();
-        break;
-}
-username = prompt('Ingresa tu nombre de usuario:');
+
+
 
 async function iniciarJuego() {
     try {
-        const modoConocido = prompt('Elige el modo de juego:\n1. Juegos Conocidos\n2. Todos los Juegos') === '1';
-
         const iniciarJuegoResponse = await fetch(`${URL}/iniciarJuegoBasquet`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ modoConocido })
         });
 
         const iniciarJuegoData = await iniciarJuegoResponse.json();

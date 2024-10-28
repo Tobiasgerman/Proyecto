@@ -94,7 +94,7 @@ io.on('connection', (socket) => {
                 );
                 } else {
                     respuesta = await sequelize.query(
-                        `SELECT nombreCompleto FROM ${gamedle} WHERE nombreCompleto LIKE '${query}%' LIMIT 10`,
+                        `SELECT nombreCompleto FROM formula1 WHERE nombreCompleto LIKE '${query}%' LIMIT 10`,
                     );
                 }
                 respuesta = respuesta[0].map(item => item.nombre);

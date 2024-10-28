@@ -72,6 +72,10 @@ const formula1 = sequelize.define('formula1', {
     type: DataTypes.STRING,
     allowNull: false,
   },
+  nombreCompleto: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
   nacionalidad: {
     type: DataTypes.STRING,
     allowNull: false,

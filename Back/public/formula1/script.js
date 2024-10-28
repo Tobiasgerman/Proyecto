@@ -8,9 +8,10 @@ const socket = io("http://localhost:3000");
 const URL = "http://localhost:3000";
 
 
+
 async function iniciarJuego() {
     try {
-        const iniciarJuegoResponse = await fetch(`${URL}/iniciarJuegoFutbol`, {
+        const iniciarJuegoResponse = await fetch(`${URL}/iniciarJuegoFormula1`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -37,14 +38,13 @@ async function adivinarJuego() {
     }
 
     try {
-        const response = await fetch(`${URL}/adivinarJugadorFutbol`, {
+        const response = await fetch(`${URL}/adivinarJugadorFormula1`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({ nombre: gameName})
         });
-        console.log(response);
 
         const data = await response.json();
         if (data.error) {
@@ -66,15 +66,11 @@ async function adivinarJuego() {
         } else {
             console.log(data.nombre);
             updateSquareColor(squares[0], data.nombre);
-            console.log(data.pais);
-            updateSquareColor(squares[1], data.nacionalidad);
-            console.log(data.equipo);
-            updateSquareColor(squares[2], data.nacimiento);
-            if(data.nacimiento != 'Verde'){
-                document.getElementsByClassName('mayorMenor')[0].textContent = data.mayorMenor == true ? 'Mayor' : 'Menor';
-            }
-            updateSquareColor(squares[3], data.posicion);
-
+            updateSquareColor(squares[1], data.apellido);
+            updateSquareColor(squares[2], data.nacionalidad);
+            updateSquareColor(squares[3], data.fechaNacimiento);
+            updateSquareColor(squares[4], data.numero);
+            input.value = '';
         }
     } catch (error) {
         console.error('Error al adivinar el juego:', error);
@@ -101,7 +97,7 @@ document.addEventListener('keyup', (event) => {
 input.addEventListener('input', () => {
     const query = input.value.trim();
     if (query) {
-        socket.emit('autocomplete', query, 'Futbol');
+        socket.emit('autocomplete', query, 'formula1');
         console.log('Emitiendo:', query);
     }
 });
