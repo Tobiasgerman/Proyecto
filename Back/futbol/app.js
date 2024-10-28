@@ -6,6 +6,11 @@ const sequelize = require('../sequelize/sequelize');
 const API_URL = 'https://api.football-data.org/v4/';
 const API_TOKEN = '20f15d7be30549db828caf69ed6a8258'; // Reemplaza con tu token de la API
 
+// Función para esperar un tiempo determinado
+function wait(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 // Función para obtener la lista de ligas
 async function getLeagues() {
     try {
@@ -14,7 +19,13 @@ async function getLeagues() {
         });
         return response.data.competitions;
     } catch (error) {
-        console.error('Error al obtener las ligas:', error);
+        if (error.response) {
+            console.error('Error en la respuesta del servidor al obtener las ligas:', error.response.status);
+            await wait(60000); // Esperar 1 minuto
+            return getLeagues(); // Reintentar
+        } else {
+            console.error('Error al obtener las ligas:', error.message);
+        }
         return [];
     }
 }
@@ -27,7 +38,13 @@ async function getTeams(leagueId) {
         });
         return response.data.teams;
     } catch (error) {
-        console.error('Error al obtener los equipos:', error);
+        if (error.response) {
+            console.error('Error en la respuesta del servidor al obtener los equipos:', error.response.status);
+            await wait(60000); // Esperar 1 minuto
+            return getTeams(leagueId); // Reintentar
+        } else {
+            console.error('Error al obtener los equipos:', error.message);
+        }
         return [];
     }
 }
@@ -51,7 +68,13 @@ async function getPlayers(teamId) {
             console.log(`Guardado: ${player.name}`);
         }
     } catch (error) {
-        console.error('Error al obtener los jugadores:', error);
+        if (error.response) {
+            console.error('Error en la respuesta del servidor al obtener los jugadores:', error.response.status);
+            await wait(60000); // Esperar 1 minuto
+            return getPlayers(teamId); // Reintentar
+        } else {
+            console.error('Error al obtener los jugadores:', error.message);
+        }
     }
 }
 
