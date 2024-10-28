@@ -20,6 +20,13 @@ fetch('fechas.txt')
 const confirmarFecha = () => {
     if (juegoTerminado) return; // No continuar si el juego ya terminó
 
+    // Ocultar imagen de easter egg si ya está visible
+    const imagenEasterEgg = document.getElementById('imagen-easter-egg');
+    if (imagenEasterEgg && imagenEasterEgg.querySelector('img')) {
+        imagenEasterEgg.innerHTML = ''; // Eliminar la imagen
+        return;
+    }
+
     const letras = filas[filaActual].querySelectorAll('.letra');
     if (letraActual !== 10) return; // No enviar si no hay una fecha completa (10 caracteres)
     
@@ -72,71 +79,55 @@ const confirmarFecha = () => {
     compararYAsignarColor(añoIngresado[2], añoCorrecto[2], 8, añoCorrecto.indexOf(añoIngresado[2]) !== -1, correctosUsados);
     compararYAsignarColor(añoIngresado[3], añoCorrecto[3], 9, añoCorrecto.indexOf(añoIngresado[3]) !== -1, correctosUsados);
 
-    if (fechaIngresada === '11-09-2001') /* atentado torres gemelas */ {
-        let imagen = document.getElementById('imagen-easter-egg');
-        imagen.innerHTML = '<img src="descarga(torres-gemelas).png" alt="Imagen" />';
+    // Mostrar imágenes de easter egg según la fecha ingresada
+    if (fechaIngresada === '11-09-2001') {
+        imagenEasterEgg.innerHTML = '<img src="descarga(torres-gemelas).png" alt="Imagen" />';
     }
-    if (fechaIngresada === '04-08-0070') /* destrucción del primer beit hamikdash */ {
-       let imagen = document.getElementById('imagen-easter-egg');
-       imagen.innerHTML = '<img src="descarga(beit-hamikdash-caida).png" alt="Imagen" />';
+    if (fechaIngresada === '04-08-0070') {
+       imagenEasterEgg.innerHTML = '<img src="descarga(beit-hamikdash-caida).png" alt="Imagen" />';
     }
-    if (fechaIngresada === '06-08-1945') /* hiroshima */ {
-        let imagen = document.getElementById('imagen-easter-egg');
-        imagen.innerHTML = '<img src="imagen(hiroshima).png" alt="Imagen" />';
+    if (fechaIngresada === '06-08-1945') {
+        imagenEasterEgg.innerHTML = '<img src="imagen(hiroshima).png" alt="Imagen" />';
     }
-    if (fechaIngresada === '09-08-1945') /* nagasaki */ {
-        let imagen = document.getElementById('imagen-easter-egg');
-        imagen.innerHTML = '<img src="descarga(nagasaki).png" alt="Imagen" />';
+    if (fechaIngresada === '09-08-1945') {
+        imagenEasterEgg.innerHTML = '<img src="descarga(nagasaki).png" alt="Imagen" />';
     }
-    if (fechaIngresada === '23-08-2008') /* cumple gandel */ {
-        let imagen = document.getElementById('imagen-easter-egg');
-        imagen.innerHTML = '<img src="cumple(gandel).png" alt="Imagen" />';
+    if (fechaIngresada === '23-08-2008') {
+        imagenEasterEgg.innerHTML = '<img src="cumple(gandel).png" alt="Imagen" />';
     }
-    if (fechaIngresada === '23-06-2009') /* cumple manu */ {
-        let imagen = document.getElementById('imagen-easter-egg');
-        imagen.innerHTML = '<img src="cumple(manu).png" alt="Imagen" />';
+    if (fechaIngresada === '23-06-2009') {
+        imagenEasterEgg.innerHTML = '<img src="cumple(manu).png" alt="Imagen" />';
     }
-    if (fechaIngresada === '22-12-2008') /* cumple tobi  */ {
-        let imagen = document.getElementById('imagen-easter-egg');
-        imagen.innerHTML = '<img src="cumple(tobi).png" alt="Imagen" />';
+    if (fechaIngresada === '22-12-2008') {
+        imagenEasterEgg.innerHTML = '<img src="cumple(tobi).png" alt="Imagen" />';
     }
-    if (fechaIngresada === '09-01-2009') /* cumple oneto */ {
-        let imagen = document.getElementById('imagen-easter-egg');
-        imagen.innerHTML = '<img src="cumple(oneto).png" alt="Imagen" />';
+    if (fechaIngresada === '09-01-2009') {
+        imagenEasterEgg.innerHTML = '<img src="cumple(oneto).png" alt="Imagen" />';
     }
-    if (fechaIngresada === '16-04-2009') /* cumple pipa */ {
-        let imagen = document.getElementById('imagen-easter-egg');
-        imagen.innerHTML = '<img src="cumple(pipa).png" alt="Imagen" />';
+    if (fechaIngresada === '16-04-2009') {
+        imagenEasterEgg.innerHTML = '<img src="cumple(pipa).png" alt="Imagen" />';
     }
-    if (fechaIngresada === '07-02-2023') /* creacion de skibidi toilet */ {
-        let imagen = document.getElementById('imagen-easter-egg');
-        imagen.innerHTML = '<img src="descarga (skibidi-toilet).png" alt="Imagen" />';
+    if (fechaIngresada === '07-02-2023') {
+        imagenEasterEgg.innerHTML = '<img src="descarga (skibidi-toilet).png" alt="Imagen" />';
     }
-    if (fechaIngresada === '26-09-2008') /* cumple sakito */ {
-        let imagen = document.getElementById('imagen-easter-egg');
-        imagen.innerHTML = '<img src="cumple(sakito).png" alt="Imagen" />';
+    if (fechaIngresada === '26-09-2008') {
+        imagenEasterEgg.innerHTML = '<img src="cumple(sakito).png" alt="Imagen" />';
     }
-    if (fechaIngresada === '01-12-2019') /* creacion de aieka monta*/ {
-        let imagen = document.getElementById('imagen-easter-egg');
-        imagen.innerHTML = '<img src="descarga(aieka).png" alt="Imagen" />';
+    if (fechaIngresada === '01-12-2019') {
+        imagenEasterEgg.innerHTML = '<img src="descarga(aieka).png" alt="Imagen" />';
     }
-    if (fechaIngresada === '26-04-1986') /* chernobyl */ {
-        let imagen = document.getElementById('imagen-easter-egg');
-        imagen.innerHTML = '<img src="descarga(chernobyl).png" alt="Imagen" />';
+    if (fechaIngresada === '26-04-1986') {
+        imagenEasterEgg.innerHTML = '<img src="descarga(chernobyl).png" alt="Imagen" />';
     }
-    if (fechaIngresada === '03-08-2008') /* cumple fogo */ {
-        let imagen = document.getElementById('imagen-easter-egg');
-        imagen.innerHTML = '<img src="cumple(fogo).png" alt="Imagen" />';
+    if (fechaIngresada === '03-08-2008') {
+        imagenEasterEgg.innerHTML = '<img src="cumple(fogo).png" alt="Imagen" />';
     }
-    if (fechaIngresada === '01-09-1939') /* invasion a polonia */ {
-        let imagen = document.getElementById('imagen-easter-egg');
-        imagen.innerHTML = '<img src="descarga(invasion-polonia).png" alt="Imagen" />';
+    if (fechaIngresada === '01-09-1939') {
+        imagenEasterEgg.innerHTML = '<img src="descarga(invasion-polonia).png" alt="Imagen" />';
     }
-    if (fechaIngresada === '10-05-2009') /* cumple simi */ {
-        let imagen = document.getElementById('imagen-easter-egg');
-        imagen.innerHTML = '<img src="cumple(simi).png" alt="Imagen" />'; 
+    if (fechaIngresada === '10-05-2009') {
+        imagenEasterEgg.innerHTML = '<img src="cumple(simi).png" alt="Imagen" />'; 
     }
-    
     
     if (fechaIngresada === fechaCorrecta) {
         mensajeFinal = `¡Felicidades! Has descubierto la fecha correcta: ${fechaCorrecta}.`;
@@ -170,41 +161,4 @@ document.addEventListener('keydown', e => {
     }
 });
 
-// Control de los botones en pantalla
-const teclas = document.querySelectorAll('.key');
-teclas.forEach(tecla => {
-    tecla.addEventListener('click', () => {
-        if (juegoTerminado) return;
-
-        const letras = filas[filaActual].querySelectorAll('.letra');
-        const key = tecla.dataset.key;
-
-        if (key === 'enter') {
-            confirmarFecha();
-        } else if (key === 'backspace' && letraActual > 0) {
-            letraActual--;
-            letras[letraActual].textContent = '';
-        } else if (letraActual < 10 && key.match(/^[0-9\-]$/)) {
-            letras[letraActual].textContent = key;
-            letraActual++;
-        }
-    });
-});
-
-// Botón "Enviar"
-const botonEnter = document.getElementById('enviar');
-botonEnter.addEventListener("click", function() {
-    confirmarFecha();
-});
-
-// Botón "Borrar"
-const botonBorrar = document.getElementById('borrar');
-botonBorrar.addEventListener("click", function() {
-    const letras = filas[filaActual].querySelectorAll('.letra');
-    if (letraActual > 0) {
-        letraActual--;
-        letras[letraActual].textContent = '';
-    }
-});
-
-document.getElementById('final').style.fontSize = "30px";
+document.getElementById('final').style.fontSize="30px";
