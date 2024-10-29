@@ -89,6 +89,10 @@ function updateSquareColor(square, status) {
         square.style.backgroundColor = 'green';
     }
 }
+document.addEventListener("click", () =>{
+    suggestionsContainer.innerHTML = '';
+    suggestionsContainer.style.display = 'none';
+});
 
 document.addEventListener('keyup', (event) => {
     if (event.key === 'Enter') {
@@ -102,9 +106,14 @@ input.addEventListener('input', () => {
         socket.emit('autocomplete', query, 'basquet');
         console.log('Emitiendo:', query);
     }
+    if(input.innerHTML == ""){
+        suggestionsContainer.innerHTML = '';
+        suggestionsContainer.style.display = 'none';
+    }
 });
 
 socket.on('suggestions', (suggestions) => {
+    if (suggestions && suggestions != undefined && suggestions != [] && suggestions != null & suggestions != ""){
     suggestionsContainer.innerHTML = '';
     console.log('Recibiendo:', suggestions);
     suggestionsContainer.style.display = 'block';
@@ -119,6 +128,11 @@ socket.on('suggestions', (suggestions) => {
         });
         suggestionsContainer.appendChild(suggestionElement);
     });
+} else{
+    suggestionsContainer.innerHTML = '';
+    suggestionsContainer.style.display = 'none';
+}
+
 });
 
 iniciarJuego();
