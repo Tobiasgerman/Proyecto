@@ -147,7 +147,11 @@ button:hover {
 main {
     max-width: auto;
     background-image: url('fondo.png');
-    background-size: contain;
-    min-height: 49rem;
-    
-}
+    height: 50rem;
+
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+  
