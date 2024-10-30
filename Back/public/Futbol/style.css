@@ -94,6 +94,7 @@ header {
     width: 100%;
     grid-template-columns: repeat(3, 1fr);
     gap: .5rem;
+     
 }
 
 .cuadradodecolor {
@@ -153,6 +154,8 @@ button {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     justify-items: center;
+    position: absolute;
+    left: 250px;
     align-items: center;
     gap: 50px;
     margin-top: 20px;
