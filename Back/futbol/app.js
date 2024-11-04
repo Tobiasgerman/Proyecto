@@ -17,7 +17,7 @@ module.exports = () => {
             }
 
             let jugadorRandomIndex = Math.floor(Math.random() * jugadores.length);
-            console.log(jugadores[jugadorRandomIndex]);
+            console.log(jugadores[jugadorRandomIndex].nombre)
             return jugadores[jugadorRandomIndex];
         } catch (error) {
             console.error('Error al obtener la lista de jugadores:', error.message);
@@ -39,12 +39,12 @@ module.exports = () => {
 
     async function iniciarJuegoFutbol(req, res) {
         jugadorAleatorio = await obtenerListaJugadores();
+        console.log(jugadorAleatorio.nombre);
 
         if (!jugadorAleatorio) {
             return res.status(500).json({ error: 'No se pudo obtener un jugador aleatorio.' });
         }
-        console.log(jugadorAleatorio);
-        
+    
         intentos = 0;
 
         res.json({
@@ -71,7 +71,17 @@ module.exports = () => {
 
 
         if (jugadorElegido.nombre === jugadorAleatorio.nombre) {
-            return res.json({ message: `Ganaste el jugador Aleatorio era ${jugadorAleatorio.nombre}` });
+            return res.json({ message: `Ganaste el jugador Aleatorio era ${jugadorAleatorio.nombre}`,
+                nombre: "Verde",
+                nacionalidad: "Verde", 
+                nacimiento : "Verde",
+                posicion: "Verde",
+                nacimientoMayor : "Verde",
+                intentos
+
+     });
+
+
         } else {
             intentos++;
             let resultadoNombre = 'Rojo';

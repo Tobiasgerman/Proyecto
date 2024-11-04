@@ -63,14 +63,6 @@ async function obtenerDatos(paisElegido, paisAleatorio) {
 }
 
 
-async function paises(req, res) {
-    try {
-        const paises = await obtenerLista();
-        res.json(paises);
-    } catch (error) {
-        res.status(500).send(error.message);
-    }
-};
 
 async function distancia(req, res) {
 
@@ -99,5 +91,5 @@ async function paisAleatorio(req, res) {
         res.status(500).send(error.message);
     }
     }
-    return {paisAleatorio, distancia, paises};
+    return {paisAleatorio, distancia};
 };

@@ -63,6 +63,13 @@ async function adivinarJuego() {
             alert(data.error);
         } else if (data.message) {
             alert(data.message);
+            console.log(data.nombre);
+            updateSquareColor(squares[0], data.nombre);
+            console.log(data.pais);
+            updateSquareColor(squares[1], data.nacionalidad);
+            console.log(data.equipo);
+            updateSquareColor(squares[2], data.nacimiento)
+            updateSquareColor(squares[3], data.posicion);
         } else {
             console.log(data.nombre);
             updateSquareColor(squares[0], data.nombre);

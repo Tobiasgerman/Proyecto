@@ -71,7 +71,19 @@ module.exports = () => {
 
 
         if (jugadorElegido.nombre === jugadorAleatorio.nombre) {
-            return res.json({ message: '¡Ganaste!' });
+            let resultadoNombre = 'Rojo';
+            let resultadoPais = coincidenciaPais ? 'Verde' : 'Rojo';
+            let resultadoEquipo = coincidenciaEquipo ? 'Verde' : 'Rojo';
+            let resultadoCamiseta = coincidenciaCamiseta ? 'Verde' : 'Rojo';
+
+            return res.json({ message: '¡Ganaste!' ,
+                camisetaMayor : camisetaMayor,
+                nombre: "Verde",
+                pais: "Verde", 
+                equipo: "Verde",
+                camiseta: "Verde",
+                intentos
+            });
         } else {
             intentos++;
             let resultadoNombre = 'Rojo';

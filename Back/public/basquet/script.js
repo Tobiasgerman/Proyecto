@@ -52,6 +52,14 @@ async function adivinarJuego() {
         }
         else if(data.message) {
             alert(data.message);
+            console.log(data.nombre);
+            updateSquareColor(squares[0], data.nombre);
+            console.log(data.pais);
+            updateSquareColor(squares[1], data.pais);
+            console.log(data.equipo);
+            updateSquareColor(squares[2], data.equipo);
+            console.log(data.camiseta);
+            updateSquareColor(squares[3], data.camiseta);
         if(data.timeTaken){
             alert(`Tu tiempo: ${data.timeTaken} segundos. Mejor tiempo: ${data.bestTime} segundos.`)
 

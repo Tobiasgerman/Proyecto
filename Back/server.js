@@ -31,7 +31,7 @@ const sequelize = new Sequelize('MultiWordle', 'root', 'root', {
 const { iniciarJuegoBasquet, adivinarJugadorBasquet } = require('./basquet/app')(sequelize);
 const {iniciarJuegoFormula1, adivinarJugadorFormula1} = require('./formula1/app')(sequelize);
 const {iniciarJuegoFutbol, adivinarJugadorFutbol} = require('./futbol/app')(sequelize);
-const {paisAleatorio, paises, distancia} = require('./Mundle/app')(sequelize);
+const {paisAleatorio, distancia} = require('./Mundle/app')(sequelize);
 
 app.post('/iniciarJuegoBasquet', iniciarJuegoBasquet);
 app.post('/adivinarJugadorBasquet', adivinarJugadorBasquet);
@@ -40,7 +40,6 @@ app.post('/adivinarJugadorFormula1', adivinarJugadorFormula1);
 app.post('/iniciarJuegoFutbol', iniciarJuegoFutbol);
 app.post('/adivinarJugadorFutbol', adivinarJugadorFutbol);
 app.post('/distancia' , distancia );
-app.get('/paises', paises);
 app.get('/pais-aleatorio', paisAleatorio);
 
 
