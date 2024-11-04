@@ -18,10 +18,10 @@ document.addEventListener("DOMContentLoaded", function() {
 
         // Verificar la opción seleccionada en "Deportistas" y redirigir
         if (OpcionGamedle === "Basket") {
-            window.location.href = "http://127.0.0.1:5500/Back/public/basquet";
+            window.location.href = "http://127.0.0.1:5500/Front/basquet";
         }
         else if (OpcionGamedle === "Futbol"){
-            window.location.href = "http://127.0.0.1:5500/Back/public/futbol"
+            window.location.href = "http://127.0.0.1:5500/Front/futbol"
         }
         else if (OpcionGamedle === "Formula 1") {
             window.location.href = "http://127.0.0.1:5500/Back/public/formula1";
