@@ -25,7 +25,6 @@ async function enviarRespuesta(paisElegido, paisAleatorio) {
 }
 
 async function jugar() {
-    const paises = await obtenerPaises();
     const paisAleatorio = await obtenerPaisAleatorio();
     console.log(paisAleatorio);
     const guessRows = document.querySelectorAll('.guess-row');

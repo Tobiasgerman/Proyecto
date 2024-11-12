@@ -90,6 +90,7 @@ header {
     gap: .5rem;
 }
 
+
 .cuadradodecolor {
     width: 20px;
     height: 20px;
@@ -150,6 +151,9 @@ button {
     align-items: center;
     gap: 50px;
     margin-top: 20px;
+    position: absolute;
+    left: 15%;
+    top: 80%;
 }
 
 .item {
@@ -183,6 +187,8 @@ button {
     position: absolute;
     background-color: white;
     width: 100%;
+
+
 }
 
 .suggestion-item {

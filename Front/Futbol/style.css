@@ -154,6 +154,8 @@ button {
     align-items: center;
     gap: 50px;
     margin-top: 20px;
+    position: absolute;
+    left: 15%;
 }
 
 .item {

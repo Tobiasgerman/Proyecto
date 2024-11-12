@@ -60,6 +60,10 @@ async function adivinarJuego() {
             updateSquareColor(squares[2], data.equipo);
             console.log(data.camiseta);
             updateSquareColor(squares[3], data.camiseta);
+            if(data.nacimiento != 'Verde'){
+                document.getElementsByClassName('mayorMenor')[0].textContent = data.mayorMenor == true ? 'Mayor' : 'Menor';
+            }
+            input.value = '';
         if(data.timeTaken){
             alert(`Tu tiempo: ${data.timeTaken} segundos. Mejor tiempo: ${data.bestTime} segundos.`)
 
@@ -80,6 +84,9 @@ async function adivinarJuego() {
             updateSquareColor(squares[2], data.equipo);
             console.log(data.camiseta);
             updateSquareColor(squares[3], data.camiseta);
+            if(data.nacimiento != 'Verde'){
+                document.getElementsByClassName('mayorMenor')[0].textContent = data.mayorMenor == true ? 'Mayor' : 'Menor';
+            }
             input.value = '';
         }
     } catch (error) {
