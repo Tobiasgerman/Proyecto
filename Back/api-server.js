@@ -413,18 +413,22 @@ app.post('/api/sports/:sport/guess', async (req, res) => {
             nationality: chosenPlayer.nationality === targetPlayer.nationality ? 'Verde' : 'Rojo',
             position: chosenPlayer.position === targetPlayer.position ? 'Verde' : 'Rojo',
             birthDate: chosenPlayer.birthDate === targetPlayer.birthDate ? 'Verde' : 'Rojo',
-            birthDateDirection: new Date(chosenPlayer.birthDate) > new Date(targetPlayer.birthDate) ? '⬇' : '⬆'
+            birthDateDirection: new Date(chosenPlayer.birthDate) > new Date(targetPlayer.birthDate) ? '⬇' : '⬆',
+            attempts: gameStates[sport].attempts,
+            chosenPlayer: {
+                name: chosenPlayer.name,
+                nationality: chosenPlayer.nationality,
+                position: chosenPlayer.position,
+                birthDate: chosenPlayer.birthDate
+            }
         };
 
         if (sport === 'formula1') {
             results.team = chosenPlayer.team === targetPlayer.team ? 'Verde' : 'Rojo';
+            results.chosenPlayer.team = chosenPlayer.team;
         }
 
-        res.json({
-            ...results,
-            attempts: gameStates[sport].attempts,
-            chosenPlayer: chosenPlayer.name
-        });
+        res.json(results);
     } catch (error) {
         console.error(`Error in ${sport} guess:`, error.message);
         res.status(500).json({ error: 'Failed to process guess' });

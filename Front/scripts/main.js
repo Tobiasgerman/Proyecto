@@ -420,11 +420,11 @@ function updateSportsGrid(data) {
     
     attributes.forEach(attr => {
         const element = document.getElementById(attr);
-        if (data[attr]) {
+        if (data[attr] !== undefined) {
             const className = data[attr] === 'Verde' ? 'correct' : 'incorrect';
             element.className = `attribute-value ${className}`;
             
-            let content = data.chosenPlayer || '-';
+            let content = data.chosenPlayer ? data.chosenPlayer[attr] : '-';
             if (attr === 'birthDate' && data.birthDateDirection) {
                 content += ` ${data.birthDateDirection}`;
             }
