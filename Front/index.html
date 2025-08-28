@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi Wordle - Juegos de Adivinanza</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <h1 class="main-title">Multi Wordle</h1>
+        <p class="subtitle">Elige tu juego de adivinanza favorito</p>
+    </header>
+
+    <main class="game-selection">
+        <div class="games-grid">
+            <div class="game-card" data-game="gamedle">
+                <div class="game-icon">🎮</div>
+                <h3>Gamedle</h3>
+                <p>Adivina el videojuego basándote en sus características</p>
+                <button class="play-btn" onclick="startGame('gamedle')">Jugar</button>
+            </div>
+
+            <div class="game-card" data-game="football">
+                <div class="game-icon">⚽</div>
+                <h3>Footble</h3>
+                <p>Adivina el jugador de fútbol por sus características</p>
+                <button class="play-btn" onclick="startGame('football')">Jugar</button>
+            </div>
+
+            <div class="game-card" data-game="basketball">
+                <div class="game-icon">🏀</div>
+                <h3>Basketle</h3>
+                <p>Adivina el jugador de basketball</p>
+                <button class="play-btn" onclick="startGame('basketball')">Jugar</button>
+            </div>
+
+            <div class="game-card" data-game="formula1">
+                <div class="game-icon">🏎️</div>
+                <h3>F1dle</h3>
+                <p>Adivina el piloto de Fórmula 1</p>
+                <button class="play-btn" onclick="startGame('formula1')">Jugar</button>
+            </div>
+
+            <div class="game-card" data-game="mundle">
+                <div class="game-icon">🌍</div>
+                <h3>Mundle</h3>
+                <p>Adivina el país basándote en la distancia</p>
+                <button class="play-btn" onclick="startGame('mundle')">Jugar</button>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Multi Wordle - Todos los derechos reservados</p>
+    </footer>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="scripts/main.js"></script>
+</body>
+</html>
