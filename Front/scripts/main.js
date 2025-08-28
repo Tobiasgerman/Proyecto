@@ -172,7 +172,7 @@ function createGameGrid(gameType) {
         `;
     } else {
         // Sports games
-        return `
+        let gridContent = `
             <div class="attribute-row">
                 <div class="attribute-label">Nombre</div>
                 <div id="name" class="attribute-value">-</div>
@@ -188,9 +188,27 @@ function createGameGrid(gameType) {
             <div class="attribute-row">
                 <div class="attribute-label">Fecha de Nacimiento</div>
                 <div id="birthDate" class="attribute-value">-</div>
-            </div>
-            ${gameType === 'formula1' ? '<div class="attribute-row"><div class="attribute-label">Equipo</div><div id="team" class="attribute-value">-</div></div>' : ''}
-        `;
+            </div>`;
+            
+        if (gameType === 'formula1') {
+            gridContent += `
+                <div class="attribute-row">
+                    <div class="attribute-label">Equipo</div>
+                    <div id="team" class="attribute-value">-</div>
+                </div>
+                <div class="attribute-row">
+                    <div class="attribute-label">Número</div>
+                    <div id="number" class="attribute-value">-</div>
+                </div>`;
+        } else if (gameType === 'football' || gameType === 'basketball') {
+            gridContent += `
+                <div class="attribute-row">
+                    <div class="attribute-label">Equipo</div>
+                    <div id="team" class="attribute-value">-</div>
+                </div>`;
+        }
+        
+        return gridContent;
     }
 }
 
@@ -414,19 +432,30 @@ function updateGamedleGrid(data) {
 
 function updateSportsGrid(data) {
     const attributes = ['name', 'nationality', 'position', 'birthDate'];
-    if (currentGame === 'formula1') {
+    
+    // Add team for all sports that have it
+    if (currentGame === 'formula1' || currentGame === 'football' || currentGame === 'basketball') {
         attributes.push('team');
+    }
+    
+    // Add number for Formula 1
+    if (currentGame === 'formula1') {
+        attributes.push('number');
     }
     
     attributes.forEach(attr => {
         const element = document.getElementById(attr);
-        if (data[attr] !== undefined) {
+        if (element && data[attr] !== undefined) {
             const className = data[attr] === 'Verde' ? 'correct' : 'incorrect';
             element.className = `attribute-value ${className}`;
             
             let content = data.chosenPlayer ? data.chosenPlayer[attr] : '-';
+            
+            // Add direction arrows for dates and numbers
             if (attr === 'birthDate' && data.birthDateDirection) {
                 content += ` ${data.birthDateDirection}`;
+            } else if (attr === 'number' && data.numberDirection) {
+                content += ` ${data.numberDirection}`;
             }
             
             element.innerHTML = content;
