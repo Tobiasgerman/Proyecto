@@ -5,13 +5,14 @@ const socketio = require('socket.io');
 const axios = require('axios');
 const https = require('https');
 const geolib = require('geolib');
+const path = require('path');
 require('dotenv').config();
 
 const app = express();
 app.use(express.json());
 app.use(cors());
 // Serve static files from Front directory
-app.use(express.static('../Front'));
+app.use(express.static(path.join(__dirname, '../Front')));
 
 const server = http.createServer(app);
 const io = socketio(server, {
@@ -28,6 +29,17 @@ const FOOTBALL_API_TOKEN = process.env.FOOTBALL_API_TOKEN;
 const PORT = process.env.PORT || 3000;
 
 const httpsAgent = new https.Agent({ rejectUnauthorized: false });
+
+app.get('/api/auth/config', (_req, res) => {
+    const url = process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL;
+    const publishableKey = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY || process.env.SUPABASE_PUBLISHABLE_KEY;
+
+    if (!url || !publishableKey) {
+        return res.status(503).json({ error: 'Supabase is not configured' });
+    }
+
+    res.json({ url, publishableKey });
+});
 
 // Game state management
 const gameStates = {
@@ -763,6 +775,49 @@ app.post('/api/mundle/distance', (req, res) => {
     }
 });
 
+app.get('/api/autocomplete', async (req, res) => {
+    try {
+        const query = String(req.query.query || '').trim();
+        const gameType = String(req.query.gameType || '');
+        let suggestions = [];
+
+        if (query.length < 2) {
+            return res.json(suggestions);
+        }
+
+        switch (gameType) {
+            case 'gamedle':
+                if (query.length > 2) {
+                    const games = await getIGDBGames(query);
+                    suggestions = games.map(game => game.name).slice(0, 10);
+                }
+                break;
+            case 'football':
+                suggestions = (await getFootballPlayers(query)).map(player => player.name).slice(0, 10);
+                break;
+            case 'basketball':
+                suggestions = (await getBasketballPlayers(query)).map(player => player.name).slice(0, 10);
+                break;
+            case 'formula1':
+                suggestions = (await getFormula1Drivers(query)).map(driver => driver.name).slice(0, 10);
+                break;
+            case 'mundle':
+                suggestions = countries
+                    .filter(country => country.name.toLowerCase().includes(query.toLowerCase()))
+                    .map(country => country.name)
+                    .slice(0, 10);
+                break;
+            default:
+                return res.status(400).json({ error: 'Invalid game type' });
+        }
+
+        res.json(suggestions);
+    } catch (error) {
+        console.error('Autocomplete error:', error.message);
+        res.status(500).json({ error: 'Failed to load suggestions' });
+    }
+});
+
 // Socket.IO for autocomplete
 io.on('connection', (socket) => {
     console.log('Client connected:', socket.id);
@@ -810,7 +865,11 @@ io.on('connection', (socket) => {
     });
 });
 
-// Start server
-server.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`);
-});
+// Start a local server, while exporting Express for serverless deployments.
+if (require.main === module) {
+    server.listen(PORT, () => {
+        console.log(`Server running on http://localhost:${PORT}`);
+    });
+}
+
+module.exports = app;

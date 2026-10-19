@@ -1,0 +1,33 @@
+[Script Info]
+Title: Multi Wordle Promo V2
+ScriptType: v4.00+
+PlayResX: 1080
+PlayResY: 1920
+WrapStyle: 2
+ScaledBorderAndShadow: yes
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: Hook,Arial,66,&H00FFFFFF,&H000000FF,&H00F16663,&H00000000,-1,0,0,0,100,100,0,0,1,5,0,5,55,55,35,1
+Style: Top,Arial,48,&H00FFFFFF,&H000000FF,&H00000000,&H00000000,-1,0,0,0,100,100,0,0,1,0,0,5,55,55,35,1
+Style: Bottom,Arial,48,&H00FFFFFF,&H000000FF,&H00000000,&H00000000,-1,0,0,0,100,100,0,0,1,0,0,5,60,60,45,1
+Style: CTA,Arial,60,&H00FFFFFF,&H000000FF,&H0081B910,&H0081B910,-1,0,0,0,100,100,0,0,3,28,3,5,60,60,40,1
+Style: URL,Arial,34,&H00D0F3A7,&H000000FF,&H00000000,&H00000000,-1,0,0,0,100,100,0,0,1,0,0,5,40,40,35,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 0,0:00:00.10,0:00:04.20,Hook,,0,0,0,,{\fad(200,250)\pos(540,145)}¿TODOS LOS JUEGOS TE PARECEN IGUALES?
+Dialogue: 0,0:00:00.60,0:00:04.20,Bottom,,0,0,0,,{\fad(250,250)\pos(540,1680)}Hay una forma distinta de jugar.
+
+Dialogue: 0,0:00:04.20,0:00:10.20,Hook,,0,0,0,,{\fad(200,250)\pos(540,145)}5 DESAFÍOS. 1 SOLO LUGAR.
+Dialogue: 0,0:00:04.60,0:00:10.20,Bottom,,0,0,0,,{\fad(250,250)\pos(540,1635)}Videojuegos • Fútbol • Básquet\NFórmula 1 • Países
+
+Dialogue: 0,0:00:10.20,0:00:18.00,Hook,,0,0,0,,{\fad(200,250)\pos(540,145)}MIRÁ LA PISTA. COMPARÁ. ADIVINÁ.
+Dialogue: 0,0:00:10.70,0:00:18.00,Bottom,,0,0,0,,{\fad(250,250)\pos(540,1680)}Cada intento te acerca a la respuesta.
+
+Dialogue: 0,0:00:18.00,0:00:26.50,Hook,,0,0,0,,{\fad(200,250)\pos(540,145)}¿CUÁNTO SABÉS REALMENTE?
+Dialogue: 0,0:00:18.40,0:00:26.50,Bottom,,0,0,0,,{\fad(250,250)\pos(540,1660)}Elegí una categoría y desafiá a tus amigos.
+
+Dialogue: 0,0:00:26.50,0:00:32.00,Hook,,0,0,0,,{\fad(200,250)\pos(540,145)}MULTI WORDLE
+Dialogue: 0,0:00:26.80,0:00:32.00,CTA,,0,0,0,,{\fad(250,250)\pos(540,1640)}REGISTRATE Y JUGÁ
+Dialogue: 0,0:00:27.20,0:00:32.00,URL,,0,0,0,,{\fad(250,250)\pos(540,1790)}multi-wordle-tobias.vercel.app

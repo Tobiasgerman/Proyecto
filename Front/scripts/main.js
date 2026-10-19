@@ -1,8 +1,8 @@
 // Multi Wordle Main JavaScript
 
-const API_BASE_URL = 'http://localhost:3000/api';
+const API_BASE_URL = '/api';
 let currentGame = null;
-let socket = null;
+let autocompleteTimer = null;
 
 // Initialize the application
 document.addEventListener('DOMContentLoaded', function() {
@@ -10,16 +10,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function initializeApp() {
-    // Connect to Socket.IO for autocomplete
-    socket = io('http://localhost:3000');
-    
-    socket.on('suggestions', function(suggestions) {
-        displaySuggestions(suggestions);
-    });
-    
-    socket.on('autocompleteError', function(error) {
-        console.error('Autocomplete error:', error);
-    });
+    // The app uses same-origin HTTP endpoints in local and deployed environments.
 }
 
 function startGame(gameType) {
@@ -220,8 +211,10 @@ function setupEventListeners() {
     // Input event for autocomplete
     input.addEventListener('input', function(e) {
         const query = e.target.value.trim();
+        clearTimeout(autocompleteTimer);
+
         if (query.length > 1) {
-            socket.emit('autocomplete', query, currentGame);
+            autocompleteTimer = setTimeout(() => loadSuggestions(query), 180);
         } else {
             hideSuggestions();
         }
@@ -243,6 +236,20 @@ function setupEventListeners() {
             hideSuggestions();
         }
     });
+}
+
+async function loadSuggestions(query) {
+    try {
+        const parameters = new URLSearchParams({ query, gameType: currentGame });
+        const response = await fetch(`${API_BASE_URL}/autocomplete?${parameters}`);
+        if (!response.ok) {
+            throw new Error('No se pudieron cargar las sugerencias');
+        }
+        displaySuggestions(await response.json());
+    } catch (error) {
+        console.error('Autocomplete error:', error);
+        hideSuggestions();
+    }
 }
 
 function displaySuggestions(suggestions) {
